@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.user.mnb.nhap_sdt"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Một mã xác nhận đã được gửi tới số điện thoại"
+            android:gravity="center_horizontal"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:paddingTop="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_sdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="19001099"
+            android:textSize="23dp"
+            android:textColor="@color/colorAccent"
+            android:paddingTop="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Để hoàn thành xác minh số điện thoại, vui lòng nhập mã 4 chữ số."
+            android:gravity="center_horizontal"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:paddingTop="10dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/editText_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:hint="Mã xác minh"
+            android:ems="6"
+            android:inputType="number" />
+    </LinearLayout>
+
+
+</LinearLayout>
