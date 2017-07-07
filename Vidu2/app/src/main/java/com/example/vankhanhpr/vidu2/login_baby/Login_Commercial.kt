@@ -1,4 +1,4 @@
-package com.example.vankhanhpr.vidu2.login
+package com.example.vankhanhpr.vidu2.login_baby
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView

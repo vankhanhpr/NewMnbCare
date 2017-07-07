@@ -274,4 +274,88 @@ public class Getter_Setter {
     public void setResult(String result) {
         Result = result;
     }
+
+
+
+    private String UserID=null;
+    private  String Customer_Name = null;
+    private String Nick_Name= null;
+    private  String Birthday= null;
+    private  String Mobile_Phone =null;
+    private  String Email=null;
+    private  String Address= null;
+    private  String Sex= null;
+    private  String Working_Date =null;
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
+    }
+
+    public String getCustomer_Name() {
+        return Customer_Name;
+    }
+
+    public void setCustomer_Name(String customer_Name) {
+        Customer_Name = customer_Name;
+    }
+
+    public String getNick_Name() {
+        return Nick_Name;
+    }
+
+    public void setNick_Name(String nick_Name) {
+        Nick_Name = nick_Name;
+    }
+
+    public String getBirthday() {
+        return Birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        Birthday = birthday;
+    }
+
+    public String getMobile_Phone() {
+        return Mobile_Phone;
+    }
+
+    public void setMobile_Phone(String mobile_Phone) {
+        Mobile_Phone = mobile_Phone;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getSex() {
+        return Sex;
+    }
+
+    public void setSex(String sex) {
+        Sex = sex;
+    }
+
+    public String getWorking_Date() {
+        return Working_Date;
+    }
+
+    public void setWorking_Date(String working_Date) {
+        Working_Date = working_Date;
+    }
 }

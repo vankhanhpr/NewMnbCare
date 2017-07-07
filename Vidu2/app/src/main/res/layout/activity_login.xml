@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.user.mnb.nhap_sdt"
     android:weightSum="10">
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
         >
 
         <EditText
-            android:id="@+id/editText_pass"
+            android:id="@+id/edt_passlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -41,7 +40,7 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btn_tieptuc"
+            android:id="@+id/btn_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tiếp tục >"

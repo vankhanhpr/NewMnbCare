@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.JsonWriter
 import android.util.Log
 import com.example.vankhanhpr.vidu2.R
+import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 import com.example.vankhanhpr.vidu2.json.ALTMW_Protocol
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
@@ -46,7 +47,7 @@ class Call_Receive_Server : AppCompatActivity()
 
     //khai báo các giá trị cần thiết
     /*var mSocket: Socket?= null*/
-    var mSocket: Socket? = IO.socket("http://124.158.14.36:8080")
+    var mSocket: Socket? = IO.socket(AllValue.address.toString())
 
     var output : StringWriter?=null
     var temp2: ALTMW_Protocol?= null
@@ -76,7 +77,7 @@ class Call_Receive_Server : AppCompatActivity()
     }
     fun Sevecie()
     {
-        mSocket=IO.socket("http://124.158.14.36:8080")
+        mSocket=IO.socket(AllValue.address.toString())
         mSocket!!.connect()
         mSocket!!.on("RES_MSG",onNewMessage)
     }

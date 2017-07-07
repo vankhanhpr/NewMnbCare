@@ -9,15 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.Wellcom">
+        <activity android:name=".login_baby.Wellcom">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.Login_Commercial"></activity>
+        <activity android:name=".login_baby.Login_Commercial"></activity>
         <activity android:name=".call_receive_service.Call_Receive_Server"></activity>
-        <activity android:name=".login.Login"/>
+        <activity android:name=".login_baby.Login"/>
+        <activity android:name=".login_baby.CheckPassLogin"/>
+        <activity android:name=".login_baby.CheckPassSignIn"/>
+
+
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
