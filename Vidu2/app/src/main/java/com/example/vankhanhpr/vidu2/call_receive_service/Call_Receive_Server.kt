@@ -92,11 +92,11 @@ class Call_Receive_Server : AppCompatActivity()
         //khai bái cái biến json
         output=null
         output= StringWriter()
-        temp2= CallService(stnumber!!,workerName,serviceName,input) //....data->class
+        temp2= CallService(stnumber!!,workerName,serviceName,input)
 
         try
         {
-            writeJsonStream(output!!,temp2!!)//............class -> json
+            writeJsonStream(output!!,temp2!!)
             Log.d("khong loi dau",output.toString())
             mSocket!!.emit("REQ_MSG",output)
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:paddingTop="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="@string/reset_pass"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/noticate_reset"
+            android:textSize="12sp"
+            android:textColor="@color/dark"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <Button
+            android:id="@+id/btn_iport_pass_restart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nhập mật khẩu"
+            android:background="@color/brown"/>
+
+    </LinearLayout>
+
+</LinearLayout>

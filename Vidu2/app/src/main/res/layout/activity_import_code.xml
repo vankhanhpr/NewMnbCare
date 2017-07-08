@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.user.mnb.nhap_sdt"
+    android:paddingTop="15dp"
     android:weightSum="10">
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,53 +11,66 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_weight="3"
+        android:gravity="center"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Một mã xác nhận đã được gửi tới số điện thoại"
+            android:text="@string/sendcode"
             android:gravity="center_horizontal"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:textColor="#000"
-            android:paddingTop="10dp"
-            />
+            android:paddingTop="10dp"/>
         <TextView
-            android:id="@+id/tv_sdt"
+            android:id="@+id/tv_phone_positively"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="19001099"
-            android:textSize="23dp"
+            android:textSize="16sp"
             android:textColor="@color/colorAccent"
             android:paddingTop="10dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Để hoàn thành xác minh số điện thoại, vui lòng nhập mã 4 chữ số."
+            android:text="@string/put_code"
             android:gravity="center_horizontal"
-            android:textSize="18dp"
+            android:textSize="12sp"
             android:textColor="#000"
             android:paddingTop="10dp"
             />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1.5"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        >
-
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp">
         <EditText
-            android:id="@+id/editText_phone"
-            android:layout_width="wrap_content"
+            android:id="@+id/edt_positively"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:hint="Mã xác minh"
-            android:ems="6"
-            android:inputType="number" />
+            android:gravity="center"
+            android:hint="@string/code_verification"
+            android:inputType="number"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_cotinue_importcode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/continue_"
+            android:textSize="12sp"
+            android:textColor="@color/dark"
+            android:gravity="center"/>
 
-
+    </LinearLayout>
 </LinearLayout>

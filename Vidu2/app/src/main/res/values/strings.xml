@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Vidu2</string>
+    <string name="confirm_phone">XÁC NHẬN THÔNG TIN SỐ ĐIỆN THOẠI</string>
+    <string name="notical_confirm">Chúc tối sẽ gửi mã xác nhận đến số điện thoại</string>
+    <string name="turn_phone">để kích hoạt tài khoản của bạn</string>
+    <string name="cencel">Hủy</string>
+    <string name="accept">Đồng ý</string>
+    <string name="continue_">Tiếp tục > </string>
+    <string name="login">Đăng nhập ></string>
+    <string name="passw">Mật khẩu</string>
+    <string name="tab_select_number">Vui lòng nhập số điện thoại của bạn để đăng nhập hoặc đăn ký mới</string>
+    <string name="notical_signin">Vui lòng nhập và xác nhận lại mật khẩu của bạn</string>
+    <string name="sendcode">Một mã xác nhận đã được gửi tới số điện thoại</string>
+    <string name="put_code">Để hoàn thành xác minh số điện thoại, vui lòng nhập mã 4 chữ số.</string>
+    <string name="code_verification">Mã xác minh</string>
+    <string name="forget_pass">Quên mật khẩu</string>
+    <string name="reset_pass">Yêu cầu lấy lại mật khẩu</string>
+    <string name="sure_pass">Bạn có chắc muốn restart mật khẩu</string>
+    <string name="noticate_reset">Chúng tôi đã gửi lại mật khẩu cho bạn yêu cầu kiểm tra mail lấy mật khẩu và đăng nhập lại</string>
+    <string name="change_your_pass">Vui lòng nhập mật khẩu mới</string>
 </resources>

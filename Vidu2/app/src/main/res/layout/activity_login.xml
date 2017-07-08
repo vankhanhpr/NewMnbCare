@@ -14,8 +14,8 @@
         android:paddingRight="10dp"
         android:layout_weight="2">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Vui lòng nhập mật khẩu của bạn"
             android:gravity="center"
             android:textSize="20dp"
@@ -25,27 +25,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingLeft="30sp"
+        android:paddingRight="30sp"
         >
 
         <EditText
             android:id="@+id/edt_passlogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="0"
-            android:hint="mật khẩu"
-            android:ems="11"
+            android:hint="@string/passw"
             android:inputType="textPassword" />
-
-        <Button
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30sp"/>
+        <TextView
             android:id="@+id/btn_continue"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tiếp tục >"
+            android:text="@string/continue_"
+            android:textSize="16sp"
+            android:gravity="center"
             android:textColor="#2E64FE"
-            android:background="#FFF"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25sp"/>
+        <TextView
+            android:id="@+id/tv_forget_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_pass"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#2E64FE"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25sp"/>
+        <TextView
+            android:id="@+id/tv_return_selectphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trở lại"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#2E64FE"
             />
     </LinearLayout>
 

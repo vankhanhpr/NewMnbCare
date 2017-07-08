@@ -16,7 +16,7 @@
             android:id="@+id/imv_mnccare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/mnb"
+            android:background="@drawable/mom"
             />
     </LinearLayout>
     <LinearLayout
@@ -43,7 +43,7 @@
             android:textSize="17dp"
             />
     </LinearLayout>
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
@@ -55,5 +55,5 @@
             android:layout_height="wrap_content"
             android:src="@drawable/vong"
             />
-    </LinearLayout>
+    </LinearLayout>-->
 </LinearLayout>

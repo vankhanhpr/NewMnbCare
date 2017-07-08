@@ -15,6 +15,7 @@ class  MessageEvent
     {
         this.temp   =temp
         this.service=service
+
     }
 
     fun getTemp(): String? {

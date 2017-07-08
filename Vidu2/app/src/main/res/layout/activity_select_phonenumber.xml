@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vui lòng nhập số điện thoại của bạn để đăng nhập hoặc đăn ký mới"
+            android:text="@string/tab_select_number"
             android:gravity="center"
             android:textSize="20dp"
             android:textColor="#000"
@@ -28,32 +28,44 @@
         android:layout_weight="3"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:weightSum="5"
         >
 
-        <EditText
-            android:id="@+id/editText_phone"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="2"
+            android:paddingLeft="30sp"
+            android:paddingRight="30sp">
+            <EditText
+                android:id="@+id/editText_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Nhập số điện thoại"
+                android:gravity="center"
+                android:inputType="phone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:hint="số điện thoại"
-            android:ems="11"
-            android:inputType="phone" />
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đăng nhập"
-            android:textColor="#2E64FE"
-            android:background="#FFF"
-            />
-        <Button
-            android:id="@+id/btn_quaylai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quay lại"
-            android:textColor="#2E64FE"
-            android:background="#FFF"
-            />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:weightSum="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_login_selectphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#2E64FE"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
 

@@ -21,7 +21,7 @@ class Wellcom : AppCompatActivity()
         setContentView(R.layout.activity_welcome)
         var call=Call_Receive_Server.instance
         call.Sevecie()
-        val secondDelay = 5
+        val secondDelay = 1
         Handler().postDelayed(Runnable() {
             startActivity(Intent(this@Wellcom, Login_Commercial::class.java))
             finish()

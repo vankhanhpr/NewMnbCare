@@ -1,13 +1,13 @@
 package com.example.vankhanhpr.vidu2.login_doctor
+
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
-import com.example.vankhanhpr.vidu2.getter_setter.IsID
 import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.login_baby.CheckPassLogin
@@ -17,7 +17,11 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 
-class Nhap_id : AppCompatActivity() {
+/**
+ * Created by VANKHANHPR on 7/8/2017.
+ */
+
+class Login_Doctor : AppCompatActivity() {
 
     var id_:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +45,11 @@ class Nhap_id : AppCompatActivity() {
         {
             var json: JSONObject?= event.getService()!!.getData() as JSONObject
             Log.d("thang khanh",json.toString())
-            var isid_: IsID?= readJson1(json!!)//đọc json thành class
+            var isid_: IsNumber?= readJson1(json!!)//đọc json thành class
             if(isid_!!.C0=="Y")
             {
                 Toast.makeText(applicationContext,"thành công", Toast.LENGTH_SHORT).show()
-                sendToActivityLogin(id_!!,AllValue.login!!)
+                sendToActivityLogin(id_!!,AllValue.login_doctor!!)
             }
             else
             {
@@ -54,10 +58,10 @@ class Nhap_id : AppCompatActivity() {
         }
     }
     // Đọc file Json để lấy kết quả
-    fun readJson1(json1: JSONObject): IsID
+    fun readJson1(json1: JSONObject): IsNumber
     {
         var c0: String? =json1.getString("c0")
-        var ser1 : IsID = IsID()
+        var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1
     }
