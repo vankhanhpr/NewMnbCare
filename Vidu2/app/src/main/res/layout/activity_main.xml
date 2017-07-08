@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.vankhanhpr.vidu2.MainActivity">
+    tools:context="com.example.vankhanhpr.vidu2.login_doctor.Nhap_id">
 
 
 <Button

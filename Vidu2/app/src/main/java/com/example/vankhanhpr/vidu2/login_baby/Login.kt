@@ -3,6 +3,7 @@ package com.example.vankhanhpr.vidu2.login_baby
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
@@ -36,7 +37,6 @@ class  Login: AppCompatActivity() {
         {
             phone =editText_phone.text.toString()
             var call= Call_Receive_Server.instance
-
             //tạo key
 
             //call.Sevecie()
@@ -57,7 +57,6 @@ class  Login: AppCompatActivity() {
             {
                 Toast.makeText(applicationContext,"Chuyển qua trang đăng nhập",Toast.LENGTH_SHORT).show()
                 sendToActivityLogin(phone!!,AllValue.login!!)
-
             }
             else
             {

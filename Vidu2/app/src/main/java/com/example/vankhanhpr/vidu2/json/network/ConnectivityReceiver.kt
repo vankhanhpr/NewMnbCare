@@ -9,7 +9,7 @@ import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 
 /**
  * Created by VANKHANHPR on 7/5/2017.
- */
+*/
 class ConnectivityReceiver : BroadcastReceiver()
 {
     override fun onReceive(context: Context, intent: Intent)

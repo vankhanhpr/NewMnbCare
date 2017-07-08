@@ -31,5 +31,7 @@ object  AllValue
     //kiểm tra số điện thoại
     var checknumber:String?= "isNumber"
     var checkpass:String?= "isPass"
+    //....... kiem tra id_
+    var checkid:String?= "isId"
 
 }
