@@ -25,5 +25,11 @@
     <string name="baby">Bé</string>
     <string name="group">Hội nhóm</string>
     <string name="manger_accoumt">Quản lý tài khoản</string>
+
+    <!--mom or doctor-->
+    <string name="mom_or_doctor">mom</string>
+    <string name="sentani_1">We carefully verify all banks before add them into the app</string>
+    <string name="sentani_2">All hotels and hostel are sortels by hospitality rating</string>
+    <string name="sentani_3">All hotels and hostel are sortels by hospitality rating2</string>
     
 </resources>

@@ -132,6 +132,7 @@ class CheckPassLogin:AppCompatActivity()
                 var json_user:JSONObject= event.getService()!!.getData()!!
                 /*user=readJson1(json_user)
                 Log.d("thông tin trả về là: ",json_user.toString())*/
+
                 sendToActivityMain(json_user.toString(),AllValue.gotomain!!)
             }
             else{

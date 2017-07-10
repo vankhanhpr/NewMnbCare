@@ -24,7 +24,6 @@
         <activity android:name=".MainActivity"/>
 
 
-
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

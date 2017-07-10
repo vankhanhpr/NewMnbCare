@@ -1,6 +1,8 @@
 package com.example.vankhanhpr.vidu2
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -44,6 +46,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var bottom_navigation_main1 =findViewById(R.id.bottom_navigation_main) as BottomNavigationView
         disableShiftMode(bottom_navigation_main1)
+        //......lần đầu đăng nhập
+        var Shared_Preferences : String = "landau"//........ ten thu muc chua
+        var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+        var thefirst : String = ""
+        var editor : SharedPreferences.Editor? = sharedpreferences.edit()
+        editor!!.putString(thefirst,"1")//........... luu du lieu
+        editor!!.commit()
 
         fragment_main = findViewById(R.id.fragment_main) as LinearLayout
         tab_medical=findViewById(R.id.tab_medical) as LinearLayout
