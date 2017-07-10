@@ -5,11 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.vankhanhpr.vidu2.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <!--main-->
+        <LinearLayout
+            android:id="@+id/fragment_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tab_medical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:visibility="visible"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="LICH KHAM"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:background="@color/brown"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_navigation_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:theme="@style/NavigationViewStyle"
+                app:theme="@style/NavigationViewStyle"
+                android:itemTextAppearance="@style/NavigationViewStyle"
+                app:menu="@menu/menumain" />
+        </LinearLayout>
+    </LinearLayout>
 
 
-<Button
-    android:id="@+id/btn_login"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="login"/>
 </android.support.constraint.ConstraintLayout>

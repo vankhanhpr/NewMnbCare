@@ -4,6 +4,7 @@ import android.widget.Toast
 import android.content.Intent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.util.Log
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 
 
@@ -18,5 +19,6 @@ class ConnectivityReceiver : BroadcastReceiver()
         Toast.makeText(context, "Network is turned ON/OF", Toast.LENGTH_SHORT).show()
         var s = Call_Receive_Server.instance
         s.Sevecie()
+        Log.d("ddadasd","Da connect")
     }
 }

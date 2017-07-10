@@ -18,4 +18,12 @@
     <string name="sure_pass">Bạn có chắc muốn restart mật khẩu</string>
     <string name="noticate_reset">Chúng tôi đã gửi lại mật khẩu cho bạn yêu cầu kiểm tra mail lấy mật khẩu và đăng nhập lại</string>
     <string name="change_your_pass">Vui lòng nhập mật khẩu mới</string>
+    
+    <!--//menu main activity-->
+    <string name="medical">Lịch khám</string>
+    <string name="mother">Mẹ</string>
+    <string name="baby">Bé</string>
+    <string name="group">Hội nhóm</string>
+    <string name="manger_accoumt">Quản lý tài khoản</string>
+    
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mmenu1"
+        android:enabled="true"
+        android:title="@string/medical"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mmenu2"
+        android:enabled="true"
+        android:title="@string/mother"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mmenu3"
+        android:enabled="true"
+        android:title="@string/baby"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mmenu4"
+        android:enabled="true"
+        android:title="@string/group"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/mmenu5"
+        android:enabled="true"
+        android:title="@string/manger_accoumt"
+        app:showAsAction="ifRoom"/>
+</menu>
