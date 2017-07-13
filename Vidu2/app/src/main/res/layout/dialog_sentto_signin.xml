@@ -9,24 +9,14 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="20dp">
+        android:paddingTop="30dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dark"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="@string/reset_pass"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <TextView
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sure_pass"
-            android:textSize="12sp"
+            android:text="@string/body_sentto_signin"
+            android:textSize="15sp"
             android:textColor="@color/dark"/>
         <View
             android:layout_width="match_parent"
@@ -35,18 +25,18 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/shrap_dialog_confirmphone"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/btn_cancel_dialogres"
+            android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cencel"
             android:layout_weight="1"
             android:background="@drawable/opaque_button"/>
         <Button
-            android:id="@+id/btn_agree_dialogres"
+            android:id="@+id/btn_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accept"

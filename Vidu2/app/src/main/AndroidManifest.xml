@@ -22,7 +22,8 @@
         <activity android:name=".login_baby.Import_Code"/>
         <activity android:name=".login_baby.CheckPassSignIn"/>
         <activity android:name=".MainActivity"/>
-
+        <activity android:name=".login_doctor.Login_Doctor"/>
+        <activity android:name=".login_doctor.main_doctor"/>
 
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>

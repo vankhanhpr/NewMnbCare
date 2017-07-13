@@ -20,7 +20,7 @@ class ALTMW_Protocol {
     private var Lang: String? = null            //Client language: V-Tiếng Việt, E-Tiếng Anh
     private var MdmTp: String? = null            //Media type: 03-Android, 04-IOS, 02-WEB, 01-Application Window
     private var AprStat: String? = null            //Approve status
-    private var Operation: String? = null        //Q: Query, I: Insert, U: Update, D: Delete, E: Export, P: Print
+    private var Operation: String? = "Q"        //Q: Query, I: Insert, U: Update, D: Delete, E: Export, P: Print
     private var InVal: Array<String>? = null  //List of input values
     private  var TotInVal: Int = 0//Total input values
     private var Otp :String? =null

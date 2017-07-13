@@ -11,6 +11,7 @@ object  AllValue
     //Truyền và lấy giá trị trong bundle cái này không được sửa nah
     var value:String ="Resuilt"
     var value2:String="Resuilt2"
+    var value3:String="Resuilt3"
     var key_bundle:String?="Document"
 
     //hết----------------
@@ -41,7 +42,7 @@ object  AllValue
     var workername_sendcode= "ALTxMNB"
     var servicename_sendcode="ALTxMNB_0101_1"
     //verification code so go to main before singin
-    var workername_verification_code= "ALT1MNB"
+    var workername_verification_code= "ALTqMNB"
     var servicename_verification_code="ALTqMNB_0101_1"
     //Resetpass work
     var workername_restartpass= "ALTxMNB"
@@ -53,7 +54,9 @@ object  AllValue
     var workername_change_pass="ALTxMNB"
     var servicename_change_pass="ALTxMNB_0101_2"
 
-
+    //check password before get code
+    var workername_checkpass_signin:String?= "ALTqMNB"
+    var servicename_checkpas_sign:String?="ALTqMNB_0101_1"
 
 
 
@@ -68,5 +71,6 @@ object  AllValue
     var restart_passwork:String?="restart_Pass"
     var change_password:String?="changePass"
     var checkid:String?= "isId"
+    var check_Pass:String?="checkPass"
 
 }

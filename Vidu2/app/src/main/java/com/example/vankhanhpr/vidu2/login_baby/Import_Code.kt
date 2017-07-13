@@ -1,12 +1,21 @@
 package com.example.vankhanhpr.vidu2.login_baby
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.example.vankhanhpr.vidu2.MainActivity
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
+import com.example.vankhanhpr.vidu2.encode.Encode
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
 import com.example.vankhanhpr.vidu2.json.MessageEvent
@@ -23,25 +32,60 @@ class Import_Code :AppCompatActivity()
 {
     var phone:String?=null
     var positively:String?=null
-    override fun onCreate(savedInstanceState: Bundle?) {
+    var dialog11:Dialog?=null
+    var password:String?=null
+
+    var progreee_importcode1:ProgressBar?=null
+    var call= Call_Receive_Server.instance
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_import_code)
         EventBus.getDefault().register(this)
 
         var inte: Intent = intent
-        var bundle:Bundle=inte.getBundleExtra("Document")
-        phone= bundle.getString("Resuilt")
-        tv_phone_positively.setText(phone.toString())
+        var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
 
+        phone= bundle.getString(AllValue.value)
+        password=bundle.getString(AllValue.value2)
+
+        dialog11= Dialog(this)
+
+        tv_phone_positively.setText(phone.toString())
+        var mCountDownTimer: CountDownTimer
+        progreee_importcode1= findViewById(R.id.progreee_importcode) as ProgressBar?
 
         tv_cotinue_importcode.setOnClickListener()
         {
+            progreee_importcode1!!.visibility= View.VISIBLE
             positively= edt_positively.text.toString()
-            var call= Call_Receive_Server.instance
-            var inval: Array<String> = arrayOf("1",phone.toString(),positively!!.toString())
-            call.CallEmit(AllValue.workername_verification_code,AllValue.servicename_verification_code,inval,AllValue.verification!!.toString())
-        }
+            var temp5=Encode().encryptString(positively)
 
+            var inval: Array<String> = arrayOf("1",phone.toString(),temp5!!.toString())
+            call.CallEmit(AllValue.workername_verification_code,AllValue.servicename_verification_code,inval,AllValue.verification!!.toString())
+
+            //khi connect thất bại
+            mCountDownTimer = object : CountDownTimer(5000, 1000) {
+                var i=0
+                override fun onTick(millisUntilFinished: Long) {
+                    i++
+                    Call_Receive_Server.instance.Sevecie()
+                    //mProgressBar.progress = i
+                    if(i==5) {
+                        progreee_importcode1!!.visibility = View.GONE
+                    }
+                }
+                override fun onFinish() {
+                    //Do what you want
+                    i++
+                    if(i==5) {
+                        progreee_importcode1!!.visibility = View.GONE
+                    }
+                }
+            }
+            mCountDownTimer.start()
+        }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
@@ -55,19 +99,36 @@ class Import_Code :AppCompatActivity()
                 if(temp.getSecC0()=="Y")
                 {
                     //tiến hành vào tràng chủ
-                    sendToActivityMain(phone.toString(),AllValue.gotomain!!)
+                    sendToActivityMain(phone!!,password!!,AllValue.gotomain!!)
                 }
                 else
                     if(temp.getSecC0()=="N")
                     {
-                        Toast.makeText(applicationContext,"Mã xác thực không hợp lệ",Toast.LENGTH_SHORT).show()
+                        dialog11!!.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                        dialog11!!.setContentView(R.layout.dialog_impot_code)
+                        var btn_cancel_import_code= dialog11!!.findViewById(R.id.btn_cancel_import_code)
+                        dialog11!!.show()
+                        btn_cancel_import_code.setOnClickListener()
+                        {
+                            dialog11!!.cancel()
+                        }
                     }
             }
             else
-            {
-                Toast.makeText(applicationContext,"ERROR SYSTEM",Toast.LENGTH_SHORT).show()
-            }
-
+                if(event.getService()!!.getResult()=="0")
+                {
+                    dialog11!!.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                    dialog11!!.setContentView(R.layout.dialog_impot_code)
+                    var btn_cancel_import_code= dialog11!!.findViewById(R.id.btn_cancel_import_code)
+                    var tv_set_import_code1= dialog11!!.findViewById(R.id.tv_set_import_code) as TextView
+                    tv_set_import_code1.setText(event.getService()!!.getMessage())
+                    dialog11!!.show()
+                    btn_cancel_import_code.setOnClickListener()
+                    {
+                        dialog11!!.cancel()
+                    }
+                    progreee_importcode1!!.visibility= View.GONE
+                }
         }
     }
     //Đọc file json
@@ -79,14 +140,15 @@ class Import_Code :AppCompatActivity()
         return ser1
     }
     //nhảy tới hàm main
-    fun sendToActivityMain(value: String,resultcode:Int) {
+    fun sendToActivityMain(value: String,value2:String,resultcode:Int) {
 
         var intent3 = Intent(applicationContext,MainActivity::class.java)
         var bundle = Bundle()
         bundle.putString(AllValue.value, value)
+        bundle.putString(AllValue.value2, value2)
+
         intent3.putExtra(AllValue.key_bundle, bundle)
         startActivityForResult(intent3,resultcode!!)
         finish()
     }
-
 }

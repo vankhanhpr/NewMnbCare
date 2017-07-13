@@ -1,83 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10">
+    android:gravity="center"
+    >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="2">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Vui lòng nhập mật khẩu của bạn"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textColor="#000"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="30sp"
-        android:paddingRight="30sp"
-        >
+        android:weightSum="10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_weight="2">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Vui lòng nhập mật khẩu của bạn"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="#000"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="30sp"
+            android:paddingRight="30sp"
+            >
 
-        <EditText
-            android:id="@+id/edt_passlogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="0"
-            android:hint="@string/passw"
-            android:inputType="textPassword" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30sp"/>
-        <TextView
-            android:id="@+id/btn_continue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/continue_"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="#2E64FE"
-            />
+            <EditText
+                android:id="@+id/edt_passlogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="0"
+                android:hint="@string/passw"
+                android:inputType="textPassword" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30sp"/>
+            <TextView
+                android:id="@+id/btn_continue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/continue_"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#2E64FE"
+                />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25sp"/>
-        <TextView
-            android:id="@+id/tv_forget_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/forget_pass"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="#2E64FE"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25sp"/>
+            <TextView
+                android:id="@+id/tv_forget_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_pass"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#2E64FE"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25sp"/>
-        <TextView
-            android:id="@+id/tv_return_selectphone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Trở lại"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="#2E64FE"
-            />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25sp"/>
+            <TextView
+                android:id="@+id/tv_return_selectphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trở lại"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#2E64FE"
+                />
+        </LinearLayout>
     </LinearLayout>
-
-
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/tab_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+</RelativeLayout>

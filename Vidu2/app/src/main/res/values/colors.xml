@@ -10,4 +10,5 @@
     <color name="colorblue1">#66AFB5</color>
     <color name="colorblue2">#658FB5</color>
     <color name="colorblue3">#9C8FBD</color>
+    <color name="button">#EEEEEE</color>
 </resources>

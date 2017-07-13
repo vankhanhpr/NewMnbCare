@@ -6,6 +6,7 @@ import android.util.JsonWriter
 import android.util.Log
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
+import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.ALTMW_Protocol
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
@@ -61,26 +62,45 @@ class Call_Receive_Server : AppCompatActivity()
 
         try
         {
-
-
-
         }
         catch(e: URISyntaxException)
         {
             Log.d("Loi dia chi","Loi")
         }
-       /* btn_login.setOnClickListener()
-        {
-            var inten= Intent(this, Login::class.java)
-            startActivity(inten)
-        }*/
+        /* btn_login.setOnClickListener()
+         {
+             var inten= Intent(this, Login::class.java)
+             startActivity(inten)
+         }*/
     }
     fun Sevecie()
     {
         mSocket=IO.socket(AllValue.address.toString())
         mSocket!!.connect()
         mSocket!!.on("RES_MSG",onNewMessage)
+        mSocket!!.on("error",systemError)
+
+        /* {
+            //here i change options
+            socket = io.connect(host, options);
+        });*/
+
+
     }
+    var systemError  =
+            object : Emitter.Listener {
+                override fun call(vararg args: Any) {
+                    // var json: JSONObject = args[0] as JSONObject
+                    runOnUiThread(Runnable
+                    {
+                        mSocket=IO.socket(AllValue.address.toString())
+                        //call server
+                        mSocket!!.connect()
+                        Log.d("ádfasd","ádfasdf")
+                        Call_Receive_Server.instance.Sevecie()
+                    })
+                }
+            }
     // hàm gọi emit dùng chung
     fun CallEmit(workerName:String,serviceName:String,input:Array<String>,key:String)
     {
@@ -106,9 +126,8 @@ class Call_Receive_Server : AppCompatActivity()
             Log.d("Error",e.toString())
         }
     }
-
     //Sự kiện on về
-     var onNewMessage  =
+    var onNewMessage  =
             object : Emitter.Listener {
                 override fun call(vararg args: Any) {
                     var json: JSONObject = args[0] as JSONObject
@@ -118,7 +137,6 @@ class Call_Receive_Server : AppCompatActivity()
                         var x: Service_Response
                         Log.d("result","cmmmm"+json.toString())
                         x= readJson(json)
-
                         var message: MessageEvent = MessageEvent()
                         var tm:Int?= x.getClientSeq()
                         var ttt:String = instance.hmap!![tm!!].toString()
@@ -129,7 +147,6 @@ class Call_Receive_Server : AppCompatActivity()
                     })
                 }
             }
-
     //Add data vào trong class
     fun CallService(clientSeq:Int, workerName:String,serviceName:String,input:Array<String>): ALTMW_Protocol
     {
@@ -143,7 +160,7 @@ class Call_Receive_Server : AppCompatActivity()
         x.setLang("V")
         x.setMdmTp("02")
         x.setAprStat("N")
-        x.setOperation("Q")
+        x.setOperation(Json.Operation!!)
         x.setOtp("")
         x.setAcntNo("888FIS1234")
         x.setSubNo("00")

@@ -2,30 +2,26 @@ package com.example.vankhanhpr.vidu2
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
-import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
 import android.support.design.internal.BottomNavigationItemView
-import java.lang.reflect.AccessibleObject.setAccessible
-import java.lang.reflect.Array.setBoolean
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Baby
 import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Group
-import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Manager_Acount
+import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Account
 import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Mom
-import android.support.annotation.NonNull
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
+import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private var fragmentTransaction: FragmentTransaction? = null
     var fragment_main:LinearLayout? = null
     var tab_medical:LinearLayout?=null
+    var user_id:String?=null
+    var pass:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -46,22 +44,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var bottom_navigation_main1 =findViewById(R.id.bottom_navigation_main) as BottomNavigationView
         disableShiftMode(bottom_navigation_main1)
+
+        var inte: Intent = intent
+        var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
+        user_id= bundle.getString(AllValue.value)
+        pass=bundle.getString(AllValue.value2)
+        Log.d("matkhau",user_id + pass)
+
         //......lần đầu đăng nhập
         var Shared_Preferences : String = "landau"//........ ten thu muc chua
         var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
-        var thefirst : String = ""
-        var editor : SharedPreferences.Editor? = sharedpreferences.edit()
-        editor!!.putString(thefirst,"1")//........... luu du lieu
-        editor!!.commit()
 
+        //Đăng nhập một lần
+        /*var editor : SharedPreferences.Editor? = sharedpreferences.edit()
+        editor!!.putString("thefirst","1")//........... luu du lieu
+        editor!!.putString("id",user_id!!)
+        editor!!.putString("password",pass!!)
+        editor!!.commit()
+*/
         fragment_main = findViewById(R.id.fragment_main) as LinearLayout
         tab_medical=findViewById(R.id.tab_medical) as LinearLayout
 
         //add the fragment
         addFragment()
-
-
-
         bottom_navigation_main1.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -133,14 +138,13 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-
     //add fragments
     fun addFragment()
     {
         fragment_Mom= Fragment_Mom()
         fragment_Baby = Fragment_Baby()
         fragment_Group= Fragment_Group()
-        fragment_Manager_Account= Fragment_Manager_Acount()
+        fragment_Manager_Account= Fragment_Account()
 
         fragmentManager =getSupportFragmentManager();
         fragmentTransaction=fragmentManager!!.beginTransaction()
@@ -156,7 +160,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction!!.hide(fragment_Group)
         fragmentTransaction!!.hide(fragment_Manager_Account)
         fragmentTransaction!!.commit()
-
     }
 
     //settting bottom nagivation
@@ -179,6 +182,5 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IllegalAccessException) {
             //Timber.e(e, "Unable to change value of shift mode");
         }
-
     }
 }
