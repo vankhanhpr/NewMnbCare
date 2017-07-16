@@ -18,6 +18,7 @@ import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.encode.Encode
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
+import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import kotlinx.android.synthetic.main.activity_import_code.*
 import org.greenrobot.eventbus.EventBus
@@ -36,7 +37,7 @@ class Import_Code :AppCompatActivity()
     var password:String?=null
 
     var progreee_importcode1:ProgressBar?=null
-    var call= Call_Receive_Server.instance
+    var call= Call_Receive_Server.getIns()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -50,7 +51,7 @@ class Import_Code :AppCompatActivity()
         phone= bundle.getString(AllValue.value)
         password=bundle.getString(AllValue.value2)
 
-        dialog11= Dialog(this)
+
 
         tv_phone_positively.setText(phone.toString())
         var mCountDownTimer: CountDownTimer
@@ -58,19 +59,21 @@ class Import_Code :AppCompatActivity()
 
         tv_cotinue_importcode.setOnClickListener()
         {
+            dialog11= Dialog(this)
             progreee_importcode1!!.visibility= View.VISIBLE
             positively= edt_positively.text.toString()
             var temp5=Encode().encryptString(positively)
 
+            //kiểm tra code đúng không
             var inval: Array<String> = arrayOf("1",phone.toString(),temp5!!.toString())
-            call.CallEmit(AllValue.workername_verification_code,AllValue.servicename_verification_code,inval,AllValue.verification!!.toString())
+            call.CallEmit(AllValue.workername_verification_code,AllValue.servicename_verification_code,inval,AllValue.verification2!!.toString())
 
             //khi connect thất bại
             mCountDownTimer = object : CountDownTimer(5000, 1000) {
                 var i=0
                 override fun onTick(millisUntilFinished: Long) {
                     i++
-                    Call_Receive_Server.instance.Sevecie()
+                    //Call_Receive_Server.instance.Sevecie()
                     //mProgressBar.progress = i
                     if(i==5) {
                         progreee_importcode1!!.visibility = View.GONE
@@ -89,7 +92,7 @@ class Import_Code :AppCompatActivity()
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
-        if(event.getTemp()==AllValue.verification.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
+        if(event.getTemp()==AllValue.verification2.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
             if(event.getService()!!.getResult()=="1")
             {
@@ -98,13 +101,16 @@ class Import_Code :AppCompatActivity()
                 temp=readJson1(json)
                 if(temp.getSecC0()=="Y")
                 {
-                    //tiến hành vào tràng chủ
-                    sendToActivityMain(phone!!,password!!,AllValue.gotomain!!)
+                    //Thêm mới thông tin khách hàng khi import code thành công
+                    Json.Operation="I"
+                    var inval5: Array<String> = arrayOf("1","2",phone!!,"4","5","6","7",password!!)
+                    call!!.CallEmit(AllValue.workername_sendcode,AllValue.servicename_sendcode,inval5,AllValue.insetCustomer!!)
+                    Json.Operation="Q"
                 }
-                else
-                    if(temp.getSecC0()=="N")
+                else//import code không thành công
+                    /*if(temp.getSecC0()=="N")*/
                     {
-                        dialog11!!.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                        dialog11!!.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog11!!.setContentView(R.layout.dialog_impot_code)
                         var btn_cancel_import_code= dialog11!!.findViewById(R.id.btn_cancel_import_code)
                         dialog11!!.show()
@@ -114,14 +120,15 @@ class Import_Code :AppCompatActivity()
                         }
                     }
             }
-            else
+            else//báo lỗi khi trả về kết quả không thành công
                 if(event.getService()!!.getResult()=="0")
                 {
-                    dialog11!!.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                    dialog11!!.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog11!!.setContentView(R.layout.dialog_impot_code)
                     var btn_cancel_import_code= dialog11!!.findViewById(R.id.btn_cancel_import_code)
                     var tv_set_import_code1= dialog11!!.findViewById(R.id.tv_set_import_code) as TextView
-                    tv_set_import_code1.setText(event.getService()!!.getMessage())
+                    var s= event.getService()!!.getMessage()!!.substring(10)
+                    tv_set_import_code1.setText(s)
                     dialog11!!.show()
                     btn_cancel_import_code.setOnClickListener()
                     {
@@ -129,6 +136,11 @@ class Import_Code :AppCompatActivity()
                     }
                     progreee_importcode1!!.visibility= View.GONE
                 }
+        }
+        if(event.getTemp()==AllValue.insetCustomer)
+        {//thêm khách hàng thành công thì đi tới hàm main và gửi các  biến liên quan
+            Json.AppLoginPswd=password
+            sendToActivityMain(phone!!,password!!,AllValue.gotomain!!)
         }
     }
     //Đọc file json

@@ -24,6 +24,7 @@ object  AllValue
     var gotomain_signin:Int?=444
     var gotomain_changepass:Int?=555
     var login_doctor:Int?=666
+    var changePass:Int?=777
 
     //hết ---------------------
 
@@ -46,7 +47,7 @@ object  AllValue
     var servicename_verification_code="ALTqMNB_0101_1"
     //Resetpass work
     var workername_restartpass= "ALTxMNB"
-    var servicename_restartpass="ALTxMNB_0101_2"
+    var servicename_restartpass="ALTxMNB_0101_1"
     //get ID with phone number
     var workername_getID="ALTqCommon"
     var servicename_getID="ALTqCommon_GetID"
@@ -57,6 +58,10 @@ object  AllValue
     //check password before get code
     var workername_checkpass_signin:String?= "ALTqMNB"
     var servicename_checkpas_sign:String?="ALTqMNB_0101_1"
+    //signin success
+    var workername_get_customer="ALTqMNB"
+    var servicename_get_customer="ALTqMNB_0101_2"
+
 
 
 
@@ -64,13 +69,25 @@ object  AllValue
     //kiểm tra số điện thoại
     var checknumber:String?= "isNumber"
     var checkpass:String?= "isPass"
+    var checkpass1:String?= "isPass1"
+
+
     var checpass_getpass:String?="isPassGetPass"
     var signin_baby:String?="baby_Signin"
     var verification:String?="veri_Code"
+    var verification2:String?="veri_Code2"
+
+    var disconnect:String?="disconnectSystem"
+    var connect:String?="connect"
+
     var getId:String?="getID"
+    var getId_Main:String?="getID"
     var restart_passwork:String?="restart_Pass"
     var change_password:String?="changePass"
     var checkid:String?= "isId"
     var check_Pass:String?="checkPass"
+    var insetCustomer:String?="insertCustomer"
+    var restartPassAgain:String?="restartPassAgain"
+    var get_info_customer:String?="getCustomer"
 
 }

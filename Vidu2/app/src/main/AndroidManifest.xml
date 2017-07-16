@@ -16,7 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".login_baby.Login_Commercial"></activity>
-        <activity android:name=".call_receive_service.Call_Receive_Server"></activity>
         <activity android:name=".login_baby.Login"/>
         <activity android:name=".login_baby.CheckPassLogin"/>
         <activity android:name=".login_baby.Import_Code"/>
@@ -24,6 +23,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".login_doctor.Login_Doctor"/>
         <activity android:name=".login_doctor.main_doctor"/>
+        <activity android:name=".change_password.ChangePass"/>
 
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>

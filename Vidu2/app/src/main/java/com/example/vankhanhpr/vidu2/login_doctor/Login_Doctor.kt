@@ -32,6 +32,7 @@ class Login_Doctor : AppCompatActivity() {
     var id_:String?=null
     var dialog_id_doctor: Dialog?=null
     var tab_loading_doctor1: ProgressBar? = null
+    var call= Call_Receive_Server.getIns()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_id_doctor)
@@ -45,8 +46,7 @@ class Login_Doctor : AppCompatActivity() {
             dialog_id_doctor= Dialog(this)
             tab_loading_doctor1!!.visibility= View.VISIBLE
             id_ = editText_id.text.toString()
-            var call= Call_Receive_Server.instance
-            call.Sevecie()
+
             var inval: Array<String> = arrayOf(AllValue.isDoctor!!.toString(),id_.toString())
             call!!.CallEmit(AllValue.workername_checknumber!!.toString(), AllValue.servicename_checknumber!!.toString(), inval, AllValue.checkid.toString())
 
@@ -56,7 +56,7 @@ class Login_Doctor : AppCompatActivity() {
                 override fun onTick(millisUntilFinished: Long)
                 {
                     i++
-                    Call_Receive_Server.instance.Sevecie()
+                    //Call_Receive_Server.instance.Sevecie()
                     //mProgressBar.progress = i
                     if(i==5)
                     {
@@ -82,7 +82,6 @@ class Login_Doctor : AppCompatActivity() {
         if(event.getTemp()== AllValue.checkid.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
             var json: JSONObject?= event.getService()!!.getData() as JSONObject
-            Log.d("thang khanh",json.toString())
             var isid_: IsNumber?= readJson1(json!!)//đọc json thành class
             if(isid_!!.C0=="Y")
             {
@@ -117,8 +116,8 @@ class Login_Doctor : AppCompatActivity() {
     fun sendToActivityLogin(value: String,resultcode:Int) {
         var intent3 = Intent(applicationContext,CheckPassLogin::class.java)
         var bundle = Bundle()
-        bundle.putString("Resuilt", value)
-        intent3.putExtra("Document", bundle)
+        bundle.putString(AllValue.value, value)
+        intent3.putExtra(AllValue.key_bundle, bundle)
         startActivityForResult(intent3,resultcode!!)
         finish()
     }

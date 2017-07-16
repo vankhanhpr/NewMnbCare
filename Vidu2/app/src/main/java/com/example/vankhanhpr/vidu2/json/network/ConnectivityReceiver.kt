@@ -17,8 +17,8 @@ class ConnectivityReceiver : BroadcastReceiver()
     {
 
         Toast.makeText(context, "Network is turned ON/OF", Toast.LENGTH_SHORT).show()
-        var s = Call_Receive_Server.instance
-        s.Sevecie()
+        //var s = Call_Receive_Server.instance
+       // s.Sevecie()
         Log.d("ddadasd","Da connect")
     }
 }

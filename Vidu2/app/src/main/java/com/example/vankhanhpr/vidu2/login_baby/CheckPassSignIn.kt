@@ -38,7 +38,7 @@ class  CheckPassSignIn:AppCompatActivity()
     var dialog6:Dialog?=null
 
     var progreee_signin1:ProgressBar?=null
-    var call = Call_Receive_Server.instance
+    var call = Call_Receive_Server.getIns()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +50,11 @@ class  CheckPassSignIn:AppCompatActivity()
         phone= bundle.getString(AllValue.value)
 
         progreee_signin1= findViewById(R.id.progreee_signin) as ProgressBar
-        dialog6 =Dialog(this)
+
 
         tv_continue_signin.setOnClickListener()
         {
+            dialog6 =Dialog(this)
             pass1=edt_password.text.toString()
             pass2=edt_passagain.text.toString()
 
@@ -64,7 +65,7 @@ class  CheckPassSignIn:AppCompatActivity()
             {
                 progreee_signin1!!.visibility= View.GONE
                 var dialog2=Dialog(this)
-                dialog2.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog2.setContentView(R.layout.dialog_error_password)
                 var btn_cancel_error_pass1= dialog2.findViewById(R.id.btn_cancel_error_pass)
                 btn_cancel_error_pass1.setOnClickListener()
@@ -85,7 +86,7 @@ class  CheckPassSignIn:AppCompatActivity()
                         override fun onTick(millisUntilFinished: Long)
                         {
                             i++
-                            Call_Receive_Server.instance.Sevecie()
+                           // Call_Receive_Server.instance.Sevecie()
                             //mProgressBar.progress = i
                             if(i==5)
                             {
@@ -128,7 +129,7 @@ class  CheckPassSignIn:AppCompatActivity()
 
                 progreee_signin1!!.visibility=View.GONE
 
-                dialog6!!.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                dialog6!!.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog6!!.setContentView(R.layout.dialog_confirm_phone)
                 var tv_dialog_signin= dialog6!!.findViewById(R.id.tv_dialog_signin) as TextView
                 var tv_cancel= dialog6!!.findViewById(R.id.tv_cancel) as TextView
@@ -162,7 +163,7 @@ class  CheckPassSignIn:AppCompatActivity()
                 {
                     progreee_signin1!!.visibility= View.GONE
                     var dialog3=Dialog(this)
-                    dialog3.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+                    dialog3.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog3.setContentView(R.layout.dialog_error_password)
                     var btn_cancel_error_pass3= dialog3.findViewById(R.id.btn_cancel_error_pass)
                     dialog3.show()

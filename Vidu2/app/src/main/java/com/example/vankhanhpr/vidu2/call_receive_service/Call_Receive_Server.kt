@@ -1,5 +1,7 @@
 package com.example.vankhanhpr.vidu2.call_receive_service
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.JsonWriter
@@ -21,29 +23,27 @@ import java.io.StringWriter
 import java.io.Writer
 
 import java.net.URISyntaxException
+import kotlin.concurrent.thread
 
 
 /**
  * Created by VANKHANHPR on 7/1/2017.
  */
 
-class Call_Receive_Server : AppCompatActivity()
+class Call_Receive_Server private constructor()
 {
-
     //Dùng mẫu thiết kế singleton cho phép gọi một lần
-    companion object
-    {
-        private var mInstance: Call_Receive_Server? = null
+    //private object Holder { val INSTANCE = Call_Receive_Server() }
+    companion object {
+        private var instance : Call_Receive_Server? = null
+        fun getIns(): Call_Receive_Server {
 
-        val instance: Call_Receive_Server
-            get()
-            {
-                if (mInstance == null)
-                {
-                    mInstance = Call_Receive_Server()
-                }
-                return mInstance!!
+            if (instance == null) {
+                Log.d("Call_Receive_Server", "getIns")
+                instance = Call_Receive_Server()
             }
+            return instance!!
+        }
     }
 
     //khai báo các giá trị cần thiết
@@ -55,57 +55,97 @@ class Call_Receive_Server : AppCompatActivity()
     var hmap : HashMap<Int,String>?= HashMap()
     var stnumber:Int?= 0
 
-    //Hàm khởi tạo chính
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_select_phonenumber)
-
-        try
-        {
-        }
-        catch(e: URISyntaxException)
-        {
-            Log.d("Loi dia chi","Loi")
-        }
-        /* btn_login.setOnClickListener()
-         {
-             var inten= Intent(this, Login::class.java)
-             startActivity(inten)
-         }*/
-    }
     fun Sevecie()
     {
         mSocket=IO.socket(AllValue.address.toString())
         mSocket!!.connect()
+
         mSocket!!.on("RES_MSG",onNewMessage)
         mSocket!!.on("error",systemError)
-
-        /* {
-            //here i change options
-            socket = io.connect(host, options);
-        });*/
-
+        mSocket!!.on("disconnect",onDisconnect)
+        mSocket!!.on("connect",onConnect)
 
     }
+
+    //Sự kiện on về
+    var onNewMessage  =
+            object : Emitter.Listener {
+                override fun call(vararg args: Any) {
+                    var json: JSONObject = args[0] as JSONObject
+                    thread{
+                        var x: Service_Response
+                        Log.d("Call_Receive_Server","onNewMessage result: "+json.toString())
+                        x= readJson(json)
+                        var message: MessageEvent = MessageEvent()
+                        var tm:Int?= x.getClientSeq()
+                        var ttt:String = instance!!.hmap!![tm!!].toString()
+                        message.setTemp(ttt)
+                        message.setService(x)
+                        //truyền data đi
+                        EventBus.getDefault().post(message)
+                    }
+                }
+            }
+    var onConnect  =
+            object : Emitter.Listener {
+                override fun call(vararg args: Any) {
+                    thread{
+                        Log.d("onConnect","onConnect")
+                        var connect: MessageEvent = MessageEvent()
+
+                        connect.setTemp(AllValue.connect!!)
+                        //truyền data đi
+                        EventBus.getDefault().post(connect)
+                    }
+                }
+            }
+    //connect fail
     var systemError  =
             object : Emitter.Listener {
                 override fun call(vararg args: Any) {
                     // var json: JSONObject = args[0] as JSONObject
-                    runOnUiThread(Runnable
-                    {
+                    thread {
+                        Log.d("SystemError","SystemError")
                         mSocket=IO.socket(AllValue.address.toString())
                         //call server
                         mSocket!!.connect()
-                        Log.d("ádfasd","ádfasdf")
-                        Call_Receive_Server.instance.Sevecie()
-                    })
+                        Call_Receive_Server.getIns()!!.Sevecie()
+                       /* var error: MessageEvent = MessageEvent()
+                        error.setTemp(AllValue.disconnect!!)
+                        //error.setService(x)
+                        EventBus.getDefault().post(error)*/
+
+                    }
                 }
             }
+
+    //disconnect
+    var onDisconnect  =
+            object : Emitter.Listener {
+                override fun call(vararg args: Any) {
+                    // var json: JSONObject = args[0] as JSONObject
+                    thread {
+                        Log.d("Disconnect","Disconnect")
+                        mSocket=IO.socket(AllValue.address.toString())
+                        //call server
+                        mSocket!!.connect()
+                        Call_Receive_Server.getIns()!!.Sevecie()
+                        var error: MessageEvent = MessageEvent()
+                        error.setTemp(AllValue.disconnect!!)
+                        //error.setService(x)
+                        EventBus.getDefault().post(error)
+
+                    }
+                }
+            }
+
+
     // hàm gọi emit dùng chung
     fun CallEmit(workerName:String,serviceName:String,input:Array<String>,key:String)
     {
+        Log.d("Call_Receive_Server","CallEmit")
         //map 1 key String với 1 số Int
-        instance.stnumber = instance.stnumber!! + 1
+        instance!!.stnumber = instance!!.stnumber!! + 1
         hmap!!.put(stnumber!!,key)
         this.hmap=hmap
 
@@ -117,36 +157,16 @@ class Call_Receive_Server : AppCompatActivity()
         try
         {
             writeJsonStream(output!!,temp2!!)
-            Log.d("khong loi dau",output.toString())
-            mSocket!!.emit("REQ_MSG",output)
 
+            mSocket!!.emit("REQ_MSG",output)
+            Log.d("Call_Receive_Server",output.toString())
         }
         catch (e:Exception)
         {
             Log.d("Error",e.toString())
         }
     }
-    //Sự kiện on về
-    var onNewMessage  =
-            object : Emitter.Listener {
-                override fun call(vararg args: Any) {
-                    var json: JSONObject = args[0] as JSONObject
 
-                    runOnUiThread(Runnable
-                    {
-                        var x: Service_Response
-                        Log.d("result","cmmmm"+json.toString())
-                        x= readJson(json)
-                        var message: MessageEvent = MessageEvent()
-                        var tm:Int?= x.getClientSeq()
-                        var ttt:String = instance.hmap!![tm!!].toString()
-                        message.setTemp(ttt)
-                        message.setService(x)
-                        //truyền data đi
-                        EventBus.getDefault().post(message)
-                    })
-                }
-            }
     //Add data vào trong class
     fun CallService(clientSeq:Int, workerName:String,serviceName:String,input:Array<String>): ALTMW_Protocol
     {
@@ -167,7 +187,8 @@ class Call_Receive_Server : AppCompatActivity()
         x.setBankCd("0000")
         x.setInVal(input)
         x.setTotInVal(input.size)
-        x.setAppLoginID("082c121293")
+        x.setAppLoginID(Json.AppLoginID)
+        x.setAppLoginPswd(Json.AppLoginPswd!!)
         x.setIPPrivate("192.168.0.113")
         return x
     }
@@ -206,9 +227,8 @@ class Call_Receive_Server : AppCompatActivity()
 
         jsonWriter.name("TotInVal").value(json.getTotInVal())
         jsonWriter.name("AppLoginID").value(json.getAppLoginID())
+        jsonWriter.name("AppLoginPswd").value(json.getAppLoginPswd())
         jsonWriter.name("IPPrivate").value(json.getIPPrivate())
-
-
 
         jsonWriter.endObject()// end address
     }

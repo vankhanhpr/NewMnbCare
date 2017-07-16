@@ -17,12 +17,17 @@
     <string name="reset_pass">Yêu cầu lấy lại mật khẩu</string>
     <string name="sure_pass">Bạn có chắc muốn restart mật khẩu</string>
     <string name="noticate_reset">Chúng tôi đã gửi lại mật khẩu cho bạn yêu cầu kiểm tra mail lấy mật khẩu và đăng nhập lại</string>
-    <string name="change_your_pass">Vui lòng nhập mật khẩu mới</string>
+    <string name="change_your_pass">Thay đổi mật khẩu của bạn</string>
     <string name="error_password">Mật khẩu không hợp lệ vui lòng kiểm tra lại</string>
     <string name="title_error_pass">LỖI</string>
     <string name="code_error">Đã xảy ra lỗi vui lòng kiểm tra lại</string>
     <string name="success">Xong</string>
     <string name="changepass_success">Đổi mật khẩu thành công</string>
+    <string name="oild_pass">Nhập mật khẩu cũ hoặc mã xác nhận</string>
+    <string name="new_pass">Nhập mật khẩu mới</string>
+    <string name="new_pass_again">Nhập lại mật khẩu mới</string>
+    <string name="sent_pass_again">Gửi lại mật khẩu</string>
+    <string name="import_password">Nhập mật khẩu</string>
 
     <!--sent to activity signin-->
     <string name="sentto_sign">Thông báo</string>
@@ -33,7 +38,7 @@
     <string name="mother">Mẹ</string>
     <string name="baby">Bé</string>
     <string name="group">Hội nhóm</string>
-    <string name="manger_accoumt">Quản lý tài khoản</string>
+    <string name="manger_accoumt">Tài khoản</string>
 
     <!--mom or doctor-->
     <string name="mom_or_doctor">mom</string>

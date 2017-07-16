@@ -13,23 +13,30 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.widget.LinearLayout
-import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Baby
-import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Group
-import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Account
-import com.example.vankhanhpr.vidu2.fragment_main.Fragment_Mom
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
+import android.widget.TextView
+import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
+import com.example.vankhanhpr.vidu2.fragment_main.*
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
+import com.example.vankhanhpr.vidu2.getter_setter.Json
+import com.example.vankhanhpr.vidu2.json.MessageEvent
+import com.example.vankhanhpr.vidu2.json.Service_Response
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var fragment_Mom: Fragment? = null
+    var fragment_Medical:Fragment?=null
+    var fragment_Mom: Fragment? = null
     var fragment_Baby: Fragment? = null
     var fragment_Group: Fragment? = null
     var fragment_Manager_Account: Fragment? = null
+
 
     private var fragmentManager: FragmentManager? = null
     private var fragmentTransaction: FragmentTransaction? = null
@@ -37,41 +44,44 @@ class MainActivity : AppCompatActivity() {
     var tab_medical:LinearLayout?=null
     var user_id:String?=null
     var pass:String?=null
+    var call= Call_Receive_Server.getIns()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        EventBus.getDefault().register(this)
         var bottom_navigation_main1 =findViewById(R.id.bottom_navigation_main) as BottomNavigationView
+
         disableShiftMode(bottom_navigation_main1)
 
+        //Lấy dữ liệu truyền về
         var inte: Intent = intent
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
         user_id= bundle.getString(AllValue.value)
         pass=bundle.getString(AllValue.value2)
-        Log.d("matkhau",user_id + pass)
+        Json.AppLoginPswd=pass
 
         //......lần đầu đăng nhập
         var Shared_Preferences : String = "landau"//........ ten thu muc chua
         var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
-
         //Đăng nhập một lần
-        /*var editor : SharedPreferences.Editor? = sharedpreferences.edit()
+        var editor : SharedPreferences.Editor? = sharedpreferences.edit()
         editor!!.putString("thefirst","1")//........... luu du lieu
         editor!!.putString("id",user_id!!)
         editor!!.putString("password",pass!!)
         editor!!.commit()
-*/
+
         fragment_main = findViewById(R.id.fragment_main) as LinearLayout
-        tab_medical=findViewById(R.id.tab_medical) as LinearLayout
+        //tab_medical=findViewById(R.id.tab_medical) as LinearLayout
+
 
         //add the fragment
         addFragment()
         bottom_navigation_main1.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-
                 var fragmentTransaction = fragmentManager!!.beginTransaction()
+                fragmentTransaction.hide(fragment_Medical)
                 fragmentTransaction.hide(fragment_Mom)
                 fragmentTransaction.hide(fragment_Baby)
                 fragmentTransaction.hide(fragment_Group)
@@ -81,66 +91,86 @@ class MainActivity : AppCompatActivity() {
                 {
                     R.id.mmenu1 ->
                     {
+                        fragmentTransaction!!.show(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
                         fragmentTransaction!!.hide(fragment_Manager_Account)
-                        tab_medical!!.visibility = View.VISIBLE
-                        fragment_main!!.visibility= GONE
                     }
                     R.id.mmenu2 ->
                     {
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
                         fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Mom)
-                        tab_medical!!.visibility = View.GONE
-                        fragment_main!!.visibility= View.VISIBLE
-
                     }
                     R.id.mmenu3 ->
                     {
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
                         fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Baby)
-                        tab_medical!!.visibility = View.GONE
-                        fragment_main!!.visibility= View.VISIBLE
                     }
                     R.id.mmenu4 ->
                     {
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
                         fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Group)
-                        tab_medical!!.visibility = View.GONE
-                        fragment_main!!.visibility= View.VISIBLE
                     }
                     R.id.mmenu5 ->
                     {
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
                         fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Manager_Account)
-                        tab_medical!!.visibility = View.GONE
-                        fragment_main!!.visibility= View.VISIBLE
                     }
                 }
                 true
                 fragmentTransaction!!.addToBackStack(null).commit()
-                /*fragmentTransaction!!.commit()*/
                 return true
             }
         })
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: MessageEvent) {
+        var serve: Service_Response = event.getService()!!
+        if (event.getTemp() == AllValue.disconnect) {
+            var  disconnect = findViewById(R.id.disconnect) as TextView
+            disconnect.visibility= View.VISIBLE
+        }
+        if (event.getTemp() == AllValue.connect) {
+            var  disconnect = findViewById(R.id.disconnect) as TextView
+            disconnect.visibility= View.GONE
+        }
+    }
+
+    //back system
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val count = fragmentManager!!.backStackEntryCount
+
+        if (count == 0) {
+            super.onBackPressed()
+            //additional code
+        } else {
+            fragmentManager!!.popBackStack()
+        }
+    }
+
     //add fragments
     fun addFragment()
     {
+        fragment_Medical= Fragment_Medical()
         fragment_Mom= Fragment_Mom()
         fragment_Baby = Fragment_Baby()
         fragment_Group= Fragment_Group()
@@ -149,12 +179,14 @@ class MainActivity : AppCompatActivity() {
         fragmentManager =getSupportFragmentManager();
         fragmentTransaction=fragmentManager!!.beginTransaction()
 
+        fragmentTransaction!!.add(R.id.fragment_main,fragment_Medical)
         fragmentTransaction!!.add(R.id.fragment_main,fragment_Mom)
         fragmentTransaction!!.add(R.id.fragment_main,fragment_Baby)
         fragmentTransaction!!.add(R.id.fragment_main,fragment_Group)
         fragmentTransaction!!.add(R.id.fragment_main,fragment_Manager_Account)
 
 
+        fragmentTransaction!!.show(fragment_Medical)
         fragmentTransaction!!.hide(fragment_Mom)
         fragmentTransaction!!.hide(fragment_Baby)
         fragmentTransaction!!.hide(fragment_Group)

@@ -20,11 +20,11 @@ class BoolPass:AppCompatActivity()
         EventBus.getDefault().register(this)
     }
 
-    var call= Call_Receive_Server.instance
+    //var call= Call_Receive_Server.instance
     fun checkPass(id:String,oldPass:String,newPass:String):Boolean
     {
         var inval: Array<String> = arrayOf(id,oldPass,newPass)
-        call.CallEmit(AllValue.workername_change_pass,AllValue.servicename_change_pass,inval,AllValue.change_password!!)
+       // call!!.CallEmit(AllValue.workername_change_pass,AllValue.servicename_change_pass,inval,AllValue.change_password!!)
         return  false
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

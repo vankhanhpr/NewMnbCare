@@ -11,4 +11,7 @@
     <color name="colorblue2">#658FB5</color>
     <color name="colorblue3">#9C8FBD</color>
     <color name="button">#EEEEEE</color>
+    <color name="green">#03A5FA</color>
+    <color name="green2">#00FF33</color>
+    <color name="tim">#663333</color>
 </resources>

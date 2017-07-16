@@ -42,7 +42,7 @@
         android:id="@+id/btn_iport_pass_restart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nhập mật khẩu"
+        android:text="@string/import_password"
         android:textSize="15sp"
         android:background="@drawable/opaque_button"/>
 

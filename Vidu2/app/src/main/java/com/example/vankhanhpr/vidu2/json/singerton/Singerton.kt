@@ -1,37 +1,19 @@
 package com.example.vankhanhpr.vidu2.json.singerton
 
+import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
+
 /**
  * Created by VANKHANHPR on 7/4/2017.
  */
-class Singleton private constructor() {
+public object Singleton {
 
-    var string: String? = null
-
-    init
-    {
-        string = "Hello"
-    }
-
-    companion object
-    {
-        private var mInstance: Singleton? = null
-
-        val instance: Singleton
-            get()
+        /*var instance: Call_Receive_Server?= null
+        fun getID() :Call_Receive_Server
+        {
+            if (instance == null)
             {
-                if (mInstance == null)
-                {
-                    mInstance = Singleton()
-                }
-                return mInstance!!
+                instance = Call_Receive_Server()
             }
-    }
-
-//    fun getInstance(): Singleton {
-//        if (mInstance == null) {
-//            mInstance = Singleton()
-//        }
-//        return mInstance
-//    }
-
+            return instance!!
+        }*/
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -33,49 +34,58 @@ class ChangePass:AppCompatActivity()
     var dialog_success:Dialog?=null
     var tab_loading:ProgressBar?=null
     var phone:String?=null
-
+    var pass3:String?=null
+    var call=Call_Receive_Server.getIns()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
         EventBus.getDefault().register(this)
-        tab_loading= findViewById(R.id.tab_loading) as ProgressBar
+
+        tab_loading= findViewById(R.id.tab_loading_changepass) as ProgressBar
         var mCountDownTimer: CountDownTimer
+        var passOid:String?=null
         var pass1:String?=null
         var pass2:String?=null
-        var pass3:String?=null
 
-        var inte: Intent = intent
+        var dialog_restart_pass:Dialog?=null
+
+        var inte: Intent = intent//set data
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
 
         phone=bundle.getString(AllValue.value)//lấy phone
-        your_id= bundle.getString(AllValue.value2)//cái id
-        your_pass= bundle.getString(AllValue.value3)//pass
 
-        var call=Call_Receive_Server.instance
         tv_continue_changepass.setOnClickListener()
         {
             var i = 0
             tab_loading!!.visibility= View.VISIBLE
             dialog= Dialog(this)
             dialog_success= Dialog(this)
+
+            passOid= edt_oidpassword.text.toString()
             pass1= edt_newpassword.text.toString()
             pass2=edt_newpassagain.text.toString()
             if(!pass1.equals(pass2))
             {
                 dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
                 dialog!!.setContentView(R.layout.dialog_error_password)
+                dialog!!.show()
                 var btn_cancel_error_pass= dialog!!.findViewById(R.id.btn_cancel_error_pass) as Button
                 btn_cancel_error_pass.setOnClickListener()
                 {
                     dialog!!.cancel()
+
                     tab_loading!!.visibility=View.GONE
                 }
             }
             if(pass1.equals(pass2))
             {
+
                 Json.Operation="D"
+
+                your_pass=Encode().encryptString(passOid)
                 pass3= Encode().encryptString(pass1.toString())
-                var inval: Array<String> = arrayOf(your_id!!.toString(),your_pass!!.toString(),pass3.toString()!!)
+                Json.AppLoginPswd = pass3
+                var inval: Array<String> = arrayOf(Json.AppLoginID!!.toString(),your_pass!!.toString(),pass3.toString()!!)
                 call.CallEmit(AllValue.workername_change_pass,AllValue.servicename_change_pass,inval,AllValue.change_password!!.toString())
                 Json.Operation="Q"
             }
@@ -84,7 +94,7 @@ class ChangePass:AppCompatActivity()
                 override fun onTick(millisUntilFinished: Long)
                 {
                     i++
-                    Call_Receive_Server.instance.Sevecie()
+                    //Call_Receive_Server.instance.Sevecie()
                     //mProgressBar.progress = i
                     if(i==5)
                     {
@@ -102,6 +112,28 @@ class ChangePass:AppCompatActivity()
             }
             mCountDownTimer.start()
         }
+
+        tab_sent_pass_again.setOnClickListener()
+        {
+
+            dialog_restart_pass= Dialog(this)
+            dialog_restart_pass!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+            dialog_restart_pass!!.setContentView(R.layout.dialog_noticate_resetpass)
+            dialog_restart_pass!!.show()
+            var btn_iport_pass_restart =dialog_restart_pass!!.findViewById(R.id.btn_iport_pass_restart) as Button
+            btn_iport_pass_restart.setOnClickListener()
+            {
+                edt_oidpassword.setText("")
+                edt_newpassword.setText("")
+                edt_newpassagain.setText("")
+                dialog_restart_pass!!.cancel()
+            }
+            Json.Operation="E"
+            var inval1: Array<String> = arrayOf(Json.AppLoginID)
+            //restart password
+            call!!.CallEmit(AllValue.workername_change_pass,AllValue.servicename_change_pass,inval1,"anhthichtom")
+            Json.Operation="Q"
+        }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
@@ -115,11 +147,11 @@ class ChangePass:AppCompatActivity()
                 btn_success.setOnClickListener()
                 {
                     if(resources.getString(R.string.mom_or_doctor)=="mom") {
-                        sendToActivityMain(phone!!,your_pass!!, AllValue.gotomain_changepass!!)
+                        sendToActivityMain(phone!!,pass3!!, AllValue.gotomain_changepass!!)
                     }
                     else
                     {
-                        sendToActivityMain_Doctor(phone!!,your_pass!!, AllValue.gotomain_changepass!!)
+                        sendToActivityMain_Doctor(phone!!,pass3!!, AllValue.gotomain_changepass!!)
                     }
                     dialog_success!!.cancel()
                     tab_loading!!.visibility=View.GONE
@@ -129,6 +161,7 @@ class ChangePass:AppCompatActivity()
             {//đổi mật khẩu không thành công
                 dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
                 dialog!!.setContentView(R.layout.dialog_error_password)
+                dialog!!.show()
                 var btn_cancel_error_pass= dialog!!.findViewById(R.id.btn_cancel_error_pass) as Button
                 btn_cancel_error_pass.setOnClickListener()
                 {

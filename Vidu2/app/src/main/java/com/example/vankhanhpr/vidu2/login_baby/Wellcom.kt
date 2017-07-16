@@ -12,8 +12,10 @@ import com.example.vankhanhpr.vidu2.MainActivity
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
+import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
+import com.example.vankhanhpr.vidu2.json.singerton.Singleton
 import com.example.vankhanhpr.vidu2.login_doctor.Login_Doctor
 import com.example.vankhanhpr.vidu2.login_doctor.main_doctor
 import org.greenrobot.eventbus.EventBus
@@ -29,13 +31,13 @@ class Wellcom : AppCompatActivity()
 {
     var id1:String? = ""
     var pass1:String?=""
-    override fun onCreate(@Nullable savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
         EventBus.getDefault().register(this)
-        var call=Call_Receive_Server.instance
-        call.Sevecie()
+
+        var call = Call_Receive_Server.getIns()
+        call!!.Sevecie()
         //................. mom or doctor
         var mom_doctor : String = getResources().getString(R.string.mom_or_doctor)
         //............... lan dau
@@ -78,15 +80,18 @@ class Wellcom : AppCompatActivity()
                 if(id1!=null)
                 {
                     Log.d("iddd",id1+ pass1!!)
-                    var call = Call_Receive_Server.instance
+
+
+                    if(resources.getString(R.string.mom_or_doctor)=="mom") {
+                        sendToActivityMain(id1!!, pass1!!, 453)
+                    }
+                    else
+                    {
+                        sendToActivityMain_Doctor(id1!!,pass1!!,454)
+                    }
                     var inval: Array<String> = arrayOf(id1!!,pass1!!)
                     call!!.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass!!.toString())
                 }
-                /*else
-                {
-                    startActivity(Intent(this@Wellcom, Login::class.java))
-                    finish()
-                }*/
             }
         }, (secondDelay * 1000).toLong())
     }
@@ -98,18 +103,13 @@ class Wellcom : AppCompatActivity()
         {
             if(serve.getResult()=="1")
             {
-                if(resources.getString(R.string.mom_or_doctor)=="mom") {
-                    sendToActivityMain(id1!!, pass1!!, 453)
-                }
-                else
-                {
-                    sendToActivityMain_Doctor(id1!!,pass1!!,454)
-                }
+                //Tính sau
             }
             else
             {
-                startActivity(Intent(this@Wellcom, Login::class.java))
-                finish()
+                //từ từ tính 2
+                /*startActivity(Intent(this@Wellcom, Login::class.java))
+                finish()*/
             }
         }
     }

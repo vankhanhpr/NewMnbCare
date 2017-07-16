@@ -47,11 +47,13 @@ class Login_Commercial : AppCompatActivity(),GestureDetector.OnGestureListener {
             if(mom_doctor == "mom"){
                 var intent = Intent(this, Login::class.java)
                 startActivity(intent)
+                finish()
             }
             else if(mom_doctor == "doctor") {
                 //............login doctor
                 var intent = Intent(this, Login_Doctor::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }

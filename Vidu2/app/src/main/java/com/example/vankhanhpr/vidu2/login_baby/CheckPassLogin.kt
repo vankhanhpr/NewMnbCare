@@ -46,9 +46,9 @@ class CheckPassLogin:AppCompatActivity()
     var tab_loading1: ProgressBar? = null
     var dialog:Dialog?=null
     var dialog_agree:Dialog?=null
-    var dialog_error:Dialog?=null
+    var dialog_error0:Dialog?=null
 
-    var call= Call_Receive_Server.instance
+    var call= Call_Receive_Server.getIns()
     var pass2:String?=""
 
 
@@ -70,8 +70,9 @@ class CheckPassLogin:AppCompatActivity()
         {
             btn_continue.setOnClickListener()//tiến hành đăng nhập
             {
+                key_lock=0
 
-                dialog_error= Dialog(this)
+                dialog_error0= Dialog(this)
 
                 tab_loading1 = findViewById(R.id.tab_loading) as ProgressBar
                 tab_loading1!!.visibility= View.VISIBLE
@@ -82,15 +83,15 @@ class CheckPassLogin:AppCompatActivity()
                 pass2 = Encode().encryptString(pass)
                 var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
 
-                var call = Call_Receive_Server.instance
-                call!!.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass!!.toString())
+
+                call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass!!.toString())
 
                 mCountDownTimer = object : CountDownTimer(5000, 1000)
                 {
                     override fun onTick(millisUntilFinished: Long)
                     {
                         i++
-                        Call_Receive_Server.instance.Sevecie()
+                        //call.Sevecie()
                         //mProgressBar.progress = i
                         if(i==5)
                         {
@@ -112,8 +113,8 @@ class CheckPassLogin:AppCompatActivity()
             tv_return_selectphone.setOnClickListener()
             {
                 key_lock=0
-                var inten4=Intent(applicationContext,Login_Doctor::class.java)
-                startActivity(inten4)
+                var inten9=Intent(applicationContext,Login_Doctor::class.java)
+                startActivity(inten9)
                 finish()
             }
             tv_forget_pass.setOnClickListener()
@@ -164,7 +165,7 @@ class CheckPassLogin:AppCompatActivity()
         //tiến hành đăng nhập
         btn_continue.setOnClickListener()//tiến hành đăng nhập
         {
-            dialog_error= Dialog(this)
+            dialog_error0 = Dialog(this)
             tab_loading1 = findViewById(R.id.tab_loading) as ProgressBar
             tab_loading1!!.visibility= View.VISIBLE
 
@@ -173,17 +174,16 @@ class CheckPassLogin:AppCompatActivity()
 
             pass = edt_passlogin.text.toString()
             pass2 = Encode().encryptString(pass)
+            Log.d("passchinh",pass+" "+pass2)
             var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
-
-            var call = Call_Receive_Server.instance
-            call!!.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass!!.toString())
+            call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass1!!.toString())
 
             mCountDownTimer = object : CountDownTimer(5000, 1000)
             {
                 override fun onTick(millisUntilFinished: Long)
                 {
                     i++
-                    Call_Receive_Server.instance.Sevecie()
+                    //Call_Receive_Server.getIns()!!.Sevecie()
                     //mProgressBar.progress = i
                     if(i==5)
                     {
@@ -205,10 +205,11 @@ class CheckPassLogin:AppCompatActivity()
         tv_return_selectphone.setOnClickListener()
         {
             key_lock=0
-            var inten4=Intent(applicationContext,Login::class.java)
-            startActivity(inten4)
+            var inten9=Intent(applicationContext,Login::class.java)
+            startActivity(inten9)
             finish()
         }
+
         //QUên mật khẩu
         tv_forget_pass.setOnClickListener()
         {
@@ -217,8 +218,6 @@ class CheckPassLogin:AppCompatActivity()
             dialog_agree=Dialog(this)
             //lấy id của hệ thống
             var array:Array<String>?= arrayOf(phone.toString())
-            call.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId.toString())
-
             dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
             dialog_agree!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
 
@@ -235,11 +234,10 @@ class CheckPassLogin:AppCompatActivity()
             }
             btn_agree_dialogres.setOnClickListener()
             {
-
-
                 Json.Operation="E"
-                var inval1: Array<String> = arrayOf(valu.getSecC0()!!.toString())
-                call.CallEmit(AllValue.workername_restartpass,AllValue.servicename_restartpass,inval1,AllValue.restart_passwork!!.toString())
+                var inval1: Array<String> = arrayOf(Json.AppLoginID)
+                //restart password
+                call!!.CallEmit(AllValue.workername_sendcode,AllValue.servicename_sendcode,inval1,AllValue.restart_passwork!!.toString())
                 Json.Operation="Q"
                 dialog_agree!!.show()
                 dialog!!.cancel()
@@ -247,8 +245,8 @@ class CheckPassLogin:AppCompatActivity()
                 btn_iport_pass_restart.setOnClickListener()
                 {
                     key_lock=1
+                    sendToActivityChangePass(phone!!,348)
                     dialog_agree!!.cancel()
-
                 }
             }
         }
@@ -257,52 +255,40 @@ class CheckPassLogin:AppCompatActivity()
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
         var  serve:Service_Response = event.getService()!!
-        if(event.getTemp()==AllValue.checkpass.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
+        if(event.getTemp()==AllValue.checkpass1.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
             if(serve.getResult()=="1")
             {
                 var json_user: JSONObject = event.getService()!!.getData()!!
+                Json.AppLoginPswd=pass2
                 if(getResources().getString(R.string.mom_or_doctor) == "mom")
                 {//đến giao diện của mẹ và bé
-                    if(key_lock==0) {
-                        Log.d("phone2",phone)
-                        sendToActivityMain(phone!!,pass2!!, AllValue.gotomain!!)
-                    }
-                    else{
-                        var s=Encode().encryptString(pass.toString())
-                        key_lock=0
-                        sendToActivityChangePass(phone!!,valu.getSecC0()!!.toString(),s,AllValue.gotomain_changepass!!)
-                    }
+
+                    sendToActivityMain(phone!!,pass2!!, AllValue.gotomain!!)
                 }
                 if(getResources().getString(R.string.mom_or_doctor) == "doctor")
                 {//đến giao diện của bác sĩ
-
-                    if(key_lock==0) {
-                        sendToActivityMain_Doctor(phone!!,pass2!!, AllValue.gotomain!!)
-                    }
-                    else
-                    {
-                        key_lock=0
-                        var s=Encode().encryptString(pass.toString())
-                        sendToActivityChangePass(phone!!,valu.getSecC0()!!.toString(),s,AllValue.gotomain_changepass!!)
-                    }
+                    sendToActivityMain_Doctor(phone!!,pass2!!, AllValue.gotomain!!)
                 }
             }
-            else{
-                if(serve.getResult()=="0")
-                {
-                    dialog_error!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
-                    dialog_error!!.setContentView(R.layout.dialog_impot_code)
-                    dialog_error!!.show()
-                    var tv_set_import_code= dialog_error!!.findViewById(R.id.tv_set_import_code) as TextView
-                    var btn_cancel_import_code= dialog_error!!.findViewById(R.id.btn_cancel_import_code) as Button
-                    tv_set_import_code.setText(resources.getText(R.string.error_password))
-                    btn_cancel_import_code.setOnClickListener()
+            if(serve.getResult()=="0")
+            {
+                try {
+                    var json_user2: JSONObject = event.getService()!!.getData()!!
+                    dialog_error0!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+                    dialog_error0!!.setContentView(R.layout.dialog_impot_code)
+                    dialog_error0!!.show()
+                    var tv_set_import_codea = dialog_error0!!.findViewById(R.id.tv_set_import_code) as TextView
+                    var btn_cancel_import_codea = dialog_error0!!.findViewById(R.id.btn_cancel_import_code) as Button
+                    tv_set_import_codea.setText(resources.getText(R.string.error_password))
+                    btn_cancel_import_codea.setOnClickListener()
                     {
-                        dialog_error!!.cancel()
+                        dialog_error0!!.cancel()
                     }
-                    tab_loading1!!.visibility= View.GONE
+
+                    tab_loading1!!.visibility = View.GONE
                 }
+                catch (e:Exception){}
             }
         }
         if(event.getTemp()==AllValue.getId.toString())
@@ -310,8 +296,7 @@ class CheckPassLogin:AppCompatActivity()
             var json_getid= serve.getData()
             valu = readJson1(json_getid!!)
         }
-
-        if(event.getTemp()==AllValue.checpass_getpass.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
+       /* if(event.getTemp()==AllValue.checpass_getpass.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
             if(serve.getResult()=="1")
             {
@@ -323,9 +308,8 @@ class CheckPassLogin:AppCompatActivity()
                 {
                     Toast.makeText(applicationContext,"Mật khẩu không đúng hoặc đã xảy ra lỗi",Toast.LENGTH_SHORT).show()
                 }
-
             }
-        }
+        }*/
     }
     //Mở màn hình chính
     fun sendToActivityMain(value:String,value2:String,resultcode:Int) {
@@ -354,13 +338,11 @@ class CheckPassLogin:AppCompatActivity()
     }
 
     //go to class change pass
-    fun sendToActivityChangePass(value: String,value2:String,value3:String,resultcode:Int) {
+    fun sendToActivityChangePass(value: String,resultcode:Int) {
 
         var intent3 = Intent(applicationContext, ChangePass::class.java)
         var bundle = Bundle()
-        bundle.putString(AllValue.value, value)
-        bundle.putString(AllValue.value2,value2)
-        bundle.putString(AllValue.value3,value3)
+        bundle.putString(AllValue.value,value)
         intent3.putExtra(AllValue.key_bundle, bundle)
         startActivityForResult(intent3,resultcode!!)
         finish()
