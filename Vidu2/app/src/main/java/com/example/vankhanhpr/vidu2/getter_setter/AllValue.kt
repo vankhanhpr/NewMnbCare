@@ -61,8 +61,9 @@ object  AllValue
     //signin success
     var workername_get_customer="ALTqMNB"
     var servicename_get_customer="ALTqMNB_0101_2"
-
-
+    //get schedule customer
+    var workername_getschedule_cus="ALTqMNB"
+    var servicename_getschedule_cus="ALTqMNB_0103_1"
 
 
     //nơi chứa các hàm gọi
@@ -70,6 +71,7 @@ object  AllValue
     var checknumber:String?= "isNumber"
     var checkpass:String?= "isPass"
     var checkpass1:String?= "isPass1"
+    var checkpass_disconnect:String?="CheckPass_Disconnet"
 
 
     var checpass_getpass:String?="isPassGetPass"
@@ -81,7 +83,9 @@ object  AllValue
     var connect:String?="connect"
 
     var getId:String?="getID"
-    var getId_Main:String?="getID"
+    var getId_Main:String?="getID2"
+    var getId_Signin:String?="getId_Signin"
+
     var restart_passwork:String?="restart_Pass"
     var change_password:String?="changePass"
     var checkid:String?= "isId"
@@ -89,5 +93,6 @@ object  AllValue
     var insetCustomer:String?="insertCustomer"
     var restartPassAgain:String?="restartPassAgain"
     var get_info_customer:String?="getCustomer"
+    var get_schedule_custommer:String?="getSchedule_Cus"//lấy danh sách lịch khám của khách hàng
 
 }

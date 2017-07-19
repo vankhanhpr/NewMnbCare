@@ -25,7 +25,7 @@ class Fragment_Account :Fragment()
         var tab_changepass1 = k.findViewById(R.id.tab_changepass)
 
         var inval: Array<String> = arrayOf(Json.AppLoginID)
-        call.CallEmit(AllValue.workername_get_customer, AllValue.workername_get_customer,inval, AllValue.get_info_customer!!)
+        //call.CallEmit(AllValue.workername_get_customer, AllValue.workername_get_customer,inval, AllValue.get_info_customer!!)
 
         //change password
         tab_changepass1.setOnClickListener()

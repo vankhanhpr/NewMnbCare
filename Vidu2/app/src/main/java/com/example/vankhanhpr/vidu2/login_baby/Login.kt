@@ -8,9 +8,6 @@ import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.Toast
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
@@ -24,7 +21,7 @@ import org.json.JSONObject
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.EditText
+import android.widget.*
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import java.util.Collections.replaceAll
 
@@ -42,16 +39,17 @@ class  Login: AppCompatActivity() {
     var phone:String?=""
     var progress_seclectphone1:ProgressBar? = null
     var dialog:Dialog?=null
+    var dialog_disconnect:Dialog?=null
 
     var call= Call_Receive_Server.getIns()
     var f:Boolean?=true
     var number:String?=""
-
+    var mCountDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_phonenumber)
         EventBus.getDefault().register(this)
-        var mCountDownTimer: CountDownTimer
+
 
         progress_seclectphone1= findViewById(R.id.progress_seclectphone) as ProgressBar
         var edit_text= findViewById(R.id.editText_phone) as EditText
@@ -64,14 +62,13 @@ class  Login: AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 var text = edit_text.getText().toString()
                 edit_text.setTextColor(resources.getColor(R.color.dark))
-
                 if(f!! && text!!.length>3) {
                     if(text.substring(0,1)!="+")
                     {
                         phone=text
                     }
                     number=text
-                    if (number!!.substring(1, 2) == "9")
+                    if (number!!.substring(1, 2) == "9" || number!!.substring(1, 2) == "8")
                     {
                         if (number!!.length == 10)
                         {
@@ -103,7 +100,7 @@ class  Login: AppCompatActivity() {
                     //Log.d("chuoi",phone)
                     if (!f!!) {
                         f=true
-                        if (number!!.substring(4, 5) == "9") {
+                        if (number!!.substring(4, 5) == "9"|| number!!.substring(4, 5) == "8") {
                             var x = text.substring(4, 7)
                             var x1 = text.substring(8, 11)
                             var x2 = text.substring(12)
@@ -132,58 +129,87 @@ class  Login: AppCompatActivity() {
         //setCall(call_Return!!)
         tv_login_selectphone.setOnClickListener()
         {
-            progress_seclectphone1!!.visibility=View.VISIBLE
-            dialog= Dialog(this)
-            //phone =editText_phone.text.toString()
-            //tạo key
-            //call.Sevecie()
-            var inval: Array<String> = arrayOf(AllValue.isBaby!!.toString(),phone.toString())
-            call!!.CallEmit(AllValue.workername_checknumber!!.toString(),AllValue.servicename_checknumber!!.toString(), inval, AllValue.checknumber.toString())
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
 
-            mCountDownTimer = object : CountDownTimer(5000, 1000)
+            if(!boolPhone(phone!!))
             {
-                var i=0
-                override fun onTick(millisUntilFinished: Long)
+                dialog_disconnect!!.show()
+                tv_cancel.setText(resources.getString(R.string.phone_error))
+                button_cancel.setOnClickListener()
                 {
-                    i++
-                   // Call_Receive_Server.instance.Sevecie()
-                    //mProgressBar.progress = i
-                    if(i==5)
-                    {
-                        progress_seclectphone1!!.visibility = View.GONE
-                    }
-                }
-                override fun onFinish()
-                {
-                    //Do what you want
-                    i++
-                    if(i==5) {
-                        progress_seclectphone1!!.visibility = View.GONE
-                    }
+                    dialog_disconnect!!.cancel()
                 }
             }
-            mCountDownTimer.start()
+            else {
+                progress_seclectphone1!!.visibility = View.VISIBLE
+                dialog = Dialog(this)
+
+                var inval: Array<String> = arrayOf(AllValue.isBaby!!.toString(), phone.toString())
+                call!!.CallEmit(AllValue.workername_checknumber!!.toString(), AllValue.servicename_checknumber!!.toString(), inval, AllValue.checknumber.toString())
+                mCountDownTimer = object : CountDownTimer(15000, 1000) {
+                    var i = 0
+                    override fun onTick(millisUntilFinished: Long) {
+                        i++
+                        Call_Receive_Server.getIns().Sevecie()
+                        if (i == 5) {
+
+                            for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                                Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                            }
+                        }
+                        //mProgressBar.progress = i
+                        if (i == 15) {
+                            Call_Receive_Server.getIns().Sevecie()
+                            progress_seclectphone1!!.visibility = View.GONE
+                        }
+                    }
+
+                    override fun onFinish() {
+                        //Do what you want
+                        i++
+                        /*if(i==15)
+                    {*/
+                        try {
+                            dialog_disconnect!!.show()
+                            tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                            button_cancel.setOnClickListener()
+                            {
+                                dialog_disconnect!!.cancel()
+                            }
+                            progress_seclectphone1!!.visibility = View.GONE
+                        } catch (e: Exception) {
+                        }
+                        /*}*/
+                    }
+                }
+                mCountDownTimer!!.start()
+            }
         }
     }
-
     //Nhận kết quả trả về khi login
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
 
         if(event.getTemp()==AllValue.checknumber.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
-            var json:JSONObject?= event.getService()!!.getData() as JSONObject
+            var json:ArrayList<JSONObject>?= event.getService()!!.getData()
 
             var isnum:IsNumber?= readJson1(json!!)//đọc json thành class
             if(isnum!!.C0=="Y")
             {
                 var array:Array<String>?= arrayOf(phone.toString())
                 call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
+                mCountDownTimer!!.cancel()
                 sendToActivityLogin(phone!!,AllValue.login!!)
             }
             else
             {
                 try {
+                    mCountDownTimer!!.cancel()
                     progress_seclectphone1!!.visibility = View.GONE
                     dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                     dialog!!.setContentView(R.layout.dialog_sentto_signin)
@@ -235,12 +261,27 @@ class  Login: AppCompatActivity() {
     }
 
     // Đọc file Json để lấy kết quả
-    fun readJson1(json1: JSONObject): IsNumber
+    fun readJson1(json1: ArrayList<JSONObject>): IsNumber
     {
-        var c0: String? =json1.getString("c0")
+        var jsonO: JSONObject?=null
+        if(json1.size>0) {
+            jsonO = json1[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
         var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1
+    }
+
+    //Kiểm tra số điện thoại
+    fun boolPhone(phone2:String):Boolean {
+        if (phone2.length == 10 && (phone2.substring(1,2) == "9" || phone2.substring(1,2) == "8" )) {
+            return true
+        }
+        if (phone2.length == 11 && phone2.substring(1,2) == "1") {
+            return true
+        }
+        return  false
     }
 
 }

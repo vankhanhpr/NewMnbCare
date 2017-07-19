@@ -2,10 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tim">
-
-    <TextView
+    android:orientation="vertical"
+    android:weightSum="10">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MEDIACAL"/>
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="9">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/brown">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dip"
+                android:text="@string/tatle_medical"
+                android:gravity="center"
+                android:textColor="@color/green2"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tab_lv_medical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            >
+            <ListView
+                android:id="@+id/id_medical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tab_error_medical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Không có dữ liệu"
+                android:textSize="@dimen/text_size_big"
+                android:paddingBottom="30dip"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:saveEnabled="true"
+                android:scaleType="center"
+                android:background="@drawable/icon_no_data"/>
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

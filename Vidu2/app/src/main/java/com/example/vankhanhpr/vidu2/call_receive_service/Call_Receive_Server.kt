@@ -2,12 +2,10 @@ package com.example.vankhanhpr.vidu2.call_receive_service
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.JsonWriter
 import android.util.Log
-import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
+import com.example.vankhanhpr.vidu2.getter_setter.Hasmap
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.ALTMW_Protocol
 import com.example.vankhanhpr.vidu2.json.MessageEvent
@@ -17,12 +15,12 @@ import com.github.nkzawa.socketio.client.Socket
 import com.github.nkzawa.socketio.client.IO;
 
 import org.greenrobot.eventbus.EventBus
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.StringWriter
 import java.io.Writer
 
-import java.net.URISyntaxException
 import kotlin.concurrent.thread
 
 
@@ -45,7 +43,6 @@ class Call_Receive_Server private constructor()
             return instance!!
         }
     }
-
     //khai báo các giá trị cần thiết
     /*var mSocket: Socket?= null*/
     var mSocket: Socket? = IO.socket(AllValue.address.toString())
@@ -53,20 +50,25 @@ class Call_Receive_Server private constructor()
     var output : StringWriter?=null
     var temp2: ALTMW_Protocol?= null
     var hmap : HashMap<Int,String>?= HashMap()
+
     var stnumber:Int?= 0
+    var hasmap:ArrayList<Hasmap>?= ArrayList()
+    var f:Boolean=true
 
     fun Sevecie()
     {
+        Log.d("connect","Connect")
         mSocket=IO.socket(AllValue.address.toString())
         mSocket!!.connect()
-
+    }
+    fun ListenEvent()
+    {
         mSocket!!.on("RES_MSG",onNewMessage)
         mSocket!!.on("error",systemError)
-        mSocket!!.on("disconnect",onDisconnect)
+
         mSocket!!.on("connect",onConnect)
-
+        mSocket!!.on("disconnect",onDisconnect)
     }
-
     //Sự kiện on về
     var onNewMessage  =
             object : Emitter.Listener {
@@ -78,8 +80,18 @@ class Call_Receive_Server private constructor()
                         x= readJson(json)
                         var message: MessageEvent = MessageEvent()
                         var tm:Int?= x.getClientSeq()
-                        var ttt:String = instance!!.hmap!![tm!!].toString()
-                        message.setTemp(ttt)
+                        var ttt:String?=null
+
+                        for (i in 0..getIns().hasmap!!.size-1)
+                        {
+                            if(getIns().hasmap!![i].getKeySystem()== tm.toString())
+                            {
+                                Log.d("hass",hasmap!!.size!!.toString()+" "+ getIns().hasmap!![i].getKeyString()+x.getMessage())
+                                ttt= getIns().hasmap!![i].getKeyString()
+                                getIns().hasmap!![i].setStatus(0)
+                            }
+                        }
+                        message.setTemp(ttt!!)
                         message.setService(x)
                         //truyền data đi
                         EventBus.getDefault().post(message)
@@ -90,9 +102,9 @@ class Call_Receive_Server private constructor()
             object : Emitter.Listener {
                 override fun call(vararg args: Any) {
                     thread{
+                        f=true
                         Log.d("onConnect","onConnect")
                         var connect: MessageEvent = MessageEvent()
-
                         connect.setTemp(AllValue.connect!!)
                         //truyền data đi
                         EventBus.getDefault().post(connect)
@@ -106,19 +118,10 @@ class Call_Receive_Server private constructor()
                     // var json: JSONObject = args[0] as JSONObject
                     thread {
                         Log.d("SystemError","SystemError")
-                        mSocket=IO.socket(AllValue.address.toString())
-                        //call server
-                        mSocket!!.connect()
                         Call_Receive_Server.getIns()!!.Sevecie()
-                       /* var error: MessageEvent = MessageEvent()
-                        error.setTemp(AllValue.disconnect!!)
-                        //error.setService(x)
-                        EventBus.getDefault().post(error)*/
-
                     }
                 }
             }
-
     //disconnect
     var onDisconnect  =
             object : Emitter.Listener {
@@ -126,28 +129,49 @@ class Call_Receive_Server private constructor()
                     // var json: JSONObject = args[0] as JSONObject
                     thread {
                         Log.d("Disconnect","Disconnect")
-                        mSocket=IO.socket(AllValue.address.toString())
-                        //call server
-                        mSocket!!.connect()
-                        Call_Receive_Server.getIns()!!.Sevecie()
                         var error: MessageEvent = MessageEvent()
                         error.setTemp(AllValue.disconnect!!)
-                        //error.setService(x)
                         EventBus.getDefault().post(error)
-
+                        if(getIns().hasmap!!.size > 0) {
+                            for (i in 0..getIns().hasmap!!.size-1)
+                            {
+                                hasmap!![i].setStatus(0)
+                            }
+                        }
                     }
                 }
             }
-
-
     // hàm gọi emit dùng chung
     fun CallEmit(workerName:String,serviceName:String,input:Array<String>,key:String)
     {
-        Log.d("Call_Receive_Server","CallEmit")
+        if(getIns().hasmap!!.size > 0)
+        {
+            for (i in 0..getIns().hasmap!!.size-1)
+            {
+                if(getIns().hasmap!![i].getKeyString()==key && getIns().hasmap!![i].getStatus()==1)
+                {
+                    Log.d("hass","Da gui mot lan vui long cho")
+                   return
+                }
+            }
+        }
         //map 1 key String với 1 số Int
-        instance!!.stnumber = instance!!.stnumber!! + 1
-        hmap!!.put(stnumber!!,key)
-        this.hmap=hmap
+        getIns().stnumber = getIns().stnumber!! + 1
+       // hmap!!.put(stnumber!!,key)
+        //this.hmap=hmap
+        var hasmap= getIns().hasmap
+
+        var tem:Hasmap= Hasmap()
+
+
+        tem.setKeySystem(getIns().stnumber!!.toString())
+        tem.setKeyString(key)
+        tem.setStatus(1)
+        Log.d("Call_Receive_Server",tem.getKeyString()+tem.getKeySystem()+tem.getStatus())
+        hasmap!!.add(tem)
+        /*hasmap!![stnumber!!].setKeySystem(stnumber!!.toString())
+        hasmap!![stnumber!!].setKeyString(key)
+        hasmap!![stnumber!!].setStatus(1)*/
 
         //khai bái cái biến json
         output=null
@@ -157,7 +181,6 @@ class Call_Receive_Server private constructor()
         try
         {
             writeJsonStream(output!!,temp2!!)
-
             mSocket!!.emit("REQ_MSG",output)
             Log.d("Call_Receive_Server",output.toString())
         }
@@ -192,7 +215,6 @@ class Call_Receive_Server private constructor()
         x.setIPPrivate("192.168.0.113")
         return x
     }
-
     //đọc file class thành file Json
     @Throws(IOException::class)
     public fun writeJsonStream(output1: Writer, json: ALTMW_Protocol)
@@ -241,15 +263,18 @@ class Call_Receive_Server private constructor()
 
         //jsonArray
         var jsonOj:String?= json.getString("Data")
-        var s :String? ="{c0:N}"
-        if(jsonOj!!.length>2) {
-            s = jsonOj!!.substring(1, jsonOj!!.length - 1)
+        var s:String ="{c0:N}"
+        var js2 = JSONObject(s)
+        var list2:ArrayList<JSONObject> = ArrayList()
+        list2.add(js2)
+        if(jsonOj!="") {
+            var js2 = JSONArray(jsonOj)
+            list2.clear()
+            for (i in 0..js2!!.length() - 1)
+            {
+                list2.add(js2.getJSONObject(i))
+            }
         }
-        Log.d("aaaaa",s.toString())
-
-        var obj = JSONObject(s) as JSONObject
-
-
         var Code :String? =json.getString("Code")
         var Message:String? =json.getString("Message")
         var Result :String? =json.getString("Result")
@@ -259,9 +284,7 @@ class Call_Receive_Server private constructor()
         ser.setTransId(TransId!!)
         ser.setClientSeq(ClientSeq!!)
         ser.setPacket(Packet!!)
-
-        ser.setData(obj)
-
+        ser.setData(list2)
         ser.setCode(Code!!)
         ser.setMessage(Message!!)
         ser.setResult(Result!!)

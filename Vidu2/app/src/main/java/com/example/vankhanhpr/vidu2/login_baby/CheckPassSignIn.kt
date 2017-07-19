@@ -36,10 +36,10 @@ class  CheckPassSignIn:AppCompatActivity()
     var pass3:String?=null
     var phone:String?="999999"
     var dialog6:Dialog?=null
-
+    var dialog_disconnect:Dialog?=null
     var progreee_signin1:ProgressBar?=null
     var call = Call_Receive_Server.getIns()
-
+    var mCountDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
@@ -57,11 +57,14 @@ class  CheckPassSignIn:AppCompatActivity()
             dialog6 =Dialog(this)
             pass1=edt_password.text.toString()
             pass2=edt_passagain.text.toString()
-
-            var mCountDownTimer: CountDownTimer
             progreee_signin1!!.visibility= View.VISIBLE
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
 
-            if (!pass1.equals(pass2))
+            if (!pass1.equals(pass2!!) || pass1!!.length<6 || pass1!!.length>20)
             {
                 progreee_signin1!!.visibility= View.GONE
                 var dialog2=Dialog(this)
@@ -74,35 +77,42 @@ class  CheckPassSignIn:AppCompatActivity()
                 }
                 dialog2.show()
             }
-            else
-            {
-                if (pass1.equals(pass2))
-                {
+            else {
+                if (pass1.equals(pass2)) {
                     pass3= Encode().encryptString(pass2.toString())
                     boolPass(pass3!!)
-                    mCountDownTimer = object : CountDownTimer(5000, 1000)
-                    {
-                        var i=0
-                        override fun onTick(millisUntilFinished: Long)
-                        {
+                    mCountDownTimer = object : CountDownTimer(15000, 1000) {
+                        var i = 0
+                        override fun onTick(millisUntilFinished: Long) {
                             i++
-                           // Call_Receive_Server.instance.Sevecie()
+                            Call_Receive_Server.getIns().Sevecie()
+                            if (i == 5) {
+                                for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                                    Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                                }
+                            }
                             //mProgressBar.progress = i
-                            if(i==5)
-                            {
+                            if (i == 15) {
+                                Call_Receive_Server.getIns().Sevecie()
                                 progreee_signin1!!.visibility = View.GONE
                             }
                         }
-                        override fun onFinish()
-                        {
+                        override fun onFinish() {
                             //Do what you want
                             i++
-                            if(i==5) {
+                            try {
+                                dialog_disconnect!!.show()
+                                tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                                button_cancel.setOnClickListener()
+                                {
+                                    dialog_disconnect!!.cancel()
+                                }
                                 progreee_signin1!!.visibility = View.GONE
+                            } catch (e: Exception) {
                             }
                         }
                     }
-                    mCountDownTimer.start()
+                    mCountDownTimer!!.start()
                 }
             }
         }
@@ -117,28 +127,22 @@ class  CheckPassSignIn:AppCompatActivity()
     //nhan ket qua tra ve khi kiem tra mat khau
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
-        if(event.getTemp()==AllValue.check_Pass)
-        {
+        if(event.getTemp()==AllValue.check_Pass) {
+            dialog_disconnect!!.cancel()
+            mCountDownTimer!!.cancel()
             var value_return:IsNumber= IsNumber()
-            var json:JSONObject= event.getService()!!.getData() as JSONObject
+            var json:ArrayList<JSONObject> = event.getService()!!.getData()!!
             value_return= readJson1(json)
-
-
             if(value_return.getSecC0()=="Y")
             {
-
                 progreee_signin1!!.visibility=View.GONE
-
                 dialog6!!.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog6!!.setContentView(R.layout.dialog_confirm_phone)
                 var tv_dialog_signin= dialog6!!.findViewById(R.id.tv_dialog_signin) as TextView
                 var tv_cancel= dialog6!!.findViewById(R.id.tv_cancel) as TextView
                 var tv_agree= dialog6!!.findViewById(R.id.tv_agree) as TextView
                 dialog6!!.show()
-
                 tv_dialog_signin.setText("Chúc tối sẽ gửi mã xác nhận đến số điện thoại "+ phone.toString()+" để kích hoạt tài khoản của bạn")
-
-
                 tv_cancel.setOnClickListener()//không đồng ý gửi mã xác thực
                 {
                     dialog6!!.cancel()
@@ -149,8 +153,6 @@ class  CheckPassSignIn:AppCompatActivity()
                     var inval2: Array<String> = arrayOf(phone.toString())
                     Json.Operation="U"
                     call.CallEmit(AllValue.workername_sendcode!!.toString(), AllValue.servicename_sendcode!!.toString(),inval2 , AllValue.signin_baby!!.toString())
-
-                    Log.d("passkhanh",phone+pass_ser.toString())
                     sendToActivityMain(phone!!,pass_ser.toString(), 123)
 
                     Json.Operation="Q"
@@ -177,7 +179,7 @@ class  CheckPassSignIn:AppCompatActivity()
     //Check pass word before sent code to phone number
     fun boolPass(s:String)
     {
-        var inval: Array<String> = arrayOf("2",s.toString())
+        var inval: Array<String> = arrayOf("2",s)
         call!!.CallEmit(AllValue.workername_checkpass_signin!!,AllValue.servicename_checkpas_sign!!,inval,AllValue.check_Pass!!)
     }
 
@@ -194,9 +196,14 @@ class  CheckPassSignIn:AppCompatActivity()
         finish()
     }
     // Đọc file Json để lấy kết quả
-    fun readJson1(json1: JSONObject): IsNumber
+    fun readJson1(json1: ArrayList<JSONObject>): IsNumber
     {
-        var c0: String? =json1.getString("c0")
+
+        var jsonO: JSONObject?=null
+        if(json1.size>0) {
+            jsonO = json1[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
         var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1

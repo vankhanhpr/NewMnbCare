@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Vidu2</string>
     <string name="confirm_phone">XÁC NHẬN THÔNG TIN SỐ ĐIỆN THOẠI</string>
-    <string name="notical_confirm">Chúc tối sẽ gửi mã xác nhận đến số điện thoại</string>
+    <string name="notical_confirm">Chúc tối đã gửi mã xác nhận đến số điện thoại của bạn!</string>
     <string name="turn_phone">để kích hoạt tài khoản của bạn</string>
     <string name="cencel">Hủy</string>
     <string name="accept">Đồng ý</string>
@@ -27,7 +27,9 @@
     <string name="new_pass">Nhập mật khẩu mới</string>
     <string name="new_pass_again">Nhập lại mật khẩu mới</string>
     <string name="sent_pass_again">Gửi lại mật khẩu</string>
+    <string name="sent_code_again">Gủi lại mã</string>
     <string name="import_password">Nhập mật khẩu</string>
+    <string name="phone_error">Số điện thoại không hợp lệ vui lòng kiểm tra lại</string>
 
     <!--sent to activity signin-->
     <string name="sentto_sign">Thông báo</string>
@@ -45,5 +47,13 @@
     <string name="sentani_1">We carefully verify all banks before add them into the app</string>
     <string name="sentani_2">All hotels and hostel are sortels by hospitality rating</string>
     <string name="sentani_3">All hotels and hostel are sortels by hospitality rating2</string>
+   <!-- listview dicimal-->
+    <string name="time_dicimal">Giờ đến khám</string>
+    <string name="name_doctor">Tên Bác sĩ</string>
+    <string name="name_mombaby">Tên mẹ và bé</string>
+    <string name="status_cus">Trạng thái</string>
+
+    //tra cứu lịch khám
+    <string name="tatle_medical">Tra cứu lịch khám</string>
 
 </resources>

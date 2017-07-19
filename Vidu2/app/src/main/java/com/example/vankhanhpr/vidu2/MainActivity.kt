@@ -18,15 +18,19 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.widget.TextView
+import android.widget.Toast
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.fragment_main.*
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
+import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
+import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -78,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         //add the fragment
         addFragment()
+
         bottom_navigation_main1.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 var fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -92,50 +97,51 @@ class MainActivity : AppCompatActivity() {
                     R.id.mmenu1 ->
                     {
                         fragmentTransaction!!.show(fragment_Medical)
-                        fragmentTransaction!!.hide(fragment_Mom)
+                        /*fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)
+                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
                     }
                     R.id.mmenu2 ->
                     {
-                        fragmentTransaction!!.hide(fragment_Medical)
+                        /*fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)
+                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
                         fragmentTransaction!!.show(fragment_Mom)
                     }
                     R.id.mmenu3 ->
                     {
-                        fragmentTransaction!!.hide(fragment_Medical)
+                       /* fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)
+                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
                         fragmentTransaction!!.show(fragment_Baby)
                     }
                     R.id.mmenu4 ->
                     {
-                        fragmentTransaction!!.hide(fragment_Medical)
+                        /*fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)
+                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
                         fragmentTransaction!!.show(fragment_Group)
                     }
                     R.id.mmenu5 ->
                     {
-                        fragmentTransaction!!.hide(fragment_Medical)
+                        /*fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)
+                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
                         fragmentTransaction!!.show(fragment_Manager_Account)
                     }
                 }
                 true
-                fragmentTransaction!!.addToBackStack(null).commit()
+                fragmentTransaction!!.addToBackStack(null)
+                fragmentTransaction!!.commit()
                 return true
             }
         })
@@ -151,6 +157,20 @@ class MainActivity : AppCompatActivity() {
         if (event.getTemp() == AllValue.connect) {
             var  disconnect = findViewById(R.id.disconnect) as TextView
             disconnect.visibility= View.GONE
+            var inval: Array<String> = arrayOf(user_id.toString(), pass!!)
+            call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass_disconnect!!.toString())
+        }
+        if(event.getTemp()==AllValue.checkpass_disconnect)
+        {
+           var x:IsNumber=readJson1(event.getService()!!.getData()!!)
+            if(x.getSecC0()==("Y"))
+            {
+                disconnect.visibility= View.GONE
+            }
+            else{
+                Toast.makeText(applicationContext,"Mất kết nối",Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -199,20 +219,36 @@ class MainActivity : AppCompatActivity() {
     fun disableShiftMode(view: BottomNavigationView) {
         val menuView = view.getChildAt(0) as BottomNavigationMenuView
         try {
-            val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
+            var shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
             shiftingMode.isAccessible = true
+
             shiftingMode.setBoolean(menuView, false)
             shiftingMode.isAccessible = true
+
+
             for (i in 0..menuView.childCount - 1) {
-                val item = menuView.getChildAt(i) as BottomNavigationItemView
+                var item = menuView.getChildAt(i) as BottomNavigationItemView
                 item.setShiftingMode(false)
                 // set once again checked value, so view will be updated
                 item.setChecked(item.itemData.isChecked)
+                item.setIcon(resources.getDrawable(R.drawable.icon_heart))
             }
         } catch (e: NoSuchFieldException) {
             //Timber.e(e, "Unable to get shift mode field");
         } catch (e: IllegalAccessException) {
             //Timber.e(e, "Unable to change value of shift mode");
         }
+    }
+    //Đọc json gửi về
+    fun readJson1(json: ArrayList<JSONObject>): IsNumber
+    {
+        var jsonO: JSONObject?=null
+        if(json.size>0) {
+            jsonO = json[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
+        var ser1 : IsNumber = IsNumber()
+        ser1.setSecC0(c0!!)
+        return ser1
     }
 }

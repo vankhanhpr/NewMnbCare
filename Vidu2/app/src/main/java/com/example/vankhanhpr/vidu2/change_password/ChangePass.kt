@@ -10,6 +10,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import com.example.vankhanhpr.vidu2.MainActivity
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
@@ -36,18 +37,20 @@ class ChangePass:AppCompatActivity()
     var phone:String?=null
     var pass3:String?=null
     var call=Call_Receive_Server.getIns()
+    var dialog_disconnect:Dialog?=null
+    var mCountDownTimer: CountDownTimer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
         EventBus.getDefault().register(this)
 
         tab_loading= findViewById(R.id.tab_loading_changepass) as ProgressBar
-        var mCountDownTimer: CountDownTimer
         var passOid:String?=null
         var pass1:String?=null
         var pass2:String?=null
-
         var dialog_restart_pass:Dialog?=null
+
 
         var inte: Intent = intent//set data
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
@@ -56,6 +59,12 @@ class ChangePass:AppCompatActivity()
 
         tv_continue_changepass.setOnClickListener()
         {
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
+
             var i = 0
             tab_loading!!.visibility= View.VISIBLE
             dialog= Dialog(this)
@@ -79,45 +88,54 @@ class ChangePass:AppCompatActivity()
             }
             if(pass1.equals(pass2))
             {
-
                 Json.Operation="D"
-
                 your_pass=Encode().encryptString(passOid)
                 pass3= Encode().encryptString(pass1.toString())
-                Json.AppLoginPswd = pass3
+                //var s= Encode().encryptString(passOid)
+                Json.AppLoginPswd = your_pass
                 var inval: Array<String> = arrayOf(Json.AppLoginID!!.toString(),your_pass!!.toString(),pass3.toString()!!)
                 call.CallEmit(AllValue.workername_change_pass,AllValue.servicename_change_pass,inval,AllValue.change_password!!.toString())
                 Json.Operation="Q"
             }
-            mCountDownTimer = object : CountDownTimer(5000, 1000)
-            {
-                override fun onTick(millisUntilFinished: Long)
-                {
+
+            mCountDownTimer = object : CountDownTimer(10000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
                     i++
-                    //Call_Receive_Server.instance.Sevecie()
-                    //mProgressBar.progress = i
-                    if(i==5)
-                    {
+                    Call_Receive_Server.getIns().Sevecie()
+                    if (i == 5) {
+                        for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                            Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                        }
+                    }
+                    if (i == 10) {
+                        Call_Receive_Server.getIns().Sevecie()
                         tab_loading!!.visibility = View.GONE
                     }
                 }
                 override fun onFinish()
-                {
-                    //Do what you want
+                {//Do what you want
                     i++
-                    if(i==5) {
+                    try {
+                        Call_Receive_Server.getIns().Sevecie()
+                        dialog_disconnect!!.show()
+                        tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                        button_cancel.setOnClickListener()
+                        {
+                            dialog_disconnect!!.cancel()
+                        }
                         tab_loading!!.visibility = View.GONE
+                    } catch (e: Exception) {
                     }
                 }
             }
-            mCountDownTimer.start()
+            mCountDownTimer!!.start()
         }
 
         tab_sent_pass_again.setOnClickListener()
         {
 
             dialog_restart_pass= Dialog(this)
-            dialog_restart_pass!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+            dialog_restart_pass!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog_restart_pass!!.setContentView(R.layout.dialog_noticate_resetpass)
             dialog_restart_pass!!.show()
             var btn_iport_pass_restart =dialog_restart_pass!!.findViewById(R.id.btn_iport_pass_restart) as Button
@@ -139,9 +157,11 @@ class ChangePass:AppCompatActivity()
     fun onEvent(event: MessageEvent) {
         if(event.getTemp()==AllValue.change_password)
         {
+            dialog_disconnect!!.cancel()
+            mCountDownTimer!!.cancel()
             if(event.getService()!!.getResult()=="1")
             {
-                dialog_success!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+                dialog_success!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog_success!!.setContentView(R.layout.dialog_error_password)
                 var btn_success= dialog_success!!.findViewById(R.id.btn_success) as Button
                 btn_success.setOnClickListener()
@@ -159,7 +179,7 @@ class ChangePass:AppCompatActivity()
             }
             else
             {//đổi mật khẩu không thành công
-                dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+                dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog!!.setContentView(R.layout.dialog_error_password)
                 dialog!!.show()
                 var btn_cancel_error_pass= dialog!!.findViewById(R.id.btn_cancel_error_pass) as Button

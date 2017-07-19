@@ -1,6 +1,7 @@
 package com.example.vankhanhpr.vidu2.json
 
 import org.json.JSONObject
+import java.util.ArrayList
 
 /**
  * Created by VANKHANHPR on 7/2/2017.
@@ -13,11 +14,20 @@ class Service_Response
     private var TransId: String? = null
     private var ClientSeq: Int? = 0
     private  var Packet: String? = null
-    private var Data:JSONObject? =null
+
     private var Code :String? =null
     private  var Message: String? = null
     private var Result :String? =null
 
+    private var Data: ArrayList<JSONObject>? =  null
+
+    fun getData(): ArrayList<JSONObject>?{
+        return Data
+    }
+
+    fun setData(data: ArrayList<JSONObject>) {
+        Data = data
+    }
 
     fun getTransId(): String? {
         return TransId
@@ -42,13 +52,6 @@ class Service_Response
         Packet = packet
     }
 
-    fun getData():JSONObject?{
-        return Data
-    }
-
-    fun setData(data: JSONObject) {
-        Data = data
-    }
 
     fun getCode(): String? {
         return Code

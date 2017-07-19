@@ -35,10 +35,12 @@ class Import_Code :AppCompatActivity()
     var positively:String?=null
     var dialog11:Dialog?=null
     var password:String?=null
+    var dialog_disconnect:Dialog?=null
+    var dialog_success:Dialog?=null
 
     var progreee_importcode1:ProgressBar?=null
     var call= Call_Receive_Server.getIns()
-
+    var mCountDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -51,12 +53,10 @@ class Import_Code :AppCompatActivity()
         phone= bundle.getString(AllValue.value)
         password=bundle.getString(AllValue.value2)
 
-
-
         tv_phone_positively.setText(phone.toString())
-        var mCountDownTimer: CountDownTimer
         progreee_importcode1= findViewById(R.id.progreee_importcode) as ProgressBar?
 
+        //Kiểm tra mã xác thực
         tv_cotinue_importcode.setOnClickListener()
         {
             dialog11= Dialog(this)
@@ -64,46 +64,88 @@ class Import_Code :AppCompatActivity()
             positively= edt_positively.text.toString()
             var temp5=Encode().encryptString(positively)
 
+
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
+
+
             //kiểm tra code đúng không
             var inval: Array<String> = arrayOf("1",phone.toString(),temp5!!.toString())
             call.CallEmit(AllValue.workername_verification_code,AllValue.servicename_verification_code,inval,AllValue.verification2!!.toString())
 
             //khi connect thất bại
-            mCountDownTimer = object : CountDownTimer(5000, 1000) {
-                var i=0
+            mCountDownTimer = object : CountDownTimer(7000, 1000) {
+                var i = 0
                 override fun onTick(millisUntilFinished: Long) {
                     i++
-                    //Call_Receive_Server.instance.Sevecie()
+                    Call_Receive_Server.getIns().Sevecie()
+                    if (i == 5) {
+                        for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                            Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                        }
+                    }
                     //mProgressBar.progress = i
-                    if(i==5) {
+                    if (i == 7) {
+                        Call_Receive_Server.getIns().Sevecie()
                         progreee_importcode1!!.visibility = View.GONE
                     }
                 }
                 override fun onFinish() {
                     //Do what you want
                     i++
-                    if(i==5) {
+                    try {
+                        dialog_disconnect!!.show()
+                        tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                        button_cancel.setOnClickListener()
+                        {
+                            dialog_disconnect!!.cancel()
+                        }
                         progreee_importcode1!!.visibility = View.GONE
+                    } catch (e: Exception) {
                     }
                 }
             }
-            mCountDownTimer.start()
+            mCountDownTimer!!.start()
+        }
+        //Lấy lại mã đăng kí trên phone
+        tv_restartpass_again.setOnClickListener()
+        {
+            dialog_success= Dialog(this)
+            dialog_success!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_success!!.setContentView(R.layout.dialog_success)
+            var tv_error1= dialog_success!!.findViewById(R.id.tv_error) as TextView
+            var btn_success1=dialog_success!!.findViewById(R.id.btn_success)
+            dialog_success!!.show()
+            tv_error1.setText(resources.getString(R.string.notical_confirm))
+            btn_success1.setOnClickListener()
+            {
+                dialog_success!!.cancel()
+            }
+            var inval2: Array<String> = arrayOf(phone.toString())
+            Json.Operation="U"
+            call.CallEmit(AllValue.workername_sendcode!!.toString(), AllValue.servicename_sendcode!!.toString(),inval2 , AllValue.signin_baby!!.toString())
+            Json.Operation="Q"
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
         if(event.getTemp()==AllValue.verification2.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
+            dialog_disconnect!!.cancel()
+            mCountDownTimer!!.cancel()
             if(event.getService()!!.getResult()=="1")
             {
                 var temp :IsNumber= IsNumber()
-                var json:JSONObject=event.getService()!!.getData()as JSONObject
+                var json:ArrayList<JSONObject> = event.getService()!!.getData()!!
                 temp=readJson1(json)
                 if(temp.getSecC0()=="Y")
                 {
                     //Thêm mới thông tin khách hàng khi import code thành công
                     Json.Operation="I"
-                    var inval5: Array<String> = arrayOf("1","2",phone!!,"4","5","6","7",password!!)
+                    var inval5: Array<String> = arrayOf("","",phone!!,"","","","",password!!)
                     call!!.CallEmit(AllValue.workername_sendcode,AllValue.servicename_sendcode,inval5,AllValue.insetCustomer!!)
                     Json.Operation="Q"
                 }
@@ -140,13 +182,25 @@ class Import_Code :AppCompatActivity()
         if(event.getTemp()==AllValue.insetCustomer)
         {//thêm khách hàng thành công thì đi tới hàm main và gửi các  biến liên quan
             Json.AppLoginPswd=password
+            var inval5: Array<String> = arrayOf(phone!!)
+            call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,inval5,AllValue.getId_Signin!!)
+
+        }
+        if(event.getTemp()==AllValue.getId_Signin)
+        {
+            var json3:IsNumber= readJson1(event!!.getService()!!.getData()!!)
+            Json.AppLoginID= json3.getSecC0()!!
             sendToActivityMain(phone!!,password!!,AllValue.gotomain!!)
         }
     }
     //Đọc file json
-    fun readJson1(json1: JSONObject): IsNumber
+    fun readJson1(json: ArrayList<JSONObject>): IsNumber
     {
-        var c0: String? =json1.getString("c0")
+        var jsonO: JSONObject?=null
+        if(json.size>0) {
+            jsonO = json[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
         var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1

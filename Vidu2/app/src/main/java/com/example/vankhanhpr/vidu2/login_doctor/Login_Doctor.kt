@@ -33,46 +33,64 @@ class Login_Doctor : AppCompatActivity() {
     var dialog_id_doctor: Dialog?=null
     var tab_loading_doctor1: ProgressBar? = null
     var call= Call_Receive_Server.getIns()
+    var mCountDownTimer: CountDownTimer? = null
+    var dialog_disconnect:Dialog?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_id_doctor)
         EventBus.getDefault().register(this)
 
-
-        var mCountDownTimer: CountDownTimer
         tab_loading_doctor1= findViewById(R.id.tab_loading_doctor) as ProgressBar
 
         btn_continue_doctor.setOnClickListener(){
             dialog_id_doctor= Dialog(this)
             tab_loading_doctor1!!.visibility= View.VISIBLE
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
+
+
             id_ = editText_id.text.toString()
 
             var inval: Array<String> = arrayOf(AllValue.isDoctor!!.toString(),id_.toString())
             call!!.CallEmit(AllValue.workername_checknumber!!.toString(), AllValue.servicename_checknumber!!.toString(), inval, AllValue.checkid.toString())
 
-            mCountDownTimer = object : CountDownTimer(5000, 1000)
-            {
-                var i=0
-                override fun onTick(millisUntilFinished: Long)
-                {
+
+            mCountDownTimer = object : CountDownTimer(7000, 1000) {
+                var i = 0
+                override fun onTick(millisUntilFinished: Long) {
                     i++
-                    //Call_Receive_Server.instance.Sevecie()
+                    Call_Receive_Server.getIns().Sevecie()
+                    if (i == 5) {
+                        for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                            Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                        }
+                    }
                     //mProgressBar.progress = i
-                    if(i==5)
-                    {
+                    if (i == 7) {
+                        Call_Receive_Server.getIns().Sevecie()
                         tab_loading_doctor1!!.visibility = View.GONE
                     }
                 }
-                override fun onFinish()
-                {
+                override fun onFinish() {
                     //Do what you want
                     i++
-                    if(i==5) {
+                    try {
+                        dialog_disconnect!!.show()
+                        tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                        button_cancel.setOnClickListener()
+                        {
+                            dialog_disconnect!!.cancel()
+                        }
                         tab_loading_doctor1!!.visibility = View.GONE
+                    } catch (e: Exception) {
                     }
                 }
             }
-            mCountDownTimer.start()
+            mCountDownTimer!!.start()
 
         }
     }
@@ -81,7 +99,9 @@ class Login_Doctor : AppCompatActivity() {
     fun onEvent(event: MessageEvent) {
         if(event.getTemp()== AllValue.checkid.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
         {
-            var json: JSONObject?= event.getService()!!.getData() as JSONObject
+            dialog_disconnect!!.cancel()
+            mCountDownTimer!!.cancel()
+            var json: ArrayList<JSONObject>?= event.getService()!!.getData()
             var isid_: IsNumber?= readJson1(json!!)//đọc json thành class
             if(isid_!!.C0=="Y")
             {
@@ -90,7 +110,7 @@ class Login_Doctor : AppCompatActivity() {
             else
             {
 
-                dialog_id_doctor!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+                dialog_id_doctor!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog_id_doctor!!.setContentView(R.layout.dialog_impot_code)
                 dialog_id_doctor!!.show()
                 var tv_set_import_code =dialog_id_doctor!!.findViewById(R.id.tv_set_import_code) as TextView
@@ -105,9 +125,13 @@ class Login_Doctor : AppCompatActivity() {
         }
     }
     // Đọc file Json để lấy kết quả
-    fun readJson1(json1: JSONObject): IsNumber
+    fun readJson1(json1: ArrayList<JSONObject>): IsNumber
     {
-        var c0: String? =json1.getString("c0")
+        var jsonO: JSONObject?=null
+        if(json1.size>0) {
+            jsonO = json1[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
         var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1

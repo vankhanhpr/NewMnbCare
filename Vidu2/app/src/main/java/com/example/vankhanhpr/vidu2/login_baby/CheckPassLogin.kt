@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import android.os.CountDownTimer
+import android.telecom.Call
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.vankhanhpr.vidu2.getter_setter.Json
@@ -41,7 +42,6 @@ class CheckPassLogin:AppCompatActivity()
     var phone:String?=""
     var user:User= User()
     var valu:IsNumber= IsNumber()
-    var key_lock:Int?=0//biến cho biết là đăng nhập hay là lấy lại mật khẩu
     var pass:String?=null
     var tab_loading1: ProgressBar? = null
     var dialog:Dialog?=null
@@ -50,8 +50,8 @@ class CheckPassLogin:AppCompatActivity()
 
     var call= Call_Receive_Server.getIns()
     var pass2:String?=""
-
-
+    var mCountDownTimer: CountDownTimer? = null
+    var dialog_disconnect:Dialog?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -70,56 +70,61 @@ class CheckPassLogin:AppCompatActivity()
         {
             btn_continue.setOnClickListener()//tiến hành đăng nhập
             {
-                key_lock=0
+                dialog_disconnect= Dialog(this)
+                dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+                var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+                var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
 
                 dialog_error0= Dialog(this)
 
                 tab_loading1 = findViewById(R.id.tab_loading) as ProgressBar
                 tab_loading1!!.visibility= View.VISIBLE
-
-                var mCountDownTimer: CountDownTimer
                 var i = 0
                 pass = edt_passlogin.text.toString()
                 pass2 = Encode().encryptString(pass)
                 var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
 
-
-                call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass!!.toString())
-
-                mCountDownTimer = object : CountDownTimer(5000, 1000)
-                {
-                    override fun onTick(millisUntilFinished: Long)
-                    {
+                call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass1!!.toString())
+                mCountDownTimer = object : CountDownTimer(10000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
                         i++
-                        //call.Sevecie()
-                        //mProgressBar.progress = i
-                        if(i==5)
-                        {
+                        Call_Receive_Server.getIns().Sevecie()
+                        if (i == 5) {
+                            for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                                Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                            }
+                        }
+                        if (i == 10) {
+                            Call_Receive_Server.getIns().Sevecie()
                             tab_loading1!!.visibility = View.GONE
                         }
                     }
-                    override fun onFinish()
-                    {
-                        //Do what you want
+                    override fun onFinish() {//Do what you want
                         i++
-                        if(i==5) {
+                        try {
+                            dialog_disconnect!!.show()
+                            tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                            button_cancel.setOnClickListener()
+                            {
+                                dialog_disconnect!!.cancel()
+                            }
                             tab_loading1!!.visibility = View.GONE
+                        } catch (e: Exception) {
                         }
                     }
                 }
-                mCountDownTimer.start()
+                mCountDownTimer!!.start()
             }
             //Trở về màn hình trước đó
             tv_return_selectphone.setOnClickListener()
             {
-                key_lock=0
                 var inten9=Intent(applicationContext,Login_Doctor::class.java)
                 startActivity(inten9)
                 finish()
             }
             tv_forget_pass.setOnClickListener()
             {
-                key_lock=0
                 dialog= Dialog(this)
                 dialog_agree=Dialog(this)
                /* //lây id của hệ thống
@@ -129,7 +134,6 @@ class CheckPassLogin:AppCompatActivity()
                 //Log.d("idhethong",phone.toString()+valu.getSecC0().toString())
                 dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
                 dialog_agree!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
-
                 dialog!!.setContentView(R.layout.dialog_reset_password)
                 dialog_agree!!.setContentView(R.layout.dialog_noticate_resetpass)
 
@@ -154,7 +158,6 @@ class CheckPassLogin:AppCompatActivity()
                     btn_iport_pass_restart.setOnClickListener()
                     {
                         dialog_agree!!.cancel()
-                        key_lock=1
                     }
                 }
             }
@@ -166,45 +169,63 @@ class CheckPassLogin:AppCompatActivity()
         btn_continue.setOnClickListener()//tiến hành đăng nhập
         {
             dialog_error0 = Dialog(this)
+
+            dialog_disconnect= Dialog(this)
+            dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
+            var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
+            var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
+
             tab_loading1 = findViewById(R.id.tab_loading) as ProgressBar
             tab_loading1!!.visibility= View.VISIBLE
 
-            var mCountDownTimer: CountDownTimer
             var i = 0
 
             pass = edt_passlogin.text.toString()
             pass2 = Encode().encryptString(pass)
-            Log.d("passchinh",pass+" "+pass2)
+
             var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
             call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass1!!.toString())
 
-            mCountDownTimer = object : CountDownTimer(5000, 1000)
+            mCountDownTimer = object : CountDownTimer(10000, 1000)
             {
+
                 override fun onTick(millisUntilFinished: Long)
                 {
                     i++
-                    //Call_Receive_Server.getIns()!!.Sevecie()
-                    //mProgressBar.progress = i
-                    if(i==5)
+                    if (i == 2)
                     {
+                        Call_Receive_Server.getIns().Sevecie()
+                        for (i in 0..Call_Receive_Server.getIns().hasmap!!.size - 1) {
+                            Call_Receive_Server.getIns().hasmap!![i].setStatus(0)
+                        }
+                    }
+                    if (i == 10) {
+                        Call_Receive_Server.getIns().Sevecie()
                         tab_loading1!!.visibility = View.GONE
                     }
                 }
                 override fun onFinish()
-                {
-                    //Do what you want
+                {//Do what you want
                     i++
-                    if(i==5) {
+                    try {
+                        Call_Receive_Server.getIns().Sevecie()
+                        dialog_disconnect!!.show()
+                        tv_cancel.setText("Vui lòng kiểm tra kết nối của bạn")
+                        button_cancel.setOnClickListener()
+                        {
+                            dialog_disconnect!!.cancel()
+                        }
                         tab_loading1!!.visibility = View.GONE
+                    } catch (e: Exception) {
                     }
                 }
             }
-            mCountDownTimer.start()
+            mCountDownTimer!!.start()
         }
         //Trở về màn hình trước đó
         tv_return_selectphone.setOnClickListener()
         {
-            key_lock=0
             var inten9=Intent(applicationContext,Login::class.java)
             startActivity(inten9)
             finish()
@@ -213,13 +234,12 @@ class CheckPassLogin:AppCompatActivity()
         //QUên mật khẩu
         tv_forget_pass.setOnClickListener()
         {
-            key_lock=0
             dialog= Dialog(this)
             dialog_agree=Dialog(this)
             //lấy id của hệ thống
             var array:Array<String>?= arrayOf(phone.toString())
-            dialog!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
-            dialog_agree!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+            dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog_agree!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
             dialog!!.setContentView(R.layout.dialog_reset_password)
             dialog_agree!!.setContentView(R.layout.dialog_noticate_resetpass)
@@ -244,7 +264,6 @@ class CheckPassLogin:AppCompatActivity()
                 var btn_iport_pass_restart =dialog_agree!!.findViewById(R.id.btn_iport_pass_restart) as Button
                 btn_iport_pass_restart.setOnClickListener()
                 {
-                    key_lock=1
                     sendToActivityChangePass(phone!!,348)
                     dialog_agree!!.cancel()
                 }
@@ -255,12 +274,13 @@ class CheckPassLogin:AppCompatActivity()
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
         var  serve:Service_Response = event.getService()!!
-        if(event.getTemp()==AllValue.checkpass1.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
+        if(event.getTemp()==AllValue.checkpass1.toString())//Kiểm tra kết quả trả check pass
         {
+            dialog_disconnect!!.cancel()
             if(serve.getResult()=="1")
             {
-                var json_user: JSONObject = event.getService()!!.getData()!!
                 Json.AppLoginPswd=pass2
+                mCountDownTimer!!.cancel()
                 if(getResources().getString(R.string.mom_or_doctor) == "mom")
                 {//đến giao diện của mẹ và bé
 
@@ -274,8 +294,9 @@ class CheckPassLogin:AppCompatActivity()
             if(serve.getResult()=="0")
             {
                 try {
-                    var json_user2: JSONObject = event.getService()!!.getData()!!
-                    dialog_error0!!.requestWindowFeature(Window.FEATURE_LEFT_ICON)
+                    tab_loading1!!.visibility = View.GONE
+                    mCountDownTimer!!.cancel()
+                    dialog_error0!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                     dialog_error0!!.setContentView(R.layout.dialog_impot_code)
                     dialog_error0!!.show()
                     var tv_set_import_codea = dialog_error0!!.findViewById(R.id.tv_set_import_code) as TextView
@@ -285,8 +306,6 @@ class CheckPassLogin:AppCompatActivity()
                     {
                         dialog_error0!!.cancel()
                     }
-
-                    tab_loading1!!.visibility = View.GONE
                 }
                 catch (e:Exception){}
             }
@@ -296,20 +315,6 @@ class CheckPassLogin:AppCompatActivity()
             var json_getid= serve.getData()
             valu = readJson1(json_getid!!)
         }
-       /* if(event.getTemp()==AllValue.checpass_getpass.toString())//Kiểm tra kết quả trả về có phải của mình đã gửi đi hay không
-        {
-            if(serve.getResult()=="1")
-            {
-                var json_user:JSONObject= event.getService()!!.getData()!!
-                sendToActivityChangePass(phone!!,valu.getSecC0().toString()!!,pass!!,AllValue.gotomain!!)
-            }
-            else{
-                if(serve.getResult()=="0")
-                {
-                    Toast.makeText(applicationContext,"Mật khẩu không đúng hoặc đã xảy ra lỗi",Toast.LENGTH_SHORT).show()
-                }
-            }
-        }*/
     }
     //Mở màn hình chính
     fun sendToActivityMain(value:String,value2:String,resultcode:Int) {
@@ -348,12 +353,15 @@ class CheckPassLogin:AppCompatActivity()
         finish()
     }
     //Đọc json gửi về
-    fun readJson1(json: JSONObject): IsNumber
+    fun readJson1(json: ArrayList<JSONObject>): IsNumber
     {
-        var C0: String? =json.getString("c0")
-        var value : IsNumber= IsNumber()
-        value.setSecC0(C0!!)
-        return value
+        var jsonO: JSONObject?=null
+        if(json.size>0) {
+            jsonO = json[0]
+        }
+        var c0: String? =jsonO!!.getString("c0")
+        var ser1 : IsNumber = IsNumber()
+        ser1.setSecC0(c0!!)
+        return ser1
     }
-
 }

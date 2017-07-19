@@ -5,25 +5,30 @@
         android:id="@+id/mmenu1"
         android:enabled="true"
         android:title="@string/medical"
+        android:icon="@drawable/icon_heart"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mmenu2"
         android:enabled="true"
         android:title="@string/mother"
+        android:icon="@drawable/icon_heart"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mmenu3"
         android:enabled="true"
         android:title="@string/baby"
+        android:icon="@drawable/icon_heart"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mmenu4"
         android:enabled="true"
         android:title="@string/group"
+        android:icon="@drawable/icon_heart"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/mmenu5"
         android:enabled="true"
+        android:icon="@drawable/icon_heart"
         android:title="@string/manger_accoumt"
         app:showAsAction="ifRoom"/>
 </menu>

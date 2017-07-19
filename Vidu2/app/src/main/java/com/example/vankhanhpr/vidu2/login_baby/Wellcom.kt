@@ -38,6 +38,7 @@ class Wellcom : AppCompatActivity()
 
         var call = Call_Receive_Server.getIns()
         call!!.Sevecie()
+        call!!.ListenEvent()
         //................. mom or doctor
         var mom_doctor : String = getResources().getString(R.string.mom_or_doctor)
         //............... lan dau

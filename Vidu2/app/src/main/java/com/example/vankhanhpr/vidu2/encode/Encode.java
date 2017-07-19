@@ -45,7 +45,6 @@ public class Encode {
     public String encryptString(String originalData) throws Exception {
         byte[] textToEncrypt = originalData.getBytes("UTF-8");
         if (originalData.contains("\"") ||
-                originalData.contains("\0") ||
                 originalData.contains("\'") ||
                 originalData.contains("\\"))
             return new String("".getBytes(), "UTF-8");
