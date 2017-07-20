@@ -1,6 +1,8 @@
 package com.example.vankhanhpr.vidu2
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,15 +19,18 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
+import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
+import com.example.vankhanhpr.vidu2.encode.Encode
 import com.example.vankhanhpr.vidu2.fragment_main.*
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
+import com.example.vankhanhpr.vidu2.login_baby.Login
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,7 +38,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity :AppCompatActivity() {
 
     var fragment_Medical:Fragment?=null
     var fragment_Mom: Fragment? = null
@@ -48,8 +53,10 @@ class MainActivity : AppCompatActivity() {
     var tab_medical:LinearLayout?=null
     var user_id:String?=null
     var pass:String?=null
+    var id_system:String?=null
     var call= Call_Receive_Server.getIns()
-
+    var dialog:Dialog?=null
+    var editor : SharedPreferences.Editor?=null
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -66,11 +73,18 @@ class MainActivity : AppCompatActivity() {
         pass=bundle.getString(AllValue.value2)
         Json.AppLoginPswd=pass
 
+        //Lấy mã khách hàng khi đăng nhập đăng kí thành công
+        var Shared_Preferences2 : String = "IDSYSTEM"
+        var sharedpreferences2 : SharedPreferences = getSharedPreferences(Shared_Preferences2, Context.MODE_PRIVATE)
+        var id123= sharedpreferences2.getString("id_system","")
+        id_system= Encode().decryptString(id123!!)
+        Json.AppLoginID=id_system!!
+        Log.d("MainActivity","Code : "+id_system.toString())
         //......lần đầu đăng nhập
         var Shared_Preferences : String = "landau"//........ ten thu muc chua
         var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
-        //Đăng nhập một lần
-        var editor : SharedPreferences.Editor? = sharedpreferences.edit()
+        //Đăng nhập một lần lưu thông tin tài khoản và mật khẩu
+        editor = sharedpreferences.edit()
         editor!!.putString("thefirst","1")//........... luu du lieu
         editor!!.putString("id",user_id!!)
         editor!!.putString("password",pass!!)
@@ -92,16 +106,16 @@ class MainActivity : AppCompatActivity() {
                 fragmentTransaction.hide(fragment_Group)
                 fragmentTransaction.hide(fragment_Manager_Account)
 
-                when (item.itemId)
-                {
-                    R.id.mmenu1 ->
+                    when (item.itemId)
                     {
-                        fragmentTransaction!!.show(fragment_Medical)
-                        /*fragmentTransaction!!.hide(fragment_Mom)
-                        fragmentTransaction!!.hide(fragment_Baby)
-                        fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
-                    }
+                        R.id.mmenu1 ->
+                        {
+                            fragmentTransaction!!.show(fragment_Medical)
+                            /*fragmentTransaction!!.hide(fragment_Mom)
+                            fragmentTransaction!!.hide(fragment_Baby)
+                            fragmentTransaction!!.hide(fragment_Group)
+                            fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                        }
                     R.id.mmenu2 ->
                     {
                         /*fragmentTransaction!!.hide(fragment_Medical)
@@ -156,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         }
         if (event.getTemp() == AllValue.connect) {
             var  disconnect = findViewById(R.id.disconnect) as TextView
-            disconnect.visibility= View.GONE
+           // disconnect.visibility= View.GONE
             var inval: Array<String> = arrayOf(user_id.toString(), pass!!)
             call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass_disconnect!!.toString())
         }
@@ -167,10 +181,26 @@ class MainActivity : AppCompatActivity() {
             {
                 disconnect.visibility= View.GONE
             }
-            else{
-                Toast.makeText(applicationContext,"Mất kết nối",Toast.LENGTH_SHORT).show()
-            }
+            else{//truong hop thay da thay doi mat khau
+                dialog= Dialog(this)
+                dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog!!.setContentView(R.layout.dialog_error_password)
+                var tv_error =dialog!!.findViewById(R.id.tv_error) as TextView
+                var btn_cancel_error_pass= dialog!!.findViewById(R.id.btn_cancel_error_pass)
+                dialog!!.show()
+                tv_error.setText(resources.getString(R.string.change_account))
+                //Logout
+                editor!!.putString("id","")
+                editor!!.putString("password","")
+                editor!!.commit()
 
+                btn_cancel_error_pass.setOnClickListener()
+                {
+                    var inten= Intent(applicationContext,Login::class.java)
+                    startActivity(inten)
+                    finish()
+                }
+            }
         }
     }
 

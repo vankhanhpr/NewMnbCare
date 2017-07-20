@@ -1,7 +1,9 @@
 package com.example.vankhanhpr.vidu2.login_baby
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -56,9 +58,6 @@ class CheckPassLogin:AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         EventBus.getDefault().register(this)
-
-        var id:String?=null
-
         var inte:Intent= intent
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
         phone= bundle.getString(AllValue.value)
@@ -276,20 +275,14 @@ class CheckPassLogin:AppCompatActivity()
         var  serve:Service_Response = event.getService()!!
         if(event.getTemp()==AllValue.checkpass1.toString())//Kiểm tra kết quả trả check pass
         {
-            dialog_disconnect!!.cancel()
+
             if(serve.getResult()=="1")
             {
+                var temp8:IsNumber= readJson1(event.getService()!!.getData()!!)
                 Json.AppLoginPswd=pass2
-                mCountDownTimer!!.cancel()
-                if(getResources().getString(R.string.mom_or_doctor) == "mom")
-                {//đến giao diện của mẹ và bé
-
-                    sendToActivityMain(phone!!,pass2!!, AllValue.gotomain!!)
-                }
-                if(getResources().getString(R.string.mom_or_doctor) == "doctor")
-                {//đến giao diện của bác sĩ
-                    sendToActivityMain_Doctor(phone!!,pass2!!, AllValue.gotomain!!)
-                }
+                Json.AppLoginID=temp8.getSecC0()!!
+                var array:Array<String>?= arrayOf(phone.toString())
+                call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
             }
             if(serve.getResult()=="0")
             {
@@ -310,10 +303,31 @@ class CheckPassLogin:AppCompatActivity()
                 catch (e:Exception){}
             }
         }
-        if(event.getTemp()==AllValue.getId.toString())
+        if(event.getTemp()==AllValue.getId_Main)
         {
-            var json_getid= serve.getData()
-            valu = readJson1(json_getid!!)
+            var x:ArrayList<JSONObject> = event.getService()!!.getData()!!
+            var y:IsNumber=readJson1(x)
+            if(y.getSecC0()!="N")
+            {
+
+                var Shared_Preferences : String = "IDSYSTEM"//........ ten thu muc chua
+                var sharedpreferences:SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+                var editor2 : SharedPreferences.Editor?= sharedpreferences.edit()
+                editor2!!.putString("id_system",Encode().encryptString(y.getSecC0().toString()))
+                editor2.commit()
+                Log.d("Checkpass","kkhh"+ y.getSecC0())
+                mCountDownTimer!!.cancel()
+                dialog_disconnect!!.cancel()
+                if(getResources().getString(R.string.mom_or_doctor) == "mom")
+                {//đến giao diện của mẹ và bé
+
+                    sendToActivityMain(phone!!,pass2!!, AllValue.gotomain!!)
+                }
+                if(getResources().getString(R.string.mom_or_doctor) == "doctor")
+                {//đến giao diện của bác sĩ
+                    sendToActivityMain_Doctor(phone!!,pass2!!, AllValue.gotomain!!)
+                }
+            }
         }
     }
     //Mở màn hình chính

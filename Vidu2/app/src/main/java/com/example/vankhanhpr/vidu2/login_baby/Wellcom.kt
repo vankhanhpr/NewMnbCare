@@ -31,6 +31,7 @@ class Wellcom : AppCompatActivity()
 {
     var id1:String? = ""
     var pass1:String?=""
+    var thefirst1:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -42,14 +43,8 @@ class Wellcom : AppCompatActivity()
         //................. mom or doctor
         var mom_doctor : String = getResources().getString(R.string.mom_or_doctor)
         //............... lan dau
-        var Shared_Preferences : String = "landau"//..............ten thu muc chua
+        var Shared_Preferences : String = "landau"
         var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
-
-        var thefirst:String?=""
-
-        var thefirst1:String?=null
-        var id:String?=null
-        var password:String?=null
 
          id1 = sharedpreferences.getString("id","")
          pass1 =sharedpreferences.getString("password","")
@@ -78,10 +73,9 @@ class Wellcom : AppCompatActivity()
                             finish()
                         }
                 }
-                if(id1!=null)
+                if(id1!="")
                 {
                     Log.d("iddd",id1+ pass1!!)
-
 
                     if(resources.getString(R.string.mom_or_doctor)=="mom") {
                         sendToActivityMain(id1!!, pass1!!, 453)

@@ -17,6 +17,7 @@ import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
 import com.example.vankhanhpr.vidu2.change_password.ChangePass
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
 import com.example.vankhanhpr.vidu2.getter_setter.Json
+import com.example.vankhanhpr.vidu2.getter_setter.dicimal_getset.Information_Schedule
 import com.example.vankhanhpr.vidu2.getter_setter.dicimal_getset.Schedule
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.json.Service_Response
@@ -52,15 +53,13 @@ class Fragment_Medical: Fragment()
         temp.setDoctor_Name("Khanh Nguyen")
         temp.setMon_Baby_Name("Ba Ban")
         temp.setStatus("Bi chui hoai")
-
-
         list_Schedule!!.add(temp)
         list_Schedule!!.add(temp)
         var adapter:Adapter_Decima= Adapter_Decima(context,list_Schedule!!)
         lv_Medical!!.adapter= adapter
 
-        var inval: Array<String> = arrayOf(Json.AppLoginID,"1")
-        call.CallEmit(AllValue.workername_getschedule_cus,AllValue.servicename_getschedule_cus,inval,AllValue.get_schedule_custommer!!)
+        var inval: Array<String> = arrayOf(Json.AppLoginID,"20120101")
+        //call.CallEmit(AllValue.workername_getschedule_cus,AllValue.servicename_getschedule_cus,inval,AllValue.get_schedule_custommer!!)
 
         return  k
     }
@@ -78,12 +77,12 @@ class Fragment_Medical: Fragment()
             {
                 tab_error_medical!!.visibility=View.GONE
                 tab_lv_medical!!.visibility=View.VISIBLE
+                var infor_customer :Information_Schedule
             }
         }
     }
     //change pass
     fun sendToChangePass(value: String,resultcode:Int) {
-
         var intent3 = Intent(context, ChangePass::class.java)
         var bundle = Bundle()
         bundle.putString(AllValue.value, value)

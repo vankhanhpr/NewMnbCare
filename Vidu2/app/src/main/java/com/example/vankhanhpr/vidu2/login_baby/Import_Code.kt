@@ -1,7 +1,9 @@
 package com.example.vankhanhpr.vidu2.login_baby
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
@@ -189,8 +191,15 @@ class Import_Code :AppCompatActivity()
         if(event.getTemp()==AllValue.getId_Signin)
         {
             var json3:IsNumber= readJson1(event!!.getService()!!.getData()!!)
-            Json.AppLoginID= json3.getSecC0()!!
-            sendToActivityMain(phone!!,password!!,AllValue.gotomain!!)
+            if(json3.getSecC0()!="N") {
+                Json.AppLoginID = json3.getSecC0()!!
+                var Shared_Preferences : String = "IDSYSTEM"//........ ten thu muc chua
+                var sharedpreferences: SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+                var editor2 : SharedPreferences.Editor?= sharedpreferences.edit()
+                editor2!!.putString("id_system",Encode().encryptString(json3.getSecC0().toString()))
+                editor2.commit()
+                sendToActivityMain(phone!!, password!!, AllValue.gotomain!!)
+            }
         }
     }
     //Đọc file json

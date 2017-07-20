@@ -64,6 +64,12 @@ object  AllValue
     //get schedule customer
     var workername_getschedule_cus="ALTqMNB"
     var servicename_getschedule_cus="ALTqMNB_0103_1"
+    //create file mom
+    var workername_create_file_mom="ALTxMNB"
+    var servicename_create_file_mom="ALTxMNB_0102_1"
+    //put schedule bucket
+    var  workername_put_bucket="ALTxMNB"
+    var servicename_put_bucket="ALTxMNB_0103_1"
 
 
     //nơi chứa các hàm gọi
@@ -94,5 +100,5 @@ object  AllValue
     var restartPassAgain:String?="restartPassAgain"
     var get_info_customer:String?="getCustomer"
     var get_schedule_custommer:String?="getSchedule_Cus"//lấy danh sách lịch khám của khách hàng
-
+    var insert_file_mom_baby:String?="insert_file"//tao ho so cho me va be
 }

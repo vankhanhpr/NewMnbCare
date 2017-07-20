@@ -53,7 +53,9 @@
     <string name="name_mombaby">Tên mẹ và bé</string>
     <string name="status_cus">Trạng thái</string>
 
-    //tra cứu lịch khám
+    <!--//tra cứu lịch khám-->
     <string name="tatle_medical">Tra cứu lịch khám</string>
 
+    <!--thay doi tai khoan-->
+    <string name="change_account">Tài khoản của bạn có sự thay đổi vui lòng kiểm tra lại</string>
 </resources>

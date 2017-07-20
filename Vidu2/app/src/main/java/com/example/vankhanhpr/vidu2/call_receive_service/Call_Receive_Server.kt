@@ -189,7 +189,6 @@ class Call_Receive_Server private constructor()
             Log.d("Error",e.toString())
         }
     }
-
     //Add data vào trong class
     fun CallService(clientSeq:Int, workerName:String,serviceName:String,input:Array<String>): ALTMW_Protocol
     {

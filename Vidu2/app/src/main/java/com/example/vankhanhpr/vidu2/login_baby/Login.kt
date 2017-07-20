@@ -201,8 +201,8 @@ class  Login: AppCompatActivity() {
             var isnum:IsNumber?= readJson1(json!!)//đọc json thành class
             if(isnum!!.C0=="Y")
             {
-                var array:Array<String>?= arrayOf(phone.toString())
-                call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
+               // var array:Array<String>?= arrayOf(phone.toString())
+                //call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
                 mCountDownTimer!!.cancel()
                 sendToActivityLogin(phone!!,AllValue.login!!)
             }
@@ -230,13 +230,13 @@ class  Login: AppCompatActivity() {
             }
         }
 
-        if(event.getTemp()==AllValue.getId_Main)
+        /*if(event.getTemp()==AllValue.getId_Main)
         {
             var tem4:IsNumber?=null
             tem4=readJson1(event.getService()!!.getData()!!)
-           Json.AppLoginID=tem4.getSecC0()!!
+            Json.AppLoginID=tem4.getSecC0()!!
             Log.d("AllValue",tem4.getSecC0())
-        }
+        }*/
     }
     //truyền số diện thoại qua các activity khác
     //Hàm chuyển qua Login
