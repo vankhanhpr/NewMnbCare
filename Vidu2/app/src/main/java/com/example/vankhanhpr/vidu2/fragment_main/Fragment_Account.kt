@@ -85,6 +85,7 @@ class Fragment_Account : Fragment() {
             startActivity(intent)
             //......................................... xóa dữ liệu "Inf_Account" B2_logout
             send_Logout()
+            call.Disconnect()
             activity.finish()//........................ finish activity main B3_logout
         }
 
@@ -164,6 +165,9 @@ class Fragment_Account : Fragment() {
         editor2!!.putString("password","")
         editor2!!.commit()
         Log.d("xoa_landau",sharedpreferences2.getString("id",""))
+
+        Json.AppLoginID = ""
+        Json.AppLoginPswd = ""
         //tvdiem_!!.text = sharedpreferences.getString("C1","").toString()
     }
 
