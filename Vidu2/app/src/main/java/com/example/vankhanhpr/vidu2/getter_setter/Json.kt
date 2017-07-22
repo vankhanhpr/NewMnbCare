@@ -9,7 +9,7 @@ object Json
 {
     public  var ID_Main:String? = ""
     public var Operation:String?= "Q"
-    public  var AppLoginID:String ="0000"
+    public  var AppLoginID:String ="0000999012"
     var  AppLoginPswd:String? =""
    // var x:Call_Receive_Server= Call_Receive_Server()
 }

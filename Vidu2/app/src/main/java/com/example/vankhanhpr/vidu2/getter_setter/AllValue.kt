@@ -70,6 +70,9 @@ object  AllValue
     //put schedule bucket
     var  workername_put_bucket="ALTxMNB"
     var servicename_put_bucket="ALTxMNB_0103_1"
+    //thay dổi thông tin khách hàng
+    var workername_change_account="ALTxMNB"
+    var servicename_change_account="ALTxMNB_0101_2"
 
 
     //nơi chứa các hàm gọi
@@ -101,4 +104,5 @@ object  AllValue
     var get_info_customer:String?="getCustomer"
     var get_schedule_custommer:String?="getSchedule_Cus"//lấy danh sách lịch khám của khách hàng
     var insert_file_mom_baby:String?="insert_file"//tao ho so cho me va be
+    var get_change_infor:String?="getInfor"
 }

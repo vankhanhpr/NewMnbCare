@@ -26,6 +26,7 @@
         <activity android:name=".login_doctor.main_doctor"/>
         <activity android:name=".change_password.ChangePass"/>
         <activity android:name="com.example.vankhanhpr.vidu2.fragment_main.fragment_mom_baby.Create_File_Mon"/>
+        <activity android:name=".fragment_main.Information_Account.Account_Inf"/>
 
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>
