@@ -1,7 +1,9 @@
 package com.example.vankhanhpr.vidu2.change_password
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
@@ -39,6 +41,7 @@ class ChangePass:AppCompatActivity()
     var call=Call_Receive_Server.getIns()
     var dialog_disconnect:Dialog?=null
     var mCountDownTimer: CountDownTimer? = null
+    var f:Boolean?= true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +57,14 @@ class ChangePass:AppCompatActivity()
 
         var inte: Intent = intent//set data
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
-
         phone=bundle.getString(AllValue.value)//lấy phone
+        if(phone=="2305")
+        {
+            f=false
+            var Shared_Preferences : String = "landau"
+            var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+            phone = sharedpreferences.getString("id","")
+        }
 
         tv_continue_changepass.setOnClickListener()
         {
@@ -166,12 +175,16 @@ class ChangePass:AppCompatActivity()
                 var btn_success= dialog_success!!.findViewById(R.id.btn_success) as Button
                 btn_success.setOnClickListener()
                 {
-                    if(resources.getString(R.string.mom_or_doctor)=="mom") {
-                        sendToActivityMain(phone!!,pass3!!, AllValue.gotomain_changepass!!)
+                    if(f!!) {
+                        if (resources.getString(R.string.mom_or_doctor) == "mom") {
+                            sendToActivityMain(phone!!, pass3!!, AllValue.gotomain_changepass!!)
+                        } else {
+                            sendToActivityMain_Doctor(phone!!, pass3!!, AllValue.gotomain_changepass!!)
+                        }
                     }
                     else
                     {
-                        sendToActivityMain_Doctor(phone!!,pass3!!, AllValue.gotomain_changepass!!)
+                        finish()
                     }
                     dialog_success!!.cancel()
                     tab_loading!!.visibility=View.GONE

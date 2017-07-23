@@ -24,7 +24,7 @@
                 android:textSize="20dip"
                 android:text="@string/tatle_medical"
                 android:gravity="center"
-                android:textColor="@color/green2"
+                android:textColor="@color/dark"
                 />
             <View
                 android:layout_width="match_parent"
@@ -64,7 +64,6 @@
                 android:saveEnabled="true"
                 android:scaleType="center"
                 android:background="@drawable/icon_no_data"/>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

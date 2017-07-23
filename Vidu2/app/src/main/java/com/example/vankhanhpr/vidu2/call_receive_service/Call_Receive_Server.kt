@@ -61,6 +61,11 @@ class Call_Receive_Server private constructor()
         mSocket=IO.socket(AllValue.address.toString())
         mSocket!!.connect()
     }
+    fun Disconnect()
+    {
+        mSocket!!.disconnect()
+        mSocket!!.connect()
+    }
     fun ListenEvent()
     {
         mSocket!!.on("RES_MSG",onNewMessage)

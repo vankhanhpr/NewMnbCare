@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="pading10dip">10dip</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_big">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
     <dimen name="tex_size_more_big">22sp</dimen>
 </resources>

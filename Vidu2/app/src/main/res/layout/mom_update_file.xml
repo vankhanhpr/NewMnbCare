@@ -17,7 +17,7 @@
             android:gravity="center_vertical">
 
             <LinearLayout
-                android:id="@+id/back_create_file_mom"
+                android:id="@+id/back_update_file_mom"
                 android:layout_width="50.0dip"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
@@ -41,7 +41,7 @@
                 android:layout_toRightOf="@+id/back_file_mom"
                 android:ellipsize="end"
                 android:focusable="true"
-                android:text="@string/create_file"
+                android:text="@string/update_file"
                 android:gravity="center"
                 android:textColor="@color/dark"
                 android:textSize="16sp"
@@ -221,10 +221,10 @@
             android:layout_height="10dp"/>
         <Button
             android:layout_gravity="center"
-            android:id="@+id/btn_create_fiel_mom"
+            android:id="@+id/bnt_save_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tạo hồ sơ"/>
+            android:text="@string/update_file_button"/>
     </LinearLayout>
     <ProgressBar
         android:id="@+id/tab_insert_file"

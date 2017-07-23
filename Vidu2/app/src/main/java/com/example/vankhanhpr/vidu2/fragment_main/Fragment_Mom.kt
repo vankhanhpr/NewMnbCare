@@ -1,117 +1,112 @@
 package com.example.vankhanhpr.vidu2.fragment_main
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.SearchView
 import com.example.vankhanhpr.vidu2.R
+import com.example.vankhanhpr.vidu2.adapter.adapter_diciamal.Adapter_List_Doctor
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
+import com.example.vankhanhpr.vidu2.fragment_main.fragment_bucking.Map_Location_Mom
 import com.example.vankhanhpr.vidu2.fragment_main.fragment_mom_baby.Create_File_Mon
 import com.example.vankhanhpr.vidu2.getter_setter.AllValue
-import com.example.vankhanhpr.vidu2.getter_setter.Json
+import com.example.vankhanhpr.vidu2.getter_setter.Examble
+import com.example.vankhanhpr.vidu2.getter_setter.mom_baby.Doctor
 import com.example.vankhanhpr.vidu2.json.MessageEvent
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.app.Activity
-import android.support.v4.app.ActivityCompat
-import android.content.pm.PackageManager
-import android.location.Location
-import android.widget.TextView
-import android.widget.Toast
+import org.json.JSONObject
+
+
+
+
+
+
 
 
 /**
  * Created by VANKHANHPR on 7/9/2017.
  */
 
-class Fragment_Mom:Fragment()/*,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener*/
+class Fragment_Mom:Fragment(),SearchView.OnQueryTextListener/*,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener*/
 {
-    /*private var location: Location? = null
-
-    // Đối tượng tương tác với Google API
-    private var gac: GoogleApiClient? = null
-
-    // Hiển thị vị trí
-    private var tvLocation: TextView? = null
 
 
-
-    override fun onConnected(p0: Bundle?) {
-        //getLocation()
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-       //gac!!.connect()
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        Toast.makeText(context, "Lỗi kết nối: " + p0.getErrorMessage(), Toast.LENGTH_SHORT).show()
-    }*/
-
+    var listDoctor:ArrayList<Doctor>?=null
     var call= Call_Receive_Server.getIns()
+    var lv_mom_chedule_bucked:ListView?=null
+    var tab_list_doctor:LinearLayout?=null
+    var tab_no_data_listdoctor:LinearLayout?=null
+    var listdoctor:ArrayList<JSONObject>?=null
+    var search_mom:SearchView?=null
+    var adapter:Adapter_List_Doctor?=null
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().register(this)
         var k: View = inflater!!.inflate(R.layout.fragment_mom, container, false)
-       // EventBus.getDefault().register(this)
 
-        //gac!!.connect()
-        //
-        // buildGoogleApiClient()
+        listDoctor= ArrayList()
+        listdoctor= ArrayList()
+        search_mom=k.findViewById(R.id.search_mom) as SearchView
+        search_mom!!.setIconifiedByDefault(false);
+        search_mom!!.setOnQueryTextListener(this);
+        search_mom!!.setSubmitButtonEnabled(false);
 
-        var bnt_create_file= k.findViewById(R.id.bnt_create_file)
-        bnt_create_file.setOnClickListener()
-        {
-            var intent= Intent(context,Create_File_Mon::class.java)
-            startActivity(intent)
+        lv_mom_chedule_bucked=k.findViewById(R.id.lv_mom_chedule_bucked) as ListView
+        tab_list_doctor=k.findViewById(R.id.tab_list_doctor) as LinearLayout
+        tab_no_data_listdoctor=k.findViewById(R.id.tab_no_data_listdoctor) as LinearLayout
+        var inval: Array<String> = arrayOf("1","10.768830", "106.697720","2000")
+        call.CallEmit(AllValue.workername_get_listdoctor,AllValue.servicename_get_listdoctor,inval,AllValue.get_list_doctor!!)
+        lv_mom_chedule_bucked!!.setOnItemClickListener{
+            parent, view, position, id ->
+            sendToActivityMapMom(listdoctor!![position].toString(),9090)
         }
         return k
     }
-    /*@Subscribe(threadMode = ThreadMode.MAIN)
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return  false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        try {
+            adapter!!.getFilter().filter(newText)
+        }
+        catch (e:Exception){}
+        return false
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
-        if (event.getTemp() == AllValue.get_info_customer) {
-
+        if(event.getTemp()==AllValue.get_list_doctor && event.getService()!!.getData().toString() !="")
+        {
+            tab_no_data_listdoctor!!.visibility= View.GONE
+            tab_list_doctor!!.visibility=View.VISIBLE
+            listdoctor= event.getService()!!.getData()!!
+            for(i in 0..listdoctor!!.size-1)
+            {
+                val gson = Gson()
+                var tm: Doctor = gson.fromJson(listdoctor!![i].toString(),Doctor::class.java)
+                listDoctor!!.add(tm)
+            }
+            adapter= Adapter_List_Doctor(context,listDoctor!!)
+            lv_mom_chedule_bucked!!.adapter = adapter!!
         }
-    }*/
-    //lay thong tin ho so me va be
-//    fun getInfor_file_mom_baby()
-//    {
-//        var array:Array<String>?= arrayOf(Json.AppLoginID)
-//        call!!.CallEmit(AllValue.workername_create_file_mom,AllValue.servicename_create_file_mom,array!!,AllValue.get_info_customer.toString())
-//    }
-//
-//    private fun getLocation() {
-//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // Kiểm tra quyền hạn
-//            ActivityCompat.requestPermissions(context as Activity,
-//                    arrayOf<String>(Manifest.permission.ACCESS_COARSE_LOCATION), 2)
-//        } else {
-//            location = LocationServices.FusedLocationApi.getLastLocation(gac)
-//
-//            if (location != null) {
-//                val latitude = location!!.getLatitude()
-//                val longitude = location!!.getLongitude()
-//                // Hiển thị
-//                tvLocation!!.setText(latitude.toString() + ", " + longitude)
-//            } else {
-//                tvLocation!!.setText("(Không thể hiển thị vị trí. " + "Bạn đã kích hoạt location trên thiết bị chưa?)")
-//            }
-//        }
-//    }
-
-    /**
-     * Tạo đối tượng google api client
-     */
-    /*@Synchronized protected fun buildGoogleApiClient() {
-        if (gac == null) {
-            gac = GoogleApiClient.Builder(context)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API).build()
-        }
-    }*/
-
+    }
+    fun sendToActivityMapMom(value: String,resultcode:Int) {
+        var intent3 = Intent(context, Map_Location_Mom::class.java)
+        var bundle = Bundle()
+        bundle.putString(AllValue.value, value)
+        intent3.putExtra(AllValue.key_bundle, bundle)
+        startActivityForResult(intent3,resultcode!!)
+    }
 }

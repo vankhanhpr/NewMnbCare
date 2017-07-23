@@ -25,7 +25,10 @@ object  AllValue
     var gotomain_changepass:Int?=555
     var login_doctor:Int?=666
     var changePass:Int?=777
-
+    var createFile:Int?=888 //tạo hồ sơ cho mẹ và bé
+    var updateFile:Int?=999
+    var sentToCreateFile:Int?=1122
+    var sentToBucking:Int?=2233
     //hết ---------------------
 
     //wokername and servicename check number
@@ -70,6 +73,18 @@ object  AllValue
     //put schedule bucket
     var  workername_put_bucket="ALTxMNB"
     var servicename_put_bucket="ALTxMNB_0103_1"
+    //lấy danh sách bác sĩ gần vị trí hiện tại
+    var workername_get_listdoctor="ALTqCommon01"
+    var servicename_get_listdoctor="ALTqCommon01_0821_1"
+    //Tra cứu hồ sơ
+    var workername_search_file="ALTqMNB"
+    var servicename_search_file="ALTqMNB_0102_1"
+    //Chỉnh sữa hồ sơ
+    var workername_update_file="ALTxMNB"
+    var servicename_update_file="ALTxMNB_0102_1"
+    //lấy thời gian khám dự kiến
+    var workername_set_time_expected="ALTxMNB"
+    var servicename_set_time_expected="ALTxMNB_0103_1"
 
 
     //nơi chứa các hàm gọi
@@ -101,4 +116,11 @@ object  AllValue
     var get_info_customer:String?="getCustomer"
     var get_schedule_custommer:String?="getSchedule_Cus"//lấy danh sách lịch khám của khách hàng
     var insert_file_mom_baby:String?="insert_file"//tao ho so cho me va be
+    var get_list_doctor:String?="getlist_doctor"//lay danh sach bac si ben tab me
+    var get_list_doctor_baby:String?="getlist_doctor_baby"//lay danh sach bac si ben tab be
+    var seach_list_file:String?="seaerch_file_mom_baby"//lay danh sach ho so trong quan ly ho so
+    var update_file_mombaby:String?="update_file_mom_baby"//update ho so me va be
+    var getlist_file_mom:String?="get_list_file_mom"//lay danh sach me va be
+    var get_time_expected:String?="get_time_expected"
+    var bucking:String?="bucking"
 }

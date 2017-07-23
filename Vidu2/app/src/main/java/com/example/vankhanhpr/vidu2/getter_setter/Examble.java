@@ -8,122 +8,148 @@ import java.util.ArrayList;
 
 public class Examble {
 
-    String Date_Perform;
-    int Ordinal_Perform;
-    String Code_Hospital;
-    String Code_Doctor;
-    String Code_Customer;
-    String ID_Mom_Baby;
-    String Name_Mom_Baby;
-    String Date_Set_Calendar;
-    String Hours_Put_Checkup;
-    String Hours_Checkup_Expected;
-    String Status;
-    String Status_Name;
+    private  String c0 ;
+    private String c1;
+    private  String c2;
+    private String c3;
+    private String c4;
+    private String c5;
+    private String c6;
+    private String c7;
+    private String c8;
+    private String c9;
+   /* private String c10;
+    private String c11;
+    private String C12;
+    private String c13;
+    private String c14;*/
 
-    public String getDate_Perform() {
-        return Date_Perform;
+    public String getC0() {
+        return c0;
     }
 
-    public void setDate_Perform(String date_Perform) {
-        Date_Perform = date_Perform;
+    public void setC0(String c0) {
+        this.c0 = c0;
     }
 
-    public int getOrdinal_Perform() {
-        return Ordinal_Perform;
+    public String getC1() {
+        return c1;
     }
 
-    public void setOrdinal_Perform(int ordinal_Perform) {
-        Ordinal_Perform = ordinal_Perform;
+    public void setC1(String c1) {
+        this.c1 = c1;
     }
 
-    public String getCode_Hospital() {
-        return Code_Hospital;
+    public String getC2() {
+        return c2;
     }
 
-    public void setCode_Hospital(String code_Hospital) {
-        Code_Hospital = code_Hospital;
+    public void setC2(String c2) {
+        this.c2 = c2;
     }
 
-    public String getCode_Doctor() {
-        return Code_Doctor;
+    public String getC3() {
+        return c3;
     }
 
-    public void setCode_Doctor(String code_Doctor) {
-        Code_Doctor = code_Doctor;
+    public void setC3(String c3) {
+        this.c3 = c3;
     }
 
-    public String getCode_Customer() {
-        return Code_Customer;
+    public String getC4() {
+        return c4;
     }
 
-    public void setCode_Customer(String code_Customer) {
-        Code_Customer = code_Customer;
+    public void setC4(String c4) {
+        this.c4 = c4;
     }
 
-    public String getID_Mom_Baby() {
-        return ID_Mom_Baby;
+    public String getC5() {
+        return c5;
     }
 
-    public void setID_Mom_Baby(String ID_Mom_Baby) {
-        this.ID_Mom_Baby = ID_Mom_Baby;
+    public void setC5(String c5) {
+        this.c5 = c5;
     }
 
-    public String getName_Mom_Baby() {
-        return Name_Mom_Baby;
+    public String getC6() {
+        return c6;
     }
 
-    public void setName_Mom_Baby(String name_Mom_Baby) {
-        Name_Mom_Baby = name_Mom_Baby;
+    public void setC6(String c6) {
+        this.c6 = c6;
     }
 
-    public String getDate_Set_Calendar() {
-        return Date_Set_Calendar;
+    public String getC7() {
+        return c7;
     }
 
-    public void setDate_Set_Calendar(String date_Set_Calendar) {
-        Date_Set_Calendar = date_Set_Calendar;
+    public void setC7(String c7) {
+        this.c7 = c7;
     }
 
-    public String getHours_Put_Checkup() {
-        return Hours_Put_Checkup;
+    public String getC8() {
+        return c8;
     }
 
-    public void setHours_Put_Checkup(String hours_Put_Checkup) {
-        Hours_Put_Checkup = hours_Put_Checkup;
+    public void setC8(String c8) {
+        this.c8 = c8;
     }
 
-    public String getHours_Checkup_Expected() {
-        return Hours_Checkup_Expected;
+    public String getC9() {
+        return c9;
     }
 
-    public void setHours_Checkup_Expected(String hours_Checkup_Expected) {
-        Hours_Checkup_Expected = hours_Checkup_Expected;
+    public void setC9(String c9) {
+        this.c9 = c9;
     }
 
-    public String getStatus() {
-        return Status;
+   /* public String getC10() {
+        return c10;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setC10(String c10) {
+        this.c10 = c10;
     }
 
-    public String getStatus_Name() {
-        return Status_Name;
+    public String getC11() {
+        return c11;
     }
 
-    public void setStatus_Name(String status_Name) {
-        Status_Name = status_Name;
+    public void setC11(String c11) {
+        this.c11 = c11;
     }
 
-    private ArrayList<String> Data;
-
-    public ArrayList<String> getData() {
-        return Data;
+    public String getC12() {
+        return C12;
     }
 
-    public void setData(ArrayList<String> data) {
-        Data = data;
+    public void setC12(String c12) {
+        C12 = c12;
     }
+
+    public String getC13() {
+        return c13;
+    }
+
+    public void setC13(String c13) {
+        this.c13 = c13;
+    }
+
+    public String getC14() {
+        return c14;
+    }
+
+    public void setC14(String c14) {
+        this.c14 = c14;
+    }*/
 }
+
+/*
+{\"c0\":\"anh.do1\",\"c1\":\"Đỗ Ngọc Anh\",\"c2\":\"M\"," +
+        "\"c3\":\"0978333444\",\"c4\":\"0975558827\"," +
+        "\"c5\":\"ngocanhtink26@gmail.com\",\"c6\":\"57 Lê Thị Hồng Gấm, Q1\"," +
+        "\"c7\":\"BV Từ Vũ\",\"c8\":\"01\"," +
+        "\"c9\":\"1 năm kinh nghiệm\",\"c10\":\"100\"," +
+        "\"c11\":\"01\",\"c12\":\"161\"," +
+        "\"c13\":\"10.7678327560425\",\"c14\":\"106.696647644043\"}*/

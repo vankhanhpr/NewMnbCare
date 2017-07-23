@@ -79,6 +79,7 @@ class MainActivity :AppCompatActivity() {
         var id123= sharedpreferences2.getString("id_system","")
         id_system= Encode().decryptString(id123!!)
         Json.AppLoginID=id_system!!
+
         Log.d("MainActivity","Code : "+id_system.toString())
         //......lần đầu đăng nhập
         var Shared_Preferences : String = "landau"//........ ten thu muc chua
@@ -111,45 +112,45 @@ class MainActivity :AppCompatActivity() {
                         R.id.mmenu1 ->
                         {
                             fragmentTransaction!!.show(fragment_Medical)
-                            /*fragmentTransaction!!.hide(fragment_Mom)
+                            fragmentTransaction!!.hide(fragment_Mom)
                             fragmentTransaction!!.hide(fragment_Baby)
                             fragmentTransaction!!.hide(fragment_Group)
-                            fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                            fragmentTransaction!!.hide(fragment_Manager_Account)
                         }
                     R.id.mmenu2 ->
                     {
-                        /*fragmentTransaction!!.hide(fragment_Medical)
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                        fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Mom)
                     }
                     R.id.mmenu3 ->
                     {
-                       /* fragmentTransaction!!.hide(fragment_Medical)
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                        fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Baby)
                     }
                     R.id.mmenu4 ->
                     {
-                        /*fragmentTransaction!!.hide(fragment_Medical)
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                        fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Group)
                     }
                     R.id.mmenu5 ->
                     {
-                        /*fragmentTransaction!!.hide(fragment_Medical)
+                        fragmentTransaction!!.hide(fragment_Medical)
                         fragmentTransaction!!.hide(fragment_Mom)
                         fragmentTransaction!!.hide(fragment_Baby)
                         fragmentTransaction!!.hide(fragment_Group)
-                        fragmentTransaction!!.hide(fragment_Manager_Account)*/
+                        fragmentTransaction!!.hide(fragment_Manager_Account)
                         fragmentTransaction!!.show(fragment_Manager_Account)
                     }
                 }

@@ -52,10 +52,47 @@
     <string name="name_doctor">Tên Bác sĩ</string>
     <string name="name_mombaby">Tên mẹ và bé</string>
     <string name="status_cus">Trạng thái</string>
+    <string name="place_work">Nơi công tác</string>
+    <string name="address">Địa chỉ</string>
+    <string name="contact">Liên hệ</string>
+    <string name="manage_file">Quản lý hồ sơ</string>
+    <string name="create_file">Tạo hồ sơ</string>
+    <string name="update_file">Chỉnh sửa hồ sơ</string>
+    <string name="update_file_button">Lưu</string>
+
+    <string name="relationship">Mối quan hệ</string>
+    <string name="bucking">Đặt lịch</string>
+    <string name="no_file_mom">Bạn chưa có hồ sơ khám vui lòng tạo hồ sơ </string>
+    <string name="Ok">OK</string>
+    <string name="goto_bucking">Tiến hành đặt hồ sơ cho: </string>
+
+
 
     <!--//tra cứu lịch khám-->
     <string name="tatle_medical">Tra cứu lịch khám</string>
 
     <!--thay doi tai khoan-->
     <string name="change_account">Tài khoản của bạn có sự thay đổi vui lòng kiểm tra lại</string>
+
+    <string name="country_prompt">Choose a country</string>
+
+    <string-array name="relationship_arrays">
+        <item>Tôi</item>
+        <item>Vợ</item>
+        <item>Con</item>
+    </string-array>
+    <string-array name="sex_arrays">
+        <item>Nam</item>
+        <item>Nữ</item>
+        <item>Khác</item>
+    </string-array>
+    <string-array name="relationship_mom">
+        <item>Vợ</item>
+    </string-array>
+    <string-array name="sex_mom">
+        <item>Nữ</item>
+    </string-array>
+
+     <string name="wife">Vợ</string>
+    <string name="me">Tôi</string>
 </resources>

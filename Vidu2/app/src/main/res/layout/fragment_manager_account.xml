@@ -85,7 +85,7 @@
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
-            android:id="@+id/tab_changepass"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -132,6 +132,7 @@
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
+            android:id="@+id/tab_changepass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -170,5 +171,51 @@
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="15dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardElevation="5dp">
+        <LinearLayout
+            android:id="@+id/tab_show_list_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:weightSum="10"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Quản lý hồ sơ"
+                android:textSize="20dp"
+                android:layout_weight="6"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_weight="2">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_launcher_round"/>
+            </LinearLayout>
 
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

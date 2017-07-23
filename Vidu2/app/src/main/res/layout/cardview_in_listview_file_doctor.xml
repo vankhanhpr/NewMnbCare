@@ -33,8 +33,9 @@
                     android:textSize="@dimen/text_size_small"
                     android:layout_weight="1"
                     android:textColor="@color/dark"
-                    android:text="Thời gian dự khám"/>
+                    android:text="@string/name_doctor"/>
                 <TextView
+                    android:id="@+id/tv_name_doctor"
                     android:gravity="left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -57,8 +58,35 @@
                     android:textSize="@dimen/text_size_small"
                     android:layout_weight="1"
                     android:textColor="@color/dark"
-                    android:text="Tên bác sĩ"/>
+                    android:text="@string/place_work"/>
                 <TextView
+                    android:id="@+id/tv_place_work"
+                    android:gravity="left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_weight="1"
+                    android:text=""/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dip"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+
+                    android:gravity="left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_weight="1"
+                    android:textColor="@color/dark"
+                    android:text="@string/address"/>
+                <TextView
+                    android:id="@+id/tv_adddresss_doctor"
                     android:gravity="left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -81,32 +109,9 @@
                     android:textSize="@dimen/text_size_small"
                     android:layout_weight="1"
                     android:textColor="@color/dark"
-                    android:text="Họ tên người khám"/>
+                    android:text="@string/contact"/>
                 <TextView
-                    android:gravity="left"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:text=""/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dip"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-                <TextView
-                    android:gravity="left"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:textColor="@color/dark"
-                    android:text="Thời gian dự "/>
-                <TextView
+                    android:id="@+id/tv_contact"
                     android:gravity="left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

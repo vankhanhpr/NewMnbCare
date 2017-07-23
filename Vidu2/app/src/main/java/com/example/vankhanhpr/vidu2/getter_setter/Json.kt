@@ -12,4 +12,5 @@ object Json
     public  var AppLoginID:String ="0000"
     var  AppLoginPswd:String? =""
    // var x:Call_Receive_Server= Call_Receive_Server()
+    var bucking:Boolean?= true
 }
