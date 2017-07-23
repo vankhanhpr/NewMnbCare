@@ -26,10 +26,14 @@
         <activity android:name=".login_doctor.main_doctor"/>
         <activity android:name=".change_password.ChangePass"/>
         <activity android:name="com.example.vankhanhpr.vidu2.fragment_main.fragment_mom_baby.Create_File_Mon"/>
+<<<<<<< HEAD
         <activity android:name=".fragment_main.information_Account.Show_List_File_MonBaby"/>
         <activity android:name=".fragment_main.fragment_mom_baby.Update_File_Mom"/>
         <activity android:name=".fragment_main.fragment_bucking.Map_Location_Mom"/>
         <activity android:name=".fragment_main.fragment_bucking.BuckingMom"/>
+=======
+        <activity android:name=".fragment_main.Information_Account.Account_Inf"/>
+>>>>>>> origin/master
 
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>

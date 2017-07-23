@@ -171,8 +171,13 @@ class MainActivity :AppCompatActivity() {
         }
         if (event.getTemp() == AllValue.connect) {
             var  disconnect = findViewById(R.id.disconnect) as TextView
-           // disconnect.visibility= View.GONE
-            var inval: Array<String> = arrayOf(user_id.toString(), pass!!)
+            disconnect.visibility= View.GONE
+
+            //......lần đầu đăng nhập
+            var Shared_Preferences : String = "landau"//........ ten thu muc chua
+            var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+
+            var inval: Array<String> = arrayOf(sharedpreferences.getString("id",""),sharedpreferences.getString( "password",""))
             call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass_disconnect!!.toString())
         }
         if(event.getTemp()==AllValue.checkpass_disconnect)
