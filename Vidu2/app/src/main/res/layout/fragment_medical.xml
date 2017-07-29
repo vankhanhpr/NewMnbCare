@@ -9,6 +9,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="9">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,39 +32,133 @@
                 android:layout_height="20dp"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/tab_lv_medical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            >
-            <ListView
-                android:id="@+id/id_medical"
+            android:layout_height="50dip"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <LinearLayout
+                android:id="@+id/month_one"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_button_month"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="1 tháng"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/text_size_big"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/month_three"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_button_month"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="3 tháng"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/text_size_big"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/month_six"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_button_month"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="6 tháng"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/text_size_big"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/month_twelve"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_button_month"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="12 tháng"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/text_size_big"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/month_all"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_button_month"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Tất cả"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/text_size_big"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/srlLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/tab_lv_medical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <com.baoyz.swipemenulistview.SwipeMenuListView
+                            android:id="@+id/id_medical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@color/while1">
+                        </com.baoyz.swipemenulistview.SwipeMenuListView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/tab_error_medical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Không có dữ liệu"
+                            android:textSize="@dimen/text_size_big"
+                            android:paddingBottom="30dip"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:saveEnabled="true"
+                            android:scaleType="center"
+                            android:background="@drawable/icon_no_data"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v4.widget.SwipeRefreshLayout>
 
-            </ListView>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/tab_error_medical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Không có dữ liệu"
-                android:textSize="@dimen/text_size_big"
-                android:paddingBottom="30dip"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:saveEnabled="true"
-                android:scaleType="center"
-                android:background="@drawable/icon_no_data"/>
-        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

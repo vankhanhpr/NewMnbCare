@@ -34,7 +34,7 @@
     <!--sent to activity signin-->
     <string name="sentto_sign">Thông báo</string>
     <string name="body_sentto_signin">Tài khoản không tồn tại, chuyển qua trang đăng ký</string>
-    
+
     <!--//menu main activity-->
     <string name="medical">Lịch khám</string>
     <string name="mother">Mẹ</string>
@@ -47,7 +47,7 @@
     <string name="sentani_1">We carefully verify all banks before add them into the app</string>
     <string name="sentani_2">All hotels and hostel are sortels by hospitality rating</string>
     <string name="sentani_3">All hotels and hostel are sortels by hospitality rating2</string>
-   <!-- listview dicimal-->
+    <!-- listview dicimal-->
     <string name="time_dicimal">Giờ đến khám</string>
     <string name="name_doctor">Tên Bác sĩ</string>
     <string name="name_mombaby">Tên mẹ và bé</string>
@@ -65,7 +65,21 @@
     <string name="no_file_mom">Bạn chưa có hồ sơ khám vui lòng tạo hồ sơ </string>
     <string name="Ok">OK</string>
     <string name="goto_bucking">Tiến hành đặt hồ sơ cho: </string>
-
+    <string name="dialog_logout">Bạn có muốn đăng xuất ?</string>
+    <!--//shedule information detail-->
+    <string name="c0">Ngày xem lịch</string>
+    <string name="c1">Số thứ tự</string>
+    <string name="c2">Mã bệnh viện</string>
+    <string name="c3">Mã bác sĩ</string>
+    <string name="c4">Tên bác sĩ</string>
+    <string name="c5">Mã khách hàng</string>
+    <string name="c6">ID của mẹ và bé</string>
+    <string name="c7">Tên mẹ hoặc bé</string>
+    <string name="c8">Ngày đặt lịch</string>
+    <string name="c9">Giờ đặt khám</string>
+    <string name="c10">Giờ khám dự kiến</string>
+    <string name="c11">Trạng thái</string>
+    <string name="c12">Tên trạng thái</string>
 
 
     <!--//tra cứu lịch khám-->
@@ -93,6 +107,11 @@
         <item>Nữ</item>
     </string-array>
 
-     <string name="wife">Vợ</string>
+    <string-array name="relationship_baby">
+        <item>Con</item>
+    </string-array>
+
+    <string name="wife">Vợ</string>
     <string name="me">Tôi</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

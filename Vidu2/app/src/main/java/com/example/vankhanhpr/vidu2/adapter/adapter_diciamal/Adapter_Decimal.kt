@@ -38,10 +38,13 @@ class Adapter_Decima(context:Context,schedule:ArrayList<Schedule>):BaseAdapter()
             view=convertView
             holder = convertView.tag as ViewHolder
         }
-        holder.tv_doctor_name!!.text = schedule!![position].getDoctor_Name()
-        holder.tv_time!!.text = schedule!![position].getTime()
-        holder.tv_mon_baby_name!!.text = schedule!![position].getMon_Baby_Name()
-        holder.tv_status!!.text = schedule!![position].getStatus()
+        holder.tv_doctor_name!!.text = schedule!![position].getC4()
+        holder.tv_time!!.text =  schedule!![position].getC10()!!.substring(0,2)+"h:"+schedule!![position].getC10()!!.substring(2)
+        holder.tv_mon_baby_name!!.text = schedule!![position].getC7()
+        holder.tv_status!!.text =""+ if(schedule!![position].getC11().toString()=="N")"Chờ khám" else
+            if(schedule!![position].getC11().toString()=="Y")"Hoàn tất"
+            else if(schedule!![position].getC11().toString()=="D") "Hủy lịch đặt do người dùng"
+            else "Hủy lịch đặt hệ thống"
         return view
     }
 

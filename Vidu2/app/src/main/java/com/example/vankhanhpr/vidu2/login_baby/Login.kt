@@ -2,7 +2,9 @@ package com.example.vankhanhpr.vidu2.login_baby
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
@@ -22,6 +24,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.*
+import com.example.vankhanhpr.vidu2.encode.Encode
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import java.util.Collections.replaceAll
 
@@ -49,6 +52,13 @@ class  Login: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_phonenumber)
         EventBus.getDefault().register(this)
+
+
+
+        var Shared_Preferences : String = "landau"//........ ten thu muc chua
+        var sharedpreferences: SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+
+        Log.d("bienid",sharedpreferences.getString("id","").toString())
 
 
         progress_seclectphone1= findViewById(R.id.progress_seclectphone) as ProgressBar
@@ -204,6 +214,7 @@ class  Login: AppCompatActivity() {
                // var array:Array<String>?= arrayOf(phone.toString())
                 //call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
                 mCountDownTimer!!.cancel()
+
                 sendToActivityLogin(phone!!,AllValue.login!!)
             }
             else

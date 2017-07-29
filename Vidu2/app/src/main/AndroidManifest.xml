@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vankhanhpr.vidu2">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,27 +21,26 @@
         <activity android:name=".login_baby.Wellcom">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login_baby.Login_Commercial"></activity>
-        <activity android:name=".login_baby.Login"/>
-        <activity android:name=".login_baby.CheckPassLogin"/>
-        <activity android:name=".login_baby.Import_Code"/>
-        <activity android:name=".login_baby.CheckPassSignIn"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".login_doctor.Login_Doctor"/>
-        <activity android:name=".login_doctor.main_doctor"/>
-        <activity android:name=".change_password.ChangePass"/>
-        <activity android:name="com.example.vankhanhpr.vidu2.fragment_main.fragment_mom_baby.Create_File_Mon"/>
-<<<<<<< HEAD
-        <activity android:name=".fragment_main.information_Account.Show_List_File_MonBaby"/>
-        <activity android:name=".fragment_main.fragment_mom_baby.Update_File_Mom"/>
-        <activity android:name=".fragment_main.fragment_bucking.Map_Location_Mom"/>
-        <activity android:name=".fragment_main.fragment_bucking.BuckingMom"/>
-=======
-        <activity android:name=".fragment_main.Information_Account.Account_Inf"/>
->>>>>>> origin/master
+        <activity android:name=".login_baby.Login_Commercial" />
+        <activity android:name=".login_baby.Login" />
+        <activity android:name=".login_baby.CheckPassLogin" />
+        <activity android:name=".login_baby.Import_Code" />
+        <activity android:name=".login_baby.CheckPassSignIn" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login_doctor.Login_Doctor" />
+        <activity android:name=".login_doctor.main_doctor" />
+        <activity android:name=".change_password.ChangePass" />
+        <activity android:name=".fragment_main.fragment_mom_baby.Create_File_Mon" />
+        <activity android:name=".fragment_main.information_Account.Show_List_File_MonBaby" />
+        <activity android:name=".fragment_main.fragment_mom_baby.Update_File_Mom" />
+        <activity android:name=".fragment_main.fragment_bucking.Map_Location_Mom" />
+        <activity android:name=".fragment_main.fragment_bucking.BuckingMom" />
+        <activity android:name=".fragment_main.information_Account.Account_Inf" />
+        <activity android:name=".fragment_main.fragment_medical.Schedule_Infor_Detail" />
 
         <receiver android:name=".json.network.ConnectivityReceiver">
             <intent-filter>
@@ -41,5 +48,21 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
+
 </manifest>

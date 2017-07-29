@@ -29,8 +29,8 @@ class Update_File_Mom:AppCompatActivity()
 {
     var file_mom:File_Mom_Baby?=null
     var edt_name_customer:EditText?=null
-    var spinner_relationship:Spinner?=null
-    var spinner_sex:Spinner?=null
+   /* var spinner_relationship:Spinner?=null
+    var spinner_sex:Spinner?=null*/
     var edt_address:EditText?=null
     var edt_phonenumber:EditText?=null
     var edt_email_cus:EditText?=null
@@ -60,23 +60,56 @@ class Update_File_Mom:AppCompatActivity()
             edt_phonenumber = findViewById(R.id.edt_phonenumber) as EditText
             edt_email_cus = findViewById(R.id.edt_email_cus) as EditText
             bnt_save_file = findViewById(R.id.bnt_save_file) as Button
-            spinner_relationship = findViewById(R.id.spinner_relationship) as Spinner
-            spinner_sex = findViewById(R.id.spinner_sex) as Spinner
+            //spinner_relationship = findViewById(R.id.spinner_relationship) as Spinner
+            //spinner_sex = findViewById(R.id.spinner_sex) as Spinner
             tv_date = findViewById(R.id.tv_date) as TextView
 
             tab_insert_file = findViewById(R.id.tab_insert_file) as ProgressBar
 
-            var adapter_rel = ArrayAdapter.createFromResource(this,
-                    R.array.relationship_arrays, android.R.layout.simple_spinner_item)
-            adapter_rel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            var adapter_sex = ArrayAdapter.createFromResource(this,
-                    R.array.sex_arrays, android.R.layout.simple_spinner_item)
-            adapter_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-            spinner_relationship!!.adapter = adapter_rel
-            spinner_sex!!.adapter = adapter_sex
 
-            spinner_relationship!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+
+            var inte: Intent = intent
+            var bundle: Bundle = inte.getBundleExtra(AllValue.key_bundle)
+            var x = bundle.getString(AllValue.value)
+            var gson = Gson()
+            file_mom = gson.fromJson(x, File_Mom_Baby::class.java)
+
+            edt_name_customer!!.setText(file_mom!!.getC3())
+            edt_name_customer!!.setSelection(file_mom!!.getC3()!!.length)
+            edt_address!!.setText(file_mom!!.getC7())
+            edt_phonenumber!!.setText(file_mom!!.getC8())
+            edt_email_cus!!.setText(file_mom!!.getC9())
+            tv_date!!.setText(file_mom!!.getC6()!!.substring(0, 2) + "/" + file_mom!!.getC6()!!.substring(2, 4) + "/" + file_mom!!.getC6()!!.substring(4))
+
+
+           /* if(file_mom!!.getC0()!! == "2") {
+
+                var adapter_rel = ArrayAdapter.createFromResource(this,
+                        R.array.relationship_mom, android.R.layout.simple_spinner_item)
+                adapter_rel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                var adapter_sex = ArrayAdapter.createFromResource(this,
+                        R.array.sex_mom, android.R.layout.simple_spinner_item)
+                adapter_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner_relationship!!.adapter = adapter_rel
+                spinner_sex!!.adapter = adapter_sex
+            }
+            if(file_mom!!.getC0()!! == "3")
+            {
+                var adapter_rel = ArrayAdapter.createFromResource(this,
+                        R.array.relationship_baby, android.R.layout.simple_spinner_item)
+                adapter_rel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                var adapter_sex = ArrayAdapter.createFromResource(this,
+                        R.array.sex_arrays, android.R.layout.simple_spinner_item)
+                adapter_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner_relationship!!.adapter = adapter_rel
+                spinner_sex!!.adapter = adapter_sex
+
+                val options = ArrayList<String>()
+                spinner_sex!!.setSelection(options.indexOf("Nữ"))
+            }*/
+
+           /* spinner_relationship!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
                     ralationship = parentView.getItemAtPosition(position).toString()
                 }
@@ -94,20 +127,9 @@ class Update_File_Mom:AppCompatActivity()
                     var r = 0
                 }
             })
+*/
 
 
-            var inte: Intent = intent
-            var bundle: Bundle = inte.getBundleExtra(AllValue.key_bundle)
-            var x = bundle.getString(AllValue.value)
-            var gson = Gson()
-            file_mom = gson.fromJson(x, File_Mom_Baby::class.java)
-
-            edt_name_customer!!.setText(file_mom!!.getC3())
-            edt_name_customer!!.setSelection(file_mom!!.getC3()!!.length)
-            edt_address!!.setText(file_mom!!.getC7())
-            edt_phonenumber!!.setText(file_mom!!.getC8())
-            edt_email_cus!!.setText(file_mom!!.getC9())
-            tv_date!!.setText(file_mom!!.getC6()!!.substring(0, 2) + "/" + file_mom!!.getC6()!!.substring(2, 4) + "/" + file_mom!!.getC6()!!.substring(4))
 
             imv_calendar.setOnClickListener()
             {
@@ -134,9 +156,9 @@ class Update_File_Mom:AppCompatActivity()
                 email1 = edt_email_cus!!.text.toString()
                 phone1 = edt_phonenumber!!.text.toString()
 
-                var res: String? = "1"
-                var se: String? = "M"
-                when (ralationship) {
+                var res: String? = file_mom!!.getC0()
+                var se: String? = file_mom!!.getC2()
+               /* when (ralationship) {
                     "Tôi" -> {
                         res = "1"
                     }
@@ -157,7 +179,7 @@ class Update_File_Mom:AppCompatActivity()
                     "Khác" -> {
                         se = "O"
                     }
-                }
+                }*/
 
                 var my_date = tv_date!!.text.toString()
                 date1 = my_date.substring(0, 2) + my_date.substring(3, 5) + my_date.substring(6)
@@ -278,8 +300,6 @@ class Update_File_Mom:AppCompatActivity()
         pic.setTitle("Chọn ngày sinh")
         pic.show()
     }
-
-
 
     fun sendToMain(value:Int,resultcode:Int) {
         var intent:Intent= getIntent();

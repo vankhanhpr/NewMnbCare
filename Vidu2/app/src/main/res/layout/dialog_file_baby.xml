@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+        <RelativeLayout
+            android:id="@+id/choose_provine_top_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:background="@color/brown"
+            android:gravity="center_vertical"
+            android:paddingLeft="40dip"
+            android:paddingRight="5dip">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/back_file_mom"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:text="Chọn hồ sơ bé"
+                android:gravity="center"
+                android:textColor="@color/dark"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/tab_lit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9">
+            <ListView
+                android:id="@+id/lv_dialog_list_baby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tab_cancel_dialog_baby"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/brown">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/tex_size_more_big"
+            android:text="@string/cencel"/>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/load_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+</RelativeLayout>

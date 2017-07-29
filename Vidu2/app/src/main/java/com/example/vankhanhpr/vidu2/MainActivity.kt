@@ -169,8 +169,8 @@ class MainActivity :AppCompatActivity() {
             var  disconnect = findViewById(R.id.disconnect) as TextView
             disconnect.visibility= View.VISIBLE
         }
-        if (event.getTemp() == AllValue.connect) {
-            var  disconnect = findViewById(R.id.disconnect) as TextView
+        if (event.getTemp() == AllValue.connect)
+        {
             disconnect.visibility= View.GONE
 
             //......lần đầu đăng nhập
@@ -183,11 +183,11 @@ class MainActivity :AppCompatActivity() {
         if(event.getTemp()==AllValue.checkpass_disconnect)
         {
            var x:IsNumber=readJson1(event.getService()!!.getData()!!)
-            if(x.getSecC0()==("Y"))
+            if(x.getSecC0()=="Y")
             {
-                disconnect.visibility= View.GONE
+
             }
-            else{//truong hop thay da thay doi mat khau
+            if(x.getSecC0()=="N"){//truong hop thay da thay doi mat khau
                 dialog= Dialog(this)
                 dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog!!.setContentView(R.layout.dialog_error_password)
@@ -196,16 +196,14 @@ class MainActivity :AppCompatActivity() {
                 dialog!!.show()
                 tv_error.setText(resources.getString(R.string.change_account))
                 //Logout
-                editor!!.putString("id","")
-                editor!!.putString("password","")
-                editor!!.commit()
+                //send_Logout()
 
-                btn_cancel_error_pass.setOnClickListener()
+               /* btn_cancel_error_pass.setOnClickListener()
                 {
                     var inten= Intent(applicationContext,Login::class.java)
                     startActivity(inten)
                     finish()
-                }
+                }*/
             }
         }
     }
@@ -221,6 +219,7 @@ class MainActivity :AppCompatActivity() {
         } else {
             fragmentManager!!.popBackStack()
         }
+        finish()
     }
 
     //add fragments
@@ -253,7 +252,7 @@ class MainActivity :AppCompatActivity() {
     //settting bottom nagivation
     @SuppressLint("RestrictedApi")
     fun disableShiftMode(view: BottomNavigationView) {
-        val menuView = view.getChildAt(0) as BottomNavigationMenuView
+        var menuView = view.getChildAt(0) as BottomNavigationMenuView
         try {
             var shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
             shiftingMode.isAccessible = true
@@ -287,4 +286,39 @@ class MainActivity :AppCompatActivity() {
         ser1.setSecC0(c0!!)
         return ser1
     }
+    /*fun send_Logout(){
+        var Shared_Preferences : String = "Inf_Account"
+        var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
+        var editor : SharedPreferences.Editor? = sharedpreferences.edit()
+        editor!!.putString("C0","")//........... trả về null
+        editor!!.putString("C1","")
+        editor!!.putString("C2","")
+        editor!!.putString("C3","")
+        editor!!.putString("C4","")
+        editor!!.putString("C5","")
+        editor!!.putString("C6","")
+        editor!!.putString("C7","")
+        editor!!.putInt("C8",0)
+        editor!!.putInt("C9",0)
+        editor!!.commit()
+        Log.d("xoa_Inf_Acc",sharedpreferences.getString("C0","").toString())
+
+        var Name_file : String = "landau"//........ ten thu muc chua
+        var sharedpreferences2 : SharedPreferences = getSharedPreferences(Name_file, Context.MODE_PRIVATE)
+        var editor2 : SharedPreferences.Editor? = sharedpreferences2.edit()
+        editor2!!.putString("id","")
+        editor2!!.putString("password","")
+        editor2!!.commit()
+        Log.d("xoa_landau",sharedpreferences2.getString("id",""))
+        Json.AppLoginID = ""
+        Json.AppLoginPswd = ""
+
+
+        var Shared_Preferences4 : String = "IDSYSTEM"//........ ten thu muc chua
+        var sharedpreferences4:SharedPreferences = getSharedPreferences(Shared_Preferences4, Context.MODE_PRIVATE)
+        var editor4 : SharedPreferences.Editor?= sharedpreferences4.edit()
+        editor4!!.putString("id_system", "")
+        editor4.commit()
+        //tvdiem_!!.text = sharedpreferences.getString("C1","").toString()
+    }*/
 }

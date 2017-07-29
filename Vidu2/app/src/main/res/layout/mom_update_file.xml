@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
             android:paddingLeft="@dimen/pading10dip"
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:entries="@array/sex_arrays"
                 android:prompt="@string/country_prompt"/>
-        </LinearLayout>
+        </LinearLayout>-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
@@ -121,17 +121,20 @@
                 android:layout_height="match_parent"
                 android:text="Ngày sinh"
                 android:layout_weight="4.5"
+                android:gravity="center_vertical"
                 android:textSize="@dimen/text_size_big"/>
             <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="5" />
             <ImageView
                 android:id="@+id/imv_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="center"
+                android:layout_gravity="center"
                 android:background="@drawable/icon_calendar"/>
         </LinearLayout>
         <View
@@ -148,8 +151,7 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Địa chỉ"
-                />
+                android:text="Địa chỉ" />
             <EditText
                 android:id="@+id/edt_address"
                 android:layout_width="match_parent"

@@ -5,4 +5,5 @@
     <dimen name="text_size_big">16sp</dimen>
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="tex_size_more_big">22sp</dimen>
+    <dimen name="text_size_bucking">16sp</dimen>
 </resources>

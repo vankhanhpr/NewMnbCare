@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180sp"
+    android:orientation="vertical"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="180sp"
+        android:layout_weight="3"
+        android:weightSum="7"
+        android:orientation="vertical"
+        android:background="@drawable/border_layout_dark2"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="5sp"
+            android:layout_weight="3">
+            <TextView
+                android:gravity="center|bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/dark"
+                android:textSize="20dp"
+                android:text="@string/dialog_logout"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_dialog_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text=""
+            android:textSize="12sp"
+            android:gravity="center"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@drawable/border_layout_dark"
+            android:weightSum="2">
+            <TextView
+                android:id="@+id/tv_cancel_logout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/cencel"
+                android:textSize="16sp"
+                android:textColor="@color/colortexmain"
+                android:gravity="center"
+                android:background="@drawable/border_layout_dark"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_agree_logout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/accept"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

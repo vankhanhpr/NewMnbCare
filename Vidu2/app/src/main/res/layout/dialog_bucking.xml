@@ -1,23 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="150dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="30dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_signin"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/body_sentto_signin"
+            android:textSize="15sp"
+            android:textColor="@color/dark"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shrap_dialog_confirmphone"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cencel"
+            android:layout_weight="1"
+            android:background="@drawable/opaque_button"/>
+        <Button
+            android:id="@+id/tv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accept"
+            android:layout_weight="1"
+            android:background="@drawable/opaque_button"/>
+    </LinearLayout>
+</LinearLayout>
+
+
+
+
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="180sp"
     android:orientation="vertical"
     android:weightSum="10">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180sp"
-        android:layout_weight="3"
-        android:weightSum="7"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/border_layout_dark2"
-        android:gravity="center_horizontal">
-
+        android:gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="30dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="5sp"
             android:layout_weight="2">
             <TextView
                 android:gravity="center|bottom"
@@ -67,4 +120,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</LinearLayout>-->

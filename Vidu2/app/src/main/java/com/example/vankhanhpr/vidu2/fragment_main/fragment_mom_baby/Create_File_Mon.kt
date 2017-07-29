@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter
 import android.widget.AdapterView.OnItemSelectedListener
 
 import android.app.DatePickerDialog
+import android.util.Log
 import com.example.vankhanhpr.vidu2.fragment_main.fragment_bucking.BuckingMom
 import com.example.vankhanhpr.vidu2.getter_setter.IsNumber
 import org.json.JSONObject
@@ -36,7 +37,7 @@ class Create_File_Mon:AppCompatActivity() {
     var call = Call_Receive_Server.getIns()
     var tv_date: TextView? = null
     var f:Boolean=true
-    var flag:Boolean=true
+    var flag:Int=2
 
     var relationship_spinner: Spinner? = null
     var sex_spinner: Spinner? = null
@@ -54,6 +55,7 @@ class Create_File_Mon:AppCompatActivity() {
     var dialog_success:Dialog?=null
     var id_mom:String?=""
     var id_doctor:String?=""
+    var flag_se:Boolean? = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +67,21 @@ class Create_File_Mon:AppCompatActivity() {
         sex_spinner = findViewById(R.id.spinner_sex) as Spinner
 
 
-        if(!Json.bucking!!)
+        if(Json.bucking==0)
         {
-            flag=false
+            flag=0
+        }
+        if(Json.bucking==1)
+        {
+            flag=1
+        }
+        else
+        {
+            flag=2
         }
 
-        if(flag!!) {
+
+        if(flag!! == 2) {
             var adapter = ArrayAdapter.createFromResource(this, R.array.relationship_arrays, android.R.layout.simple_spinner_item)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             var adapter_sex = ArrayAdapter.createFromResource(this, R.array.sex_arrays, android.R.layout.simple_spinner_item)
@@ -78,7 +89,7 @@ class Create_File_Mon:AppCompatActivity() {
             relationship_spinner!!.adapter = adapter
             sex_spinner!!.adapter = adapter_sex
         }
-        else
+        if(flag!! == 0)
         {
             var adapter = ArrayAdapter.createFromResource(this, R.array.relationship_mom, android.R.layout.simple_spinner_item)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -89,29 +100,54 @@ class Create_File_Mon:AppCompatActivity() {
             relationship_spinner!!.adapter = adapter
             sex_spinner!!.adapter = adapter_sex
         }
+        if(flag!! == 1)
+        {
+            var adapter = ArrayAdapter.createFromResource(applicationContext, R.array.relationship_baby, android.R.layout.simple_spinner_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        try {
-            relationship_spinner!!.setOnItemSelectedListener(object : OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
-                    relationship = parentView.getItemAtPosition(position).toString()
-                }
+            var adapter_sex = ArrayAdapter.createFromResource(applicationContext, R.array.sex_arrays, android.R.layout.simple_spinner_item)
+            adapter_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-                override fun onNothingSelected(parentView: AdapterView<*>) {
-                    var r = 0
-                }
-            })
-            sex_spinner!!.setOnItemSelectedListener(object : OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
-                    sex = parentView.getItemAtPosition(position).toString()
-                }
-
-                override fun onNothingSelected(parentView: AdapterView<*>) {
-                    var r = 0
-                }
-            })
+            relationship_spinner!!.adapter = adapter
+            sex_spinner!!.adapter = adapter_sex
         }
-        catch (e:Exception){}
 
+        var adapter_sex5 = ArrayAdapter.createFromResource(applicationContext, R.array.sex_mom, android.R.layout.simple_spinner_item)
+        adapter_sex5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        var adapter_sex6 = ArrayAdapter.createFromResource(applicationContext,R.array.sex_arrays, android.R.layout.simple_spinner_item)
+        adapter_sex6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        relationship_spinner!!.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long)
+            {
+                relationship = parentView.getItemAtPosition(position).toString()
+                if(!flag_se!!) {
+                    if (flag!! == 2) {
+                        if (relationship!! == "Vợ") {
+
+                            sex_spinner!!.adapter = adapter_sex5
+                        }
+                        else {
+
+                            sex_spinner!!.adapter = adapter_sex6
+                        }
+                    }
+                }
+                flag_se=false
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                var r = 0
+            }
+        })
+        sex_spinner!!.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
+                sex = parentView.getItemAtPosition(position).toString()
+            }
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                var r = 0
+            }
+        })
 
         back_create_file_mom.setOnClickListener()
         {
@@ -141,7 +177,7 @@ class Create_File_Mon:AppCompatActivity() {
             var i = 0
             date= tv_date!!.text.toString()
             var date_string: String? = ""
-            if (date!!.length > 0) { date_string = date!!.substring(6) + date!!.subSequence(3, 5) + date!!.subSequence(0, 2)
+            if (date!!.length > 0) {date_string = date!!.substring(6) + date!!.subSequence(3, 5) + date!!.subSequence(0, 2)
             }
             var res: String? = "1"
             var se: String? = "M"
@@ -150,6 +186,7 @@ class Create_File_Mon:AppCompatActivity() {
                     res = "1"
                 }
                 "Vợ" -> {
+
                     res = "2"
                 }
                 "Con" -> {
@@ -230,10 +267,12 @@ class Create_File_Mon:AppCompatActivity() {
                 tv_error.setText(event.getService()!!.getMessage())
                 btn_success.setOnClickListener()
                 {
-                    if(flag) {
+                    if(flag==2)
+                    {
                         sendToMain(1, AllValue.createFile!!)
                     }
-                    else{
+                    else
+                    {
                         sendToActivityBucking(id_doctor!!,temp!!.getSecC0()!!,1234)
                     }
                 }

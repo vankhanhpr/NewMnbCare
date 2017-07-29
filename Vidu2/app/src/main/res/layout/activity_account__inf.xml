@@ -1,114 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    tools:context="com.example.vankhanhpr.vidu2.fragment_main.Information_Account.Account_Inf">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Họ Tên :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
-    <EditText
-        android:id="@+id/et_hoten"
+   >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Họ và tên"
-        android:inputType="textPersonName"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên riêng :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp">
 
-    <EditText
-        android:id="@+id/et_tenrieng"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Tên riêng"
-        android:inputType="textPersonName"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Số điện thoại"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Họ Tên :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_hoten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Họ và tên"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên riêng :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
 
-    <EditText
-        android:id="@+id/et_sodt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Số điện thoai"
-        android:inputType="phone"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giới tính :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_tenrieng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tên riêng"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
 
-    <EditText
-        android:id="@+id/et_giotinh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Giới tính"
-        android:inputType="textPersonName"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ngày sinh :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_sodt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Số điện thoai"
+            android:inputType="phone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giới tính :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
 
-    <EditText
-        android:id="@+id/et_ngaysinh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Ngày sinh"
-        android:inputType="textPersonName"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Địa chỉ :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_giotinh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Giới tính"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày sinh :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
 
-    <EditText
-        android:id="@+id/et_diachi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Địa chỉ"
-        android:inputType="textPersonName"
-        />
-    <TextView
+        <EditText
+            android:id="@+id/et_ngaysinh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Ngày sinh"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
+
+        <EditText
+            android:id="@+id/et_diachi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Địa chỉ"
+            android:inputType="textPersonName"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email :"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textPersonName"
+            />
+        <Button
+            android:id="@+id/btn_luuthongtin"
+            android:layout_width="wrap_content"
+            android:text="Lưu thông tin"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/tab_update_cus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email :"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"/>
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        />
-    <Button
-        android:id="@+id/btn_luuthongtin"
-        android:layout_width="wrap_content"
-        android:text="Lưu thông tin"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

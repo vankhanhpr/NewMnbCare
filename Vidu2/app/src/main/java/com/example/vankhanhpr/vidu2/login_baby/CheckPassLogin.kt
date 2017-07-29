@@ -41,7 +41,7 @@ import com.example.vankhanhpr.vidu2.login_doctor.main_doctor
 
 class CheckPassLogin:AppCompatActivity()
 {
-    var phone:String?=""
+    var phonem:String?=""
     var user:User= User()
     var valu:IsNumber= IsNumber()
     var pass:String?=null
@@ -60,8 +60,9 @@ class CheckPassLogin:AppCompatActivity()
         EventBus.getDefault().register(this)
         var inte:Intent= intent
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
-        phone= bundle.getString(AllValue.value)
-        Log.d("phone1",phone)
+        phonem= bundle.getString(AllValue.value)
+        Json.phone=phonem
+        Log.d("sodienthoaidau",phonem!!+Json.phone)
 
 
         //----------Login cho bác sĩ
@@ -82,7 +83,7 @@ class CheckPassLogin:AppCompatActivity()
                 var i = 0
                 pass = edt_passlogin.text.toString()
                 pass2 = Encode().encryptString(pass)
-                var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
+                var inval: Array<String> = arrayOf(phonem.toString(), pass2!!)
 
                 call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass1!!.toString())
                 mCountDownTimer = object : CountDownTimer(10000, 1000) {
@@ -146,10 +147,10 @@ class CheckPassLogin:AppCompatActivity()
                 }
                 btn_agree_dialogres.setOnClickListener()
                 {
-                    var inval1: Array<String> = arrayOf(phone!!.toString())
+                    var inval12: Array<String> = arrayOf(phonem!!.toString())
                     Log.d("id",valu.getSecC0().toString())
                     Json.Operation="E"
-                    call.CallEmit(AllValue.workername_restartpass,AllValue.servicename_restartpass,inval1,AllValue.restart_passwork!!.toString())
+                    call.CallEmit(AllValue.workername_restartpass,AllValue.servicename_restartpass,inval12,AllValue.restart_passwork!!.toString())
                     Json.Operation="Q"
                     dialog_agree!!.show()
                     dialog!!.cancel()
@@ -183,12 +184,11 @@ class CheckPassLogin:AppCompatActivity()
             pass = edt_passlogin.text.toString()
             pass2 = Encode().encryptString(pass)
 
-            var inval: Array<String> = arrayOf(phone.toString(), pass2!!)
-            call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval, AllValue.checkpass1!!.toString())
+            var inval4: Array<String> = arrayOf(phonem.toString(), pass2!!)
+            call.CallEmit(AllValue.workername_checkpass!!.toString(), AllValue.servicename_checkpass!!.toString(), inval4, AllValue.checkpass1!!.toString())
 
             mCountDownTimer = object : CountDownTimer(10000, 1000)
             {
-
                 override fun onTick(millisUntilFinished: Long)
                 {
                     i++
@@ -236,7 +236,6 @@ class CheckPassLogin:AppCompatActivity()
             dialog= Dialog(this)
             dialog_agree=Dialog(this)
             //lấy id của hệ thống
-            var array:Array<String>?= arrayOf(phone.toString())
             dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog_agree!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -254,16 +253,16 @@ class CheckPassLogin:AppCompatActivity()
             btn_agree_dialogres.setOnClickListener()
             {
                 Json.Operation="E"
-                var inval1: Array<String> = arrayOf(Json.AppLoginID)
+                var inval15: Array<String> = arrayOf(Json.AppLoginID)
                 //restart password
-                call!!.CallEmit(AllValue.workername_sendcode,AllValue.servicename_sendcode,inval1,AllValue.restart_passwork!!.toString())
+                call!!.CallEmit(AllValue.workername_sendcode,AllValue.servicename_sendcode,inval15,AllValue.restart_passwork!!.toString())
                 Json.Operation="Q"
                 dialog_agree!!.show()
                 dialog!!.cancel()
                 var btn_iport_pass_restart =dialog_agree!!.findViewById(R.id.btn_iport_pass_restart) as Button
                 btn_iport_pass_restart.setOnClickListener()
                 {
-                    sendToActivityChangePass(phone!!,348)
+                    sendToActivityChangePass(phonem!!,348)
                     dialog_agree!!.cancel()
                 }
             }
@@ -281,8 +280,10 @@ class CheckPassLogin:AppCompatActivity()
                 var temp8:IsNumber= readJson1(event.getService()!!.getData()!!)
                 Json.AppLoginPswd=pass2
                 Json.AppLoginID=temp8.getSecC0()!!
-                var array:Array<String>?= arrayOf(phone.toString())
-                call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Main.toString())
+                Log.d("sodienthoaigetid",phonem!!)
+                var array:Array<String>?= arrayOf(Json.phone.toString())
+                call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Login.toString())
+
             }
             if(serve.getResult()=="0")
             {
@@ -303,29 +304,29 @@ class CheckPassLogin:AppCompatActivity()
                 catch (e:Exception){}
             }
         }
-        if(event.getTemp()==AllValue.getId_Main)
+        if(event.getTemp()==AllValue.getId_Login)//lấy id của hệ thống
         {
             var x:ArrayList<JSONObject> = event.getService()!!.getData()!!
             var y:IsNumber=readJson1(x)
-            if(y.getSecC0()!="N")
-            {
+            if(y.getSecC0()!="N") {
 
                 var Shared_Preferences : String = "IDSYSTEM"//........ ten thu muc chua
                 var sharedpreferences:SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
                 var editor2 : SharedPreferences.Editor?= sharedpreferences.edit()
                 editor2!!.putString("id_system",Encode().encryptString(y.getSecC0().toString()))
                 editor2.commit()
-                Log.d("Checkpass","kkhh"+ y.getSecC0())
                 mCountDownTimer!!.cancel()
                 dialog_disconnect!!.cancel()
                 if(getResources().getString(R.string.mom_or_doctor) == "mom")
                 {//đến giao diện của mẹ và bé
 
-                    sendToActivityMain(phone!!,pass2!!, AllValue.gotomain!!)
+                    Log.d("sodienthoaigotomainmom",phonem!!)
+                    sendToActivityMain(Json.phone!!,pass2!!, AllValue.gotomain!!)
                 }
                 if(getResources().getString(R.string.mom_or_doctor) == "doctor")
                 {//đến giao diện của bác sĩ
-                    sendToActivityMain_Doctor(phone!!,pass2!!, AllValue.gotomain!!)
+                    Log.d("sodienthoaigotomain_do",phonem!!)
+                    sendToActivityMain_Doctor(Json.phone!!,pass2!!, AllValue.gotomain!!)
                 }
             }
         }
@@ -341,7 +342,6 @@ class CheckPassLogin:AppCompatActivity()
         startActivityForResult(intent3,resultcode!!)
         finish()
     }
-
     //goto main doctor
     fun sendToActivityMain_Doctor(value: String,value2:String,resultcode:Int) {
 

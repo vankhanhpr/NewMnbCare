@@ -12,6 +12,7 @@ object  AllValue
     var value:String ="Resuilt"
     var value2:String="Resuilt2"
     var value3:String="Resuilt3"
+    var value4:String="Resuilt4"
     var key_bundle:String?="Document"
 
     //hết----------------
@@ -29,6 +30,7 @@ object  AllValue
     var updateFile:Int?=999
     var sentToCreateFile:Int?=1122
     var sentToBucking:Int?=2233
+    var senToSheduleDetail:Int?= 3344
     //hết ---------------------
 
     //wokername and servicename check number
@@ -73,7 +75,6 @@ object  AllValue
     //put schedule bucket
     var  workername_put_bucket="ALTxMNB"
     var servicename_put_bucket="ALTxMNB_0103_1"
-<<<<<<< HEAD
     //lấy danh sách bác sĩ gần vị trí hiện tại
     var workername_get_listdoctor="ALTqCommon01"
     var servicename_get_listdoctor="ALTqCommon01_0821_1"
@@ -86,11 +87,13 @@ object  AllValue
     //lấy thời gian khám dự kiến
     var workername_set_time_expected="ALTxMNB"
     var servicename_set_time_expected="ALTxMNB_0103_1"
-=======
+    //thay đổi thông tin khách hàng
     //thay dổi thông tin khách hàng
     var workername_change_account="ALTxMNB"
     var servicename_change_account="ALTxMNB_0101_2"
->>>>>>> origin/master
+    //Hủy lịch khám
+    var workername_cancel_schedule="ALTxMNB"
+    var servicename_cancel_schedule="ALTxMNB_0102_1"
 
 
     //nơi chứa các hàm gọi
@@ -111,6 +114,7 @@ object  AllValue
 
     var getId:String?="getID"
     var getId_Main:String?="getID2"
+    var getId_Login:String?="getID_Login"
     var getId_Signin:String?="getId_Signin"
 
     var restart_passwork:String?="restart_Pass"
@@ -122,15 +126,13 @@ object  AllValue
     var get_info_customer:String?="getCustomer"
     var get_schedule_custommer:String?="getSchedule_Cus"//lấy danh sách lịch khám của khách hàng
     var insert_file_mom_baby:String?="insert_file"//tao ho so cho me va be
-<<<<<<< HEAD
-    var get_list_doctor:String?="getlist_doctor"//lay danh sach bac si ben tab me
+    var get_list_doctor_mom:String?="getlist_doctor_mom"//lay danh sach bac si ben tab me
     var get_list_doctor_baby:String?="getlist_doctor_baby"//lay danh sach bac si ben tab be
     var seach_list_file:String?="seaerch_file_mom_baby"//lay danh sach ho so trong quan ly ho so
     var update_file_mombaby:String?="update_file_mom_baby"//update ho so me va be
     var getlist_file_mom:String?="get_list_file_mom"//lay danh sach me va be
-    var get_time_expected:String?="get_time_expected"
-    var bucking:String?="bucking"
-=======
-    var get_change_infor:String?="getInfor"
->>>>>>> origin/master
+    var get_time_expected:String?="get_time_expected"//lấy thời gian khám dự kiến cho mẹ
+    var bucking:String?="bucking"//đặt lịch
+    var get_change_infor:String?="getInfor"//thay dổi thông tin khách hàng
+    var cancel_schedule:String?="cancel_schedule"
 }

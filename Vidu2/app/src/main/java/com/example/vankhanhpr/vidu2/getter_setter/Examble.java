@@ -18,11 +18,11 @@ public class Examble {
     private String c7;
     private String c8;
     private String c9;
-   /* private String c10;
+    private String c10;
     private String c11;
     private String C12;
     private String c13;
-    private String c14;*/
+    private String c14;
 
     public String getC0() {
         return c0;
@@ -104,7 +104,7 @@ public class Examble {
         this.c9 = c9;
     }
 
-   /* public String getC10() {
+    public String getC10() {
         return c10;
     }
 
@@ -142,7 +142,7 @@ public class Examble {
 
     public void setC14(String c14) {
         this.c14 = c14;
-    }*/
+    }
 }
 
 /*
