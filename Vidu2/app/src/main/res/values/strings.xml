@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="dont_connection">Mất kết nối</string>
+
     <string name="app_name">Vidu2</string>
     <string name="confirm_phone">XÁC NHẬN THÔNG TIN SỐ ĐIỆN THOẠI</string>
     <string name="notical_confirm">Chúc tối đã gửi mã xác nhận đến số điện thoại của bạn!</string>
@@ -80,6 +83,13 @@
     <string name="c10">Giờ khám dự kiến</string>
     <string name="c11">Trạng thái</string>
     <string name="c12">Tên trạng thái</string>
+    <string name="information_customer">Chỉnh sửa thông tin người dùng</string>
+    <!-- .......................................... -->
+    <!--filter theo trạng thái-->
+    <string name="wait">N</string>
+    <string name="succsess_bucker">Y</string>
+    <string name="cancel_buker">D</string>
+    <string name="cancel_bucker_system">C</string>
 
 
     <!--//tra cứu lịch khám-->
@@ -90,6 +100,7 @@
 
     <string name="country_prompt">Choose a country</string>
 
+    <!--spinner giới tính và mối quan hệ-->
     <string-array name="relationship_arrays">
         <item>Tôi</item>
         <item>Vợ</item>
@@ -113,5 +124,7 @@
 
     <string name="wife">Vợ</string>
     <string name="me">Tôi</string>
+    <!--hết filter -->
+
     <string name="title_activity_maps">Map</string>
 </resources>

@@ -40,8 +40,6 @@ import android.widget.AbsListView
 
 class Fragment_Baby:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout.OnRefreshListener
 {
-
-
     var call= Call_Receive_Server.getIns()
     var tab_no_data_listdoctor_baby:LinearLayout?=null
     var tab_list_doctor_baby:LinearLayout?=null
@@ -112,7 +110,7 @@ class Fragment_Baby:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
-        if(event.getTemp()==AllValue.get_list_doctor_baby && event.getService()!!.getData()!!.toArray()!=null)
+        if(event.getTemp()==AllValue.get_list_doctor_baby && event.getService()!!.getData()!!.toString()!=Json.error)
         {
             tab_no_data_listdoctor_baby!!.visibility= View.GONE
             tab_list_doctor_baby!!.visibility= View.VISIBLE
@@ -127,6 +125,10 @@ class Fragment_Baby:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout
             lv_baby_chedule_bucked!!.adapter= adapter
 
         }
+    }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
     fun sendToActivityMapMom(value: String,resultcode:Int) {

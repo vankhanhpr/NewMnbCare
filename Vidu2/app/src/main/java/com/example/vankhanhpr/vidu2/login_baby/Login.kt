@@ -249,6 +249,10 @@ class  Login: AppCompatActivity() {
             Log.d("AllValue",tem4.getSecC0())
         }*/
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
     //truyền số diện thoại qua các activity khác
     //Hàm chuyển qua Login
     fun sendToActivityLogin(value: String,resultcode:Int) {

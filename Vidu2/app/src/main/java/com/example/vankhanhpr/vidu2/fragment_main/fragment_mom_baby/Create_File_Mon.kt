@@ -56,6 +56,7 @@ class Create_File_Mon:AppCompatActivity() {
     var id_mom:String?=""
     var id_doctor:String?=""
     var flag_se:Boolean? = true
+    var disconnect:TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +66,7 @@ class Create_File_Mon:AppCompatActivity() {
         tab_insert_file = findViewById(R.id.tab_insert_file) as ProgressBar
         relationship_spinner = findViewById(R.id.spinner_relationship) as Spinner
         sex_spinner = findViewById(R.id.spinner_sex) as Spinner
+        disconnect=findViewById(R.id.disconnect)as TextView
 
 
         if(Json.bucking==0)
@@ -158,6 +160,9 @@ class Create_File_Mon:AppCompatActivity() {
             dialog_disconnect = Dialog(this)
             dialog_notication= Dialog(this)
             dialog_success= Dialog(this)
+            var dialogerror=Dialog(this)
+            dialogerror.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogerror.setContentView(R.layout.dialog_error)
 
             dialog_success!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog_success!!.setContentView(R.layout.dialog_success)
@@ -167,12 +172,29 @@ class Create_File_Mon:AppCompatActivity() {
             var tv_cancel = dialog_disconnect!!.findViewById(R.id.tv_error) as TextView
             var button_cancel = dialog_disconnect!!.findViewById(R.id.btn_cancel_error_pass)
 
+
+
+
             tab_insert_file!!.visibility = View.VISIBLE
             name = edt_name_customer.text.toString()
             address = edt_address.text.toString()
             phone = edt_phonenumber.text.toString()
             email = edt_email_cus.text.toString()
 
+            //kiểm tra số điện thoại và email
+            if(!(boolPhone(phone!!) && boolEmail(email!!)))
+            {
+                dialogerror.show()
+                var text=dialogerror.findViewById(R.id.tv_error) as TextView
+                var cancel=dialogerror.findViewById(R.id.btn_cancel_error)
+                text.setText("Email hoặc số điện thoại không hợp lệ!")
+                cancel.setOnClickListener()
+                {
+                    dialogerror.cancel()
+                }
+                tab_insert_file!!.visibility=View.GONE
+                return@setOnClickListener
+            }
 
             var i = 0
             date= tv_date!!.text.toString()
@@ -291,7 +313,20 @@ class Create_File_Mon:AppCompatActivity() {
                 }
             }
         }
+        if (event.getTemp() == AllValue.disconnect) {
+
+            disconnect!!.visibility= View.VISIBLE
+        }
+        if (event.getTemp() == AllValue.connect) {
+            disconnect!!.visibility = View.GONE
+        }
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+
     fun sendToMain(value:Int,resultcode:Int) {
         var intent:Intent= getIntent();
         var bundle:Bundle =  Bundle();
@@ -363,6 +398,41 @@ class Create_File_Mon:AppCompatActivity() {
         var ser1 : IsNumber = IsNumber()
         ser1.setSecC0(c0!!)
         return ser1
+    }
+    //Kiểm tra số điện thoại
+    fun boolPhone(phone2:String):Boolean {
+        if(phone2=="")
+        {
+            return true
+        }
+        if (phone2.length == 10 && (phone2.substring(1,2) == "9" || phone2.substring(1,2) == "8" )) {
+            return true
+        }
+        if (phone2.length == 11 && phone2.substring(1,2) == "1") {
+            return true
+        }
+        return  false
+    }
+    //kiểm tra email
+    fun boolEmail(email:String):Boolean
+    {
+        if(email=="")
+        {
+            return true
+        }
+        var tem=0
+        for(i in 0..email.length-1)
+        {
+            if(email.get(i).toString() == "@")
+            {
+                tem++
+            }
+        }
+        if(tem==1)
+        {
+            return true
+        }
+        return false
     }
 }
 

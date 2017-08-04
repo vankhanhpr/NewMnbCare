@@ -25,14 +25,14 @@ class  Schedule_Infor_Detail:AppCompatActivity()
         schedule= bundle.getString(AllValue.value)
         var gson =Gson()
         scheduleCl= gson.fromJson(schedule,Schedule::class.java)
-        tv_c0.setText(scheduleCl!!.getC0())
+        tv_c0.setText(scheduleCl!!.getC0()!!.substring(6,8)+"/"+scheduleCl!!.getC0()!!.substring(4,6)+"/"+scheduleCl!!.getC0()!!.substring(0,4))
         tv_c1.setText(scheduleCl!!.getC1())//
         tv_c2.setText(scheduleCl!!.getC2())
         tv_c3.setText(scheduleCl!!.getC4())
         tv_c4.setText(scheduleCl!!.getC7())
-        tv_c5.setText(scheduleCl!!.getC8()!!.substring(0,2)+scheduleCl!!.getC8()!!.substring(2,4)+scheduleCl!!.getC8()!!.substring(4))
-        tv_c6.setText(scheduleCl!!.getC9()!!.substring(0,2)+":"+scheduleCl!!.getC9()!!.substring(2))
-        tv_c7.setText(scheduleCl!!.getC10()!!.substring(0,2)+":"+scheduleCl!!.getC10()!!.substring(2))
+        tv_c5.setText(scheduleCl!!.getC8()!!.substring(0,2)+"/"+scheduleCl!!.getC8()!!.substring(2,4)+"/"+scheduleCl!!.getC8()!!.substring(4))
+        tv_c6.setText(scheduleCl!!.getC9()!!.substring(0,2)+"h:"+scheduleCl!!.getC9()!!.substring(2))
+        tv_c7.setText(scheduleCl!!.getC10()!!.substring(0,2)+"h:"+scheduleCl!!.getC10()!!.substring(2))
 
         tv_c8.setText("" + (if(scheduleCl!!.getC11()!!.toString() =="N") "Chờ khám"
             else

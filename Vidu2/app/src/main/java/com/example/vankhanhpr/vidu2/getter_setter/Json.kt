@@ -18,4 +18,7 @@ object Json
     val error="[{\"c0\":\"N\"}]"
     var doctor:Doctor?=null
     var phone:String?=null
+    var filter:Boolean?=true
+    var filter4:Boolean?=true
+    var number:Int?=0
 }

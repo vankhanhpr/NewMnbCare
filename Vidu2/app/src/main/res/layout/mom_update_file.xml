@@ -13,7 +13,7 @@
             android:id="@+id/choose_provine_top_bar"
             android:layout_width="fill_parent"
             android:layout_height="45.0dip"
-            android:background="@color/brown"
+            android:background="@color/tab_fragment"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -47,11 +47,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_update_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:paddingBottom="10dip">
             <TextView
                 android:layout_width="wrap_content"
@@ -62,59 +66,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:paddingLeft="@dimen/pading10dip"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mối quan hệ"
-                android:layout_weight="0.5"/>
-            <Spinner
-                android:id="@+id/spinner_relationship"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:entries="@array/relationship_arrays"
-                android:prompt="@string/country_prompt"/>
-        </LinearLayout>
-
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
+            android:layout_height="15dip"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:paddingLeft="@dimen/pading10dip"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Giới tính"
-                android:layout_weight="0.5"/>
-            <Spinner
-                android:layout_marginLeft="70dp"
-                android:id="@+id/spinner_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:entries="@array/sex_arrays"
-                android:prompt="@string/country_prompt"/>
-        </LinearLayout>-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_update_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:weightSum="10">
             <TextView
                 android:layout_width="0dip"
@@ -139,13 +99,13 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/brown"/>
+            android:layout_height="15dip"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <TextView
                 android:gravity="center"
@@ -162,16 +122,13 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="15dip"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_update_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
@@ -187,19 +144,12 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
+            android:layout_height="15dip"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_update_file"
             android:orientation="horizontal"
+            android:background="@drawable/list_selector"
             android:paddingLeft="@dimen/pading10dip"
             android:gravity="center">
             <TextView
@@ -220,12 +170,14 @@
             android:background="@color/brown"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="40dp"/>
         <Button
             android:layout_gravity="center"
             android:id="@+id/bnt_save_file"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/button_file"
+            android:background="@drawable/list_selector"
             android:text="@string/update_file_button"/>
     </LinearLayout>
     <ProgressBar
@@ -235,4 +187,13 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
+    <TextView
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_connection"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/view_disconnect"/>
 </RelativeLayout>

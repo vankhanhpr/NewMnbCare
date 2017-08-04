@@ -31,6 +31,7 @@ import org.json.JSONObject
 import com.baoyz.swipemenulistview.SwipeMenu
 import android.R.drawable.ic_delete
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import com.example.vankhanhpr.vidu2.library_bottomnagi.BottomNavigationViewEx.dp2px
 import android.graphics.Color.rgb
@@ -42,6 +43,10 @@ import android.view.Window
 import android.widget.*
 import com.baoyz.swipemenulistview.SwipeMenuItem
 import com.baoyz.swipemenulistview.SwipeMenuCreator
+import com.example.vankhanhpr.vidu2.MainActivity
+import com.example.vankhanhpr.vidu2.fragment_main.fragment_medical.spinner.MyAdapter
+import com.example.vankhanhpr.vidu2.fragment_main.fragment_medical.spinner.StateVO
+import com.example.vankhanhpr.vidu2.myinterface.IFilter_Scheduler
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -51,10 +56,8 @@ import kotlin.collections.ArrayList
  * Created by VANKHANHPR on 7/9/2017.
  */
 
-class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.OnClickListener
+class Fragment_Medical() : Fragment(), SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,IFilter_Scheduler
 {
-
-
     var call =Call_Receive_Server.getIns()
     var lv_Medical: SwipeMenuListView?=null
     var list_Schedule: ArrayList<Schedule>? = ArrayList()
@@ -75,6 +78,10 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
     var date_schedule:String=""
     var now =Calendar.getInstance()
     var timeFormat2: SimpleDateFormat =  SimpleDateFormat("yyyyMMdd")
+    var spinner_bucker:Spinner?=null
+    var vivo:ArrayList<StateVO> ?= ArrayList()
+
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var k: View = inflater!!.inflate(R.layout.fragment_medical, container, false)
@@ -83,6 +90,7 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
         tab_error_medical=k.findViewById(R.id.tab_error_medical) as LinearLayout
         tab_lv_medical=k.findViewById(R.id.tab_lv_medical)as LinearLayout
         srlLayout=k.findViewById(R.id.srlLayout)as SwipeRefreshLayout
+        spinner_bucker =k.findViewById(R.id.spinner_bucker)as Spinner
         srlLayout!!.setOnRefreshListener(this)
 
         month_one= k.findViewById(R.id.month_one) as LinearLayout//1thang
@@ -92,6 +100,7 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
         month_all=k.findViewById(R.id.month_all) as LinearLayout//set all
 
 
+        runFilter()
 
         now.add(Calendar.DATE,-30).toString()
         date_schedule = timeFormat2.format(now.getTime())
@@ -184,6 +193,23 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
 
             }
         })
+
+        var spinnerAdapter= MyAdapter(context,0,vivo!!,this)
+        spinner_bucker!!.adapter= spinnerAdapter
+
+
+        spinner_bucker!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long)
+            {
+               if(position==0)
+               {
+                   Toast.makeText(context,"anhkhanhday roi",Toast.LENGTH_SHORT).show()
+               }
+            }
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                var r = 0
+            }
+        })
         return  k
     }
     fun getSchedule()
@@ -201,6 +227,12 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
                 now.add(Calendar.DATE,-30).toString()
                 date_schedule=timeFormat2.format(now.getTime())
                 Log.d("ngayhientailala",date_schedule)
+                month_one!!.background= resources.getDrawable(R.drawable.border_button_month)
+                month_three!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_six!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_twelve!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_all!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+
                 getSchedule()
             }
             R.id.month_three->
@@ -209,24 +241,44 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
                 now.add(Calendar.DATE,-90).toString()
                 date_schedule=timeFormat2.format(now.getTime())
                 getSchedule()
+                month_one!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_three!!.background= resources.getDrawable(R.drawable.border_button_month)
+                month_six!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_twelve!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_all!!.background= resources.getDrawable(R.drawable.border_layout_dark)
             }
             R.id.month_six ->{
                 now =Calendar.getInstance()
                 now.add(Calendar.DATE,-120).toString()
                 date_schedule=timeFormat2.format(now.getTime())
                 getSchedule()
+                month_one!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_three!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_six!!.background= resources.getDrawable(R.drawable.border_button_month)
+                month_twelve!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_all!!.background= resources.getDrawable(R.drawable.border_layout_dark)
             }
             R.id.month_twelve ->{
                 now =Calendar.getInstance()
                 now.add(Calendar.DATE,-365).toString()
                 date_schedule=timeFormat2.format(now.getTime())
                 getSchedule()
+                month_one!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_three!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_six!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_twelve!!.background= resources.getDrawable(R.drawable.border_button_month)
+                month_all!!.background= resources.getDrawable(R.drawable.border_layout_dark)
             }
             R.id.month_all->{
                 now =Calendar.getInstance()
                 now.add(Calendar.DATE,-730).toString()
                 date_schedule=timeFormat2.format(now.getTime())
                 getSchedule()
+                month_one!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_three!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_six!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_twelve!!.background= resources.getDrawable(R.drawable.border_layout_dark)
+                month_all!!.background= resources.getDrawable(R.drawable.border_button_month)
             }
         }
     }
@@ -305,6 +357,10 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
             }
         }
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
     //change pass
     fun sendToScheduleDetail(value: String,resultcode:Int) {
         var intent3 = Intent(context, Schedule_Infor_Detail::class.java)
@@ -319,5 +375,77 @@ class Fragment_Medical: Fragment(), SwipeRefreshLayout.OnRefreshListener,View.On
             call.CallEmit(AllValue.workername_getschedule_cus,AllValue.servicename_getschedule_cus,inval,AllValue.get_schedule_custommer!!)
             srlLayout!!.setRefreshing(false)
         }, 2000)
+    }
+
+
+    override fun Call_filter(arr: ArrayList<StateVO>) {
+        super.Call_filter(arr)
+        if(list_Schedule!=null)
+        {
+            var listTemp:ArrayList<Schedule> = ArrayList()
+            if(arr!!.get(4).isSelected())
+            {
+
+                var adapter1:Adapter_Decima= Adapter_Decima(context,list_Schedule!!)
+                lv_Medical!!.adapter= adapter1
+                return
+            }
+            else {
+                Log.d("khanh12_","thong tin la 1:"+arr!!.get(1).isSelected().toString()+ " 2:"+arr!!.get(2).isSelected().toString()+" 3:"+arr!!.get(3).isSelected().toString()+" 4:"+ arr!!.get(4).isSelected().toString())
+                if (arr!!.get(1).isSelected()) {
+                    for (i in 0..list_Schedule!!.size - 1) {
+                        if (list_Schedule!!.get(i).getC11() == resources.getString(R.string.wait)) {
+                            listTemp.add(list_Schedule!!.get(i))
+                        }
+                    }
+                }
+                if (arr!!.get(2).isSelected()) {
+
+                    for (i in 0..list_Schedule!!.size - 1) {
+                        if (list_Schedule!!.get(i).getC11() == resources.getString(R.string.succsess_bucker)) {
+                            listTemp.add(list_Schedule!!.get(i))
+                        }
+                    }
+                    Log.d("khanh12trangthaicua2la","xx"+listTemp.size)
+                }
+                if (arr!!.get(3).isSelected()) {
+                    for (i in 0..list_Schedule!!.size - 1) {
+                        if (list_Schedule!!.get(i).getC11() == resources.getString(R.string.cancel_buker) || list_Schedule!!.get(i).getC12() == resources.getString(R.string.cancel_bucker_system)) {
+                            listTemp.add(list_Schedule!!.get(i))
+                        }
+                    }
+                }
+            }
+            var adapter3:Adapter_Decima= Adapter_Decima(context,listTemp)
+            lv_Medical!!.adapter= adapter3
+        }
+    }
+    fun runFilter()
+    {
+        vivo=ArrayList()
+        var tem0:StateVO= StateVO()
+        tem0.setTitle("Chọn")
+        tem0.setSelected(false)
+        vivo!!.add(tem0)
+
+        var tem2:StateVO= StateVO()
+        tem2.setTitle("Chưa khám")
+        tem2.setSelected(false)
+        vivo!!.add(tem2)
+
+        var tem3:StateVO= StateVO()
+        tem3.setTitle("Khám xong")
+        tem3.setSelected(false)
+        vivo!!.add(tem3)
+
+        var tem4:StateVO= StateVO()
+        tem4.setTitle("Hủy lịch")
+        tem4.setSelected(false)
+        vivo!!.add(tem4)
+
+        var tem:StateVO= StateVO()
+        tem.setSelected(false)
+        tem.setTitle("Tất cả")
+        vivo!!.add(tem)
     }
 }

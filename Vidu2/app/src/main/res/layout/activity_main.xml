@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.vankhanhpr.vidu2.MainActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,22 +21,18 @@
                 android:visibility="visible"
                 android:orientation="vertical">
             </LinearLayout>
-            <android.support.design.widget.BottomNavigationView
+            <com.example.vankhanhpr.vidu2.library_bottomnagi.BottomNavigationViewEx
                 android:id="@+id/bottom_navigation_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/brown"
-                android:layout_alignParentBottom="true"
-                android:theme="@style/NavigationViewStyle"
-                app:theme="@style/NavigationViewStyle"
-                android:itemTextAppearance="@style/NavigationViewStyle"
-                app:menu="@menu/menumain" />
+                android:layout_alignParentBottom="false"
+                design:menu="@menu/menumain" />
         </LinearLayout>
         <TextView
             android:id="@+id/disconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Không có kết nối"
+            android:text="@string/dont_connection"
             android:textSize="20sp"
             android:gravity="center"
             android:visibility="gone"

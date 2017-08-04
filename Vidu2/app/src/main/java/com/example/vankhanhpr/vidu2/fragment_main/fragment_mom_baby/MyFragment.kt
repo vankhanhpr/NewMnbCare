@@ -44,8 +44,8 @@ class MyFragment : Fragment(), OnMapReadyCallback, LocationListener, DirectionFi
     var kinhdo : Double? = null
     var vido : Double? = null
 
-    var lat:String?=Json.doctor!!.getC13()
-    var lon:String?=Json.doctor!!.getC14()
+    var lat:String?=""
+    var lon:String?=""
 
     var MarkerPoints: ArrayList<LatLng>? = ArrayList()
     override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
@@ -53,6 +53,8 @@ class MyFragment : Fragment(), OnMapReadyCallback, LocationListener, DirectionFi
 
         var view1= inflater!!.inflate(R.layout.fragment_map, container, false)
         mMapView = view1!!.findViewById(R.id.map1)as MapView
+        lat = Json.doctor!!.getC13()
+        lon = Json.doctor!!.getC14()
         return view1
     }
 
@@ -60,6 +62,8 @@ class MyFragment : Fragment(), OnMapReadyCallback, LocationListener, DirectionFi
         super.onViewCreated(view, savedInstanceState)
         if(mMapView!=null)
         {
+            lat = Json.doctor!!.getC13()
+            lon = Json.doctor!!.getC14()
             mMapView!!.onCreate(null)
             mMapView!!.onResume()
             mMapView!!.getMapAsync(this)

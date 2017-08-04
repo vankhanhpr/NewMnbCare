@@ -76,6 +76,7 @@ class Map_Location_Mom :AppCompatActivity() {
     private var fragmentManager: FragmentManager? = null
     private var fragmentTransaction: FragmentTransaction? = null
     var fragment_map: Fragment?= null
+    var disconnect:TextView?=null
 
 
 
@@ -86,6 +87,7 @@ class Map_Location_Mom :AppCompatActivity() {
 
         tab_map= findViewById(R.id.tab_map)as LinearLayout
         tab_bucking_file=findViewById(R.id.tab_bucking_file)as ProgressBar
+        disconnect=findViewById(R.id.disconnect)as TextView
 
         if(Json.mom_baby==1)//kiem tra neu la be
         {
@@ -95,8 +97,6 @@ class Map_Location_Mom :AppCompatActivity() {
         {
             f_mom_baby=true
         }
-
-
         tv_date4=findViewById(R.id.tv_date) as TextView
         tv_time_bucket=findViewById(R.id.tv_time_bucket) as TextView
         back_map_location=findViewById(R.id.back_map_location) as LinearLayout
@@ -194,7 +194,7 @@ class Map_Location_Mom :AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
-        if (event.getTemp() == AllValue.getlist_file_mom && event.getService()!!.getData().toString() != null) {
+        if (event.getTemp() == AllValue.getlist_file_mom && event.getService()!!.getData().toString() != Json.error) {
 
             tab_bucking_file!!.visibility=View.GONE
             dialog_disconnect!!.cancel()
@@ -353,6 +353,17 @@ class Map_Location_Mom :AppCompatActivity() {
                 }
             }
         }
+        if (event.getTemp() == AllValue.disconnect) {
+
+            disconnect!!.visibility= View.VISIBLE
+        }
+        if (event.getTemp() == AllValue.connect) {
+            disconnect!!.visibility = View.GONE
+        }
+    }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
     fun  callTime()//lay thoi gian du kien

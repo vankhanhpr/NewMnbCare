@@ -3,12 +3,12 @@ package com.example.vankhanhpr.vidu2.fragment_main.information_Account
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.ListAdapter
-import android.widget.ListView
+import android.widget.*
 import com.example.vankhanhpr.vidu2.R
 import com.example.vankhanhpr.vidu2.adapter.adapter_diciamal.Adapter_File_Mom_Baby
 import com.example.vankhanhpr.vidu2.call_receive_service.Call_Receive_Server
@@ -23,9 +23,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
-import android.widget.AdapterView
-import android.widget.Toast
-import android.widget.TextView
 import android.widget.AdapterView.OnItemClickListener
 import com.example.vankhanhpr.vidu2.fragment_main.fragment_mom_baby.Update_File_Mom
 import com.example.vankhanhpr.vidu2.getter_setter.dicimal_getset.Information_Schedule
@@ -34,7 +31,7 @@ import com.example.vankhanhpr.vidu2.getter_setter.dicimal_getset.Information_Sch
 /**
  * Created by VANKHANHPR on 7/21/2017.
  */
-class Show_List_File_MonBaby:AppCompatActivity()
+class Show_List_File_MonBaby:AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener
 {
     var call= Call_Receive_Server.getIns()
     var listFile_Mom:ArrayList<File_Mom_Baby>?=null
@@ -45,6 +42,8 @@ class Show_List_File_MonBaby:AppCompatActivity()
     var tab_list_doctor_baby:LinearLayout?=null
     var adapter_search: ListAdapter? = null
     var listFile:ArrayList<JSONObject>?=null
+    var disconnect:TextView?=null
+    var refres_file:SwipeRefreshLayout?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +58,9 @@ class Show_List_File_MonBaby:AppCompatActivity()
         tab_create_file_mom=findViewById(R.id.tab_create_file_mom) as LinearLayout
         tab_no_data_manage_file=findViewById(R.id.tab_no_data_manage_file) as LinearLayout
         tab_list_doctor_baby=findViewById(R.id.tab_list_doctor_baby)  as LinearLayout
+        disconnect=findViewById(R.id.disconnect)as TextView
+        refres_file=findViewById(R.id.refres_file) as SwipeRefreshLayout
+        refres_file!!.setOnRefreshListener(this)
 
         lv_show_list_file= findViewById(R.id.lv_show_list_file) as ListView
         getListFile()
@@ -77,6 +79,19 @@ class Show_List_File_MonBaby:AppCompatActivity()
             var mom_baby:JSONObject= listFile!![position]
             sendToActivityUpdateFile(mom_baby.toString(),2233)
         }
+        lv_show_list_file!!.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
+
+            }
+            override fun onScroll(listView: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                val topRowVerticalPosition = if (listView == null || listView.childCount === 0)
+                    0
+                else
+                    lv_show_list_file!!.getChildAt(0).getTop()
+                refres_file!!.setEnabled(topRowVerticalPosition >= 0)
+
+            }
+        })
     }
 
     //Insert data success
@@ -118,7 +133,20 @@ class Show_List_File_MonBaby:AppCompatActivity()
             var adapter=Adapter_File_Mom_Baby(applicationContext,listFile_Mom!!)
             lv_show_list_file!!.adapter= adapter
         }
+        if (event.getTemp() == AllValue.disconnect) {
+
+            disconnect!!.visibility = View.VISIBLE
+        }
+        if (event.getTemp() == AllValue.connect) {
+            disconnect!!.visibility = View.GONE
+        }
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+
     fun sendToActivityCreateFile(value: String,resultcode:Int) {
 
         var intent3 = Intent(applicationContext, Create_File_Mon::class.java)
@@ -134,5 +162,12 @@ class Show_List_File_MonBaby:AppCompatActivity()
         bundle.putString(AllValue.value, value)
         intent3.putExtra(AllValue.key_bundle, bundle)
         startActivityForResult(intent3,resultcode!!)
+    }
+
+    override fun onRefresh() {
+        Handler().postDelayed(Runnable {
+            getListFile()
+            refres_file!!.setRefreshing(false)
+        }, 2000)
     }
 }

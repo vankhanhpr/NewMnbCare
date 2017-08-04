@@ -117,6 +117,10 @@ class BuckingMom:AppCompatActivity()
             }
         }
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
 
     fun readJson1(json: ArrayList<JSONObject>): IsNumber
     {

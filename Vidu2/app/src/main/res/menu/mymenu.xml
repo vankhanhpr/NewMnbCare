@@ -4,19 +4,19 @@
     <item
         android:id="@+id/menu1"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/icon_heart"
         android:title=""
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu2"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/icon_heart"
         android:title=""
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu3"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/icon_heart"
         android:title=""
         app:showAsAction="ifRoom" />
 </menu>

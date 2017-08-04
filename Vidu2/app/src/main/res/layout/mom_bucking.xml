@@ -14,7 +14,7 @@
         android:id="@+id/choose_provine_top_bar"
         android:layout_width="fill_parent"
         android:layout_height="45.0dip"
-        android:background="@color/brown"
+        android:background="@color/tab_fragment"
         android:gravity="center_vertical">
 
       <LinearLayout

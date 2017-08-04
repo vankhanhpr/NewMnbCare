@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.vankhanhpr.vidu2.R
@@ -25,6 +26,7 @@ import com.example.vankhanhpr.vidu2.getter_setter.IsCustomer
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.json.MessageEvent
 import com.example.vankhanhpr.vidu2.login_baby.Login
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
@@ -42,14 +44,29 @@ class Fragment_Account :Fragment()
     var tvtenkh_ : TextView? = null
 
 
+    var point1:ImageView?=null
+    var point2:ImageView?=null
+    var point3:ImageView?=null
+    var point4:ImageView?=null
+    var point5:ImageView?=null
+
+
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var k: View = inflater!!.inflate(R.layout.fragment_manager_account, container, false)
 
         var tab_changepass1 = k.findViewById(R.id.tab_changepass)
         tab_show_list_file=k.findViewById(R.id.tab_show_list_file) as LinearLayout
 
+        point1=k.findViewById(R.id.point1) as ImageView
+        point2=k.findViewById(R.id.point2) as ImageView
+        point3=k.findViewById(R.id.point3) as ImageView
+        point4=k.findViewById(R.id.point4) as ImageView
+        point5=k.findViewById(R.id.point5) as ImageView
+
+
         var inval: Array<String> = arrayOf(Json.AppLoginID)
-        //call.CallEmit(AllValue.workername_get_customer, AllValue.workername_get_customer,inval, AllValue.get_info_customer!!)
+        call.CallEmit(AllValue.workername_get_customer, AllValue.workername_get_customer,inval, AllValue.get_info_customer!!)
 
         //............. kiểm tra thông tin khách hàng
         //.............................................đọc dữ liệu C0 -> C9 B4
@@ -64,12 +81,59 @@ class Fragment_Account :Fragment()
         sharedpreferences.getString("C6","")
         sharedpreferences.getString("C7","")
         var c8_ = sharedpreferences.getInt("C8",0)
-        sharedpreferences.getInt("C9",0)
+        var diem=sharedpreferences.getInt("C9",0)
+
+        Log.d("diemcuakhachhang","diem"+diem)
         //........ gán dữ liệu nhận đc vào text_view
         tvdiem_ = k.findViewById(R.id.tvdiem) as TextView
         tvdiem_!!.text = c8_.toString()
         tvtenkh_ = k.findViewById(R.id.tv_tenkh) as TextView
         tvtenkh_!!.text = c1_.toString()
+
+
+        when(diem) {
+            0 -> {
+                point1!!.setImageResource(R.drawable.icon_point0)
+                point2!!.setImageResource(R.drawable.icon_point0)
+                point3!!.setImageResource(R.drawable.icon_point0)
+                point4!!.setImageResource(R.drawable.icon_point0)
+                point5!!.setImageResource(R.drawable.icon_point0)
+            }
+            1 -> {
+                point1!!.setImageResource(R.drawable.icon_heart)
+                point2!!.setImageResource(R.drawable.icon_point0)
+                point3!!.setImageResource(R.drawable.icon_point0)
+                point4!!.setImageResource(R.drawable.icon_point0)
+                point5!!.setImageResource(R.drawable.icon_point0)
+            }
+            2 -> {
+                point1!!.setImageResource(R.drawable.icon_heart)
+                point2!!.setImageResource(R.drawable.icon_heart)
+                point3!!.setImageResource(R.drawable.icon_point0)
+                point4!!.setImageResource(R.drawable.icon_point0)
+                point5!!.setImageResource(R.drawable.icon_point0)
+            }
+            3 -> {
+                point1!!.setImageResource(R.drawable.icon_heart)
+                point2!!.setImageResource(R.drawable.icon_heart)
+                point3!!.setImageResource(R.drawable.icon_heart)
+                point4!!.setImageResource(R.drawable.icon_point0)
+                point5!!.setImageResource(R.drawable.icon_point0)
+            }
+            4 -> {
+                point1!!.setImageResource(R.drawable.icon_heart)
+                point2!!.setImageResource(R.drawable.icon_heart)
+                point4!!.setImageResource(R.drawable.icon_heart)
+                point5!!.setImageResource(R.drawable.icon_point0)
+            }
+            5 -> {
+                point1!!.setImageResource(R.drawable.icon_heart)
+                point2!!.setImageResource(R.drawable.icon_heart)
+                point3!!.setImageResource(R.drawable.icon_heart)
+                point4!!.setImageResource(R.drawable.icon_heart)
+                point5!!.setImageResource(R.drawable.icon_heart)
+            }
+        }
         //change password
         tab_changepass1.setOnClickListener()
         {
@@ -149,7 +213,10 @@ class Fragment_Account :Fragment()
             tvtenkh_!!.text = c1_.toString()        //..... test
         }
     }
-
+     override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
     //............ logout
     fun send_Logout(){
         var Shared_Preferences : String = "Inf_Account"

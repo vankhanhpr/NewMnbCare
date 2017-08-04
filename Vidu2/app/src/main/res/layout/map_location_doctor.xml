@@ -14,7 +14,7 @@
             android:id="@+id/choose_provine_top_bar"
             android:layout_width="fill_parent"
             android:layout_height="45.0dip"
-            android:background="@color/brown"
+            android:background="@color/tab_fragment"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -82,18 +82,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="@drawable/list_selector"
                 android:paddingLeft="@dimen/pading10dip"
+                android:gravity="center"
                 android:weightSum="10">
                 <TextView
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:text="Ngày đặt khám"
+                    android:gravity="center"
                     android:layout_weight="4.5"
                     android:textSize="@dimen/text_size_big"/>
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="5" />
                 <ImageView
                     android:id="@+id/imv_calendar_map"
@@ -118,17 +122,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/pading10dip"
+                android:background="@drawable/list_selector"
                 android:weightSum="10">
                 <TextView
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:text="Giờ đặt khám"
+                    android:gravity="center"
                     android:layout_weight="4.5"
                     android:textSize="@dimen/text_size_big"/>
                 <TextView
                     android:id="@+id/tv_time_bucket"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="5" />
                 <ImageView
                     android:id="@+id/imv_time_bucking_map"
@@ -166,5 +173,14 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
+    <TextView
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_connection"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/view_disconnect"/>
 
 </RelativeLayout>

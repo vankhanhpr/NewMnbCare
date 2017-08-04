@@ -33,6 +33,7 @@ import android.widget.TextView
 import com.example.vankhanhpr.vidu2.getter_setter.Json
 import com.example.vankhanhpr.vidu2.login_doctor.Login_Doctor
 import com.example.vankhanhpr.vidu2.login_doctor.main_doctor
+import kotlin.concurrent.thread
 
 
 /**
@@ -54,10 +55,13 @@ class CheckPassLogin:AppCompatActivity()
     var pass2:String?=""
     var mCountDownTimer: CountDownTimer? = null
     var dialog_disconnect:Dialog?=null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         EventBus.getDefault().register(this)
+
         var inte:Intent= intent
         var bundle:Bundle=inte.getBundleExtra(AllValue.key_bundle)
         phonem= bundle.getString(AllValue.value)
@@ -268,21 +272,27 @@ class CheckPassLogin:AppCompatActivity()
             }
         }
     }
+
+
+
+    fun getID()
+    {
+        Log.d("sodienthoaigetid",phonem!!)
+        var array:Array<String>?= arrayOf(phonem!!)
+        call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Login.toString())
+    }
     //Chờ đợi kết quả khi gọi emit
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: MessageEvent) {
         var  serve:Service_Response = event.getService()!!
         if(event.getTemp()==AllValue.checkpass1.toString())//Kiểm tra kết quả trả check pass
         {
-
             if(serve.getResult()=="1")
             {
                 var temp8:IsNumber= readJson1(event.getService()!!.getData()!!)
                 Json.AppLoginPswd=pass2
                 Json.AppLoginID=temp8.getSecC0()!!
-                Log.d("sodienthoaigetid",phonem!!)
-                var array:Array<String>?= arrayOf(Json.phone.toString())
-                call!!.CallEmit(AllValue.workername_getID,AllValue.servicename_getID,array!!,AllValue.getId_Login.toString())
+                getID()
 
             }
             if(serve.getResult()=="0")
@@ -330,6 +340,11 @@ class CheckPassLogin:AppCompatActivity()
                 }
             }
         }
+    }
+
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
     //Mở màn hình chính
     fun sendToActivityMain(value:String,value2:String,resultcode:Int) {

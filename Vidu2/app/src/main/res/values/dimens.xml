@@ -6,4 +6,14 @@
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="tex_size_more_big">22sp</dimen>
     <dimen name="text_size_bucking">16sp</dimen>
+    <dimen name="text_size_info_shedule">15dip</dimen><!--Cỡ chữ của chi tiết lịch khám-->
+    <dimen name="size_create_file">54dip</dimen>
+    <dimen name="size_update_file">60dip</dimen>
+    <dimen name="size_file">7dip</dimen><!--khoảng cách giữa hai linear-->
+    <dimen name="title_main">50dip</dimen> <!--độ rộng của các ô tiêu đề-->
+    <dimen name="text_size_card_list">12sp</dimen> <!--cỡ chữ của các cardview trong các listview-->
+    <dimen name="size_pading_card_buck">5dip</dimen>
+    <dimen name="text_size_title">16dip</dimen>
+    <dimen name="text_size_infor_customer">12sp</dimen> <!--font chữ chỉnh sửa thông tin người dùng-->
+    <dimen name="text_size_card_account">15dip</dimen>
 </resources>

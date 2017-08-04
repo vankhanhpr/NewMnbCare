@@ -49,6 +49,8 @@ class Update_File_Mom:AppCompatActivity()
     var dialog_disconnect: Dialog? = null
     var mCountDownTimer: CountDownTimer? = null
     var tab_insert_file:ProgressBar?=null
+    var disconnect:TextView?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mom_update_file)
@@ -60,6 +62,8 @@ class Update_File_Mom:AppCompatActivity()
             edt_phonenumber = findViewById(R.id.edt_phonenumber) as EditText
             edt_email_cus = findViewById(R.id.edt_email_cus) as EditText
             bnt_save_file = findViewById(R.id.bnt_save_file) as Button
+            disconnect=findViewById(R.id.disconnect)as TextView
+
             //spinner_relationship = findViewById(R.id.spinner_relationship) as Spinner
             //spinner_sex = findViewById(R.id.spinner_sex) as Spinner
             tv_date = findViewById(R.id.tv_date) as TextView
@@ -145,6 +149,10 @@ class Update_File_Mom:AppCompatActivity()
                 dialog_notication = Dialog(this)
                 dialog_success = Dialog(this)
                 dialog_disconnect = Dialog(this)
+                var dialogerror=Dialog(this)
+
+                dialogerror.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogerror.setContentView(R.layout.dialog_error)
 
                 dialog_disconnect!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog_disconnect!!.setContentView(R.layout.dialog_error_password)
@@ -158,28 +166,21 @@ class Update_File_Mom:AppCompatActivity()
 
                 var res: String? = file_mom!!.getC0()
                 var se: String? = file_mom!!.getC2()
-               /* when (ralationship) {
-                    "Tôi" -> {
-                        res = "1"
+
+
+                if(!(boolEmail(email1!!) && boolPhone(phone1!!)))
+                {
+                    dialogerror.show()
+                    var text=dialogerror.findViewById(R.id.tv_error) as TextView
+                    var cancel=dialogerror.findViewById(R.id.btn_cancel_error)
+                    text.setText("Email hoặc số điện thoại không hợp lệ!")
+                    cancel.setOnClickListener()
+                    {
+                        dialogerror.cancel()
                     }
-                    "Vợ" -> {
-                        res = "2"
-                    }
-                    "Con" -> {
-                        res = "3"
-                    }
+                    tab_insert_file!!.visibility=View.GONE
+                    return@setOnClickListener
                 }
-                when (sex) {
-                    "Nam" -> {
-                        se = "M"
-                    }
-                    "Nữ" -> {
-                        se = "F"
-                    }
-                    "Khác" -> {
-                        se = "O"
-                    }
-                }*/
 
                 var my_date = tv_date!!.text.toString()
                 date1 = my_date.substring(0, 2) + my_date.substring(3, 5) + my_date.substring(6)
@@ -231,26 +232,23 @@ class Update_File_Mom:AppCompatActivity()
             tab_insert_file!!.visibility = View.GONE
             mCountDownTimer!!.cancel()
             dialog_disconnect!!.cancel()
-            if(event.getService()!!.getResult()=="1")
-            {
+            if (event.getService()!!.getResult() == "1") {
                 dialog_success!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog_success!!.setContentView(R.layout.dialog_success)
                 dialog_success!!.show()
-                var btn_success= dialog_success!!.findViewById(R.id.btn_success) as Button
-                var tv_error=dialog_success!!.findViewById(R.id.tv_error) as TextView
+                var btn_success = dialog_success!!.findViewById(R.id.btn_success) as Button
+                var tv_error = dialog_success!!.findViewById(R.id.tv_error) as TextView
                 tv_error.setText(event.getService()!!.getMessage())
                 btn_success.setOnClickListener()
                 {
-                    sendToMain(1,AllValue.updateFile!!)
+                    sendToMain(1, AllValue.updateFile!!)
                 }
-            }
-            else
-            {
+            } else {
                 dialog_notication!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog_notication!!.setContentView(R.layout.dialog_error)
                 dialog_notication!!.show()
-                var tv_error= dialog_notication!!.findViewById(R.id.tv_error) as TextView
-                var btn_cancel_error= dialog_notication!!.findViewById(R.id.btn_cancel_error) as Button
+                var tv_error = dialog_notication!!.findViewById(R.id.tv_error) as TextView
+                var btn_cancel_error = dialog_notication!!.findViewById(R.id.btn_cancel_error) as Button
                 tv_error.setText(event.getService()!!.getMessage())
                 btn_cancel_error.setOnClickListener()
                 {
@@ -258,7 +256,19 @@ class Update_File_Mom:AppCompatActivity()
                 }
             }
         }
+
+        if (event.getTemp() == AllValue.disconnect) {
+
+            disconnect!!.visibility = View.VISIBLE
         }
+        if (event.getTemp() == AllValue.connect) {
+            disconnect!!.visibility = View.GONE
+        }
+    }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
 
     fun showDatePickerDialog() {
         val callback = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -308,5 +318,41 @@ class Update_File_Mom:AppCompatActivity()
         intent.putExtra(AllValue.key_bundle, bundle);
         setResult(resultcode, intent); // phương thức này sẽ trả kết quả cho Activity1
         finish(); // Đóng Activity hiện tại
+    }
+
+    //Kiểm tra số điện thoại
+    fun boolPhone(phone2:String):Boolean {
+        if(phone2=="")
+        {
+            return true
+        }
+        if (phone2.length == 10 && (phone2.substring(1,2) == "9" || phone2.substring(1,2) == "8" )) {
+            return true
+        }
+        if (phone2.length == 11 && phone2.substring(1,2) == "1") {
+            return true
+        }
+        return  false
+    }
+    //kiểm tra email
+    fun boolEmail(email:String):Boolean
+    {
+        if(email=="")
+        {
+            return true
+        }
+        var tem=0
+        for(i in 0..email.length-1)
+        {
+            if(email.get(i).toString() == "@")
+            {
+                tem++
+            }
+        }
+        if(tem==1)
+        {
+            return true
+        }
+        return false
     }
 }

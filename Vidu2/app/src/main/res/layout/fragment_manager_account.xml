@@ -11,16 +11,16 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="15dp"
+        card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
             android:id="@+id/cv_thongtinkh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:weightSum="10"
-            >
+            android:background="@color/tab_fragment"
+            android:weightSum="10">
             <LinearLayout
                 android:layout_gravity="center"
                 android:layout_width="0dp"
@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Điểm"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/text_size_card_account"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"/>
                 <TextView
@@ -40,13 +40,14 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:layout_gravity="center"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_size_card_account" />
             </LinearLayout>
             <LinearLayout
                 android:layout_weight="4"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:paddingTop="10dip"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/ivhinh"
@@ -54,11 +55,12 @@
                     android:layout_height="80dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    android:background="@drawable/icon_user" />
                 <TextView
                     android:id="@+id/tv_tenkh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_card_account"
                     android:text="Họ Tên"
                     />
             </LinearLayout>
@@ -76,71 +78,60 @@
                     android:text="Đánh giá"
                     android:textColor="@color/colorPrimary"
                     android:layout_gravity="center"
-                    android:textSize="20dp"/>
-                <ImageView
-                    android:id="@+id/ivdanhgia"
-                    android:layout_gravity="center"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/tim"
-                    />
+                    android:textSize="@dimen/text_size_card_account"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dip"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:id="@+id/point1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_heart"/>
+                    <ImageView
+                        android:id="@+id/point2"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_heart" />
+                    <ImageView
+                        android:id="@+id/point3"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_heart"/>
+                    <ImageView
+                        android:id="@+id/point4"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_heart" />
+                    <ImageView
+                        android:id="@+id/point5"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_heart"/>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <!--<android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="15dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="5dp">
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:weightSum="10"
-            >
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    />
-            </LinearLayout>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="Đổi Email"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="2">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher_round"/>
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>-->
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="15dp"
+        card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
@@ -149,7 +140,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:weightSum="10"
-            >
+            android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/sharp_fragment_account">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -158,8 +150,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    />
+                    android:scaleType="center"
+                    android:background="@drawable/icon_change_pass" />
             </LinearLayout>
             <TextView
                 android:layout_width="0dp"
@@ -167,27 +159,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:text="Đổi Mật khẩu"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="2">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher_round"/>
-            </LinearLayout>
+                android:gravity="center"
+                android:textSize="@dimen/text_size_card_account"
+                android:layout_weight="8"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="15dp"
+        card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
@@ -195,8 +178,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:weightSum="10"
-            >
+            android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/sharp_fragment_account"
+            android:weightSum="10">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -205,8 +189,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    />
+                    android:background="@drawable/icon_manage_file"
+                    android:scaleType="center" />
             </LinearLayout>
             <TextView
                 android:layout_width="0dp"
@@ -214,27 +198,16 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:text="Quản lý hồ sơ"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="2">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher_round"/>
-            </LinearLayout>
-
+                android:gravity="center"
+                android:textSize="@dimen/text_size_card_account"
+                android:layout_weight="8"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="15dp"
+        card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp">
         <LinearLayout
@@ -242,18 +215,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:weightSum="10"
-            >
+            android:background="@drawable/sharp_fragment_account"
+            android:weightSum="10">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingLeft="@dimen/pading10dip"
                 android:layout_weight="2">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    />
+                    android:background="@drawable/icon_logout"/>
             </LinearLayout>
             <TextView
                 android:layout_width="0dp"
@@ -261,20 +234,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:text="Đăng xuất"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="2">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher_round"/>
-            </LinearLayout>
-
+                android:gravity="center"
+                android:textSize="@dimen/text_size_card_account"
+                android:layout_weight="8"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

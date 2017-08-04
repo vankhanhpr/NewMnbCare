@@ -9,95 +9,116 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4c931a"
+        android:background="@drawable/list_selector"
         android:layout_margin="2dp"
         app:cardCornerRadius="4dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="20dip"
+            android:orientation="horizontal"
+            android:paddingLeft="5dip"
             android:paddingTop="5dip"
             android:paddingBottom="5dip"
+            android:weightSum="10"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-                <TextView
-                    android:gravity="left"
-                    android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:textColor="@color/dark"
-                    android:text="@string/name_doctor"/>
-                <TextView
-                    android:id="@+id/tv_name_doctor"
-                    android:gravity="left"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:text=""/>
+                    android:scaleType="center"
+                    android:background="@drawable/icon_doctor"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dip"/>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-                <TextView
-                    android:gravity="left"
-                    android:layout_width="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:textColor="@color/dark"
-                    android:text="@string/place_work"/>
-                <TextView
-                    android:id="@+id/tv_place_work"
-                    android:gravity="left"
-                    android:layout_width="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:text="@string/name_doctor"/>
+                    <TextView
+                        android:id="@+id/tv_name_doctor"
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:layout_weight="1"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:text=""/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dip"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-                <TextView
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:text="@string/place_work"/>
+                    <TextView
+                        android:id="@+id/tv_place_work"
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
 
-                    android:gravity="left"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:textColor="@color/dark"
-                    android:text="@string/address"/>
-                <TextView
-                    android:id="@+id/tv_adddresss_doctor"
-                    android:gravity="left"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_weight="1"
-                    android:text=""/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dip"/>
-            <LinearLayout
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:text="@string/address"/>
+                    <TextView
+                        android:id="@+id/tv_adddresss_doctor"
+                        android:gravity="left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/text_listdoctor_mom_baby"
+                        android:layout_weight="1"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dip"/>
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -108,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_small"
                     android:layout_weight="1"
-                    android:textColor="@color/dark"
+                    android:textColor="@color/text_listdoctor_mom_baby"
                     android:text="@string/contact"/>
                 <TextView
                     android:id="@+id/tv_contact"
@@ -116,8 +137,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/text_listdoctor_mom_baby"
                     android:layout_weight="1"
                     android:text=""/>
+            </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

@@ -75,8 +75,6 @@ class Fragment_Mom:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout.
         var gt = GpsTracker(context)
         var l = gt.getLocation()
 
-
-
         if (l == null) {
             Toast.makeText(context, "GPS unable to get Value", Toast.LENGTH_SHORT).show()
         }
@@ -102,10 +100,8 @@ class Fragment_Mom:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout.
                 else
                     lv_mom_chedule_bucked!!.getChildAt(0).getTop()
                 refres_mom!!.setEnabled(topRowVerticalPosition >= 0)
-
             }
         })
-
         return k
     }
     fun getListDoctor()
@@ -124,10 +120,6 @@ class Fragment_Mom:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout.
         catch (e:Exception){}
         return false
     }
-
-
-
-
     override fun onRefresh() {
         Handler().postDelayed(Runnable {
             getListDoctor()
@@ -159,6 +151,12 @@ class Fragment_Mom:Fragment(),SearchView.OnQueryTextListener,SwipeRefreshLayout.
             }
         }
     }
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+
     fun sendToActivityMapMom(value: String,resultcode:Int) {
         var intent3 = Intent(context, Map_Location_Mom::class.java)
         var bundle = Bundle()

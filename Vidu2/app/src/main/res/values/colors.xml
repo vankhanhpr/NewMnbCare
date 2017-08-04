@@ -16,4 +16,23 @@
     <color name="tim">#663333</color>
     <color name="orage">#FFCC33</color>
     <color name="orange2">#FF9900</color>
+    <color name="tab_fragment">#FCC467</color>
+
+    <!--Quản lý hồ sơ-->
+    <color name="ralationship">#DEFF7B</color>
+    <color name="text_ralationship">#997126</color>
+    <!--Tra cứu lịch khám-->
+    <color name="bucker">#F6EBBC</color>
+    <color name="text_bucker">#000000</color>
+    <color name="text_bucker1">#000000</color>
+
+    <!--Màu nền của chi tiết thông tin lịch khám-->
+    <color name="shedule_info">#F6EBBC</color>
+    <color name="text_schedule">#000000</color>
+    <!--Danh sách bác sĩ-->
+    <color name="text_listdoctor_mom_baby">#000000</color>
+    <!--màu button trong tạo update hồ sơ-->
+    <color name="button_file">#FF0000</color>
+    <color name="color_title">#000000</color>
+
 </resources>

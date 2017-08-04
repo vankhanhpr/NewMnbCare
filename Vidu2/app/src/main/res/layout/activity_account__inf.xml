@@ -3,118 +3,225 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/choose_provine_top_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:background="@color/tab_fragment"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Họ Tên :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
-        <EditText
-            android:id="@+id/et_hoten"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Họ và tên"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên riêng :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
+            <LinearLayout
+                android:id="@+id/back_update_information_customer"
+                android:layout_width="50.0dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_tenrieng"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Tên riêng"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số điện thoại"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
+                <ImageView
+                    android:layout_width="50.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:padding="10.0dip"
+                    android:src="@drawable/back" />
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_sodt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Số điện thoai"
-            android:inputType="phone"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giới tính :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
+            <TextView
 
-        <EditText
-            android:id="@+id/et_giotinh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Giới tính"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ngày sinh :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/back_file_mom"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:text="@string/information_customer"
+                android:gravity="center"
+                android:textColor="@color/dark"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-        <EditText
-            android:id="@+id/et_ngaysinh"
+        <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Ngày sinh"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Địa chỉ :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
+            android:orientation="vertical"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
+            android:background="@drawable/schedule_information"
+            android:gravity="center"
+            android:paddingTop="10dp">
 
-        <EditText
-            android:id="@+id/et_diachi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Địa chỉ"
-            android:inputType="textPersonName"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email :"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"/>
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textPersonName"
-            />
-        <Button
-            android:id="@+id/btn_luuthongtin"
-            android:layout_width="wrap_content"
-            android:text="Lưu thông tin"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information"
+                android:orientation="horizontal"
+                android:weightSum="10">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Họ Tên :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:layout_weight="7"
+                    android:id="@+id/et_hoten"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information"
+                android:weightSum="10">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tên riêng :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:layout_weight="7"
+                    android:id="@+id/et_tenrieng"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="10"
+                android:background="@drawable/schedule_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại:"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:id="@+id/et_sodt"
+                    android:layout_weight="7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="phone"/>
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:id="@+id/et_giotinh"
+                    android:layout_weight="7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:id="@+id/et_ngaysinh"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:cursorVisible="false"
+                    android:inputType="textPersonName"/>
+                <ImageView
+                    android:id="@+id/calendar_born"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_calendar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Địa chỉ :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:id="@+id/et_diachi"
+                    android:layout_weight="7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="textPersonName"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schedule_information">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Email :"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:textColor="@color/colorPrimary"/>
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_weight="7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_infor_customer"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+            <Button
+                android:gravity="center"
+                android:id="@+id/btn_luuthongtin"
+                android:layout_width="wrap_content"
+                android:text="Lưu thông tin"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <ProgressBar

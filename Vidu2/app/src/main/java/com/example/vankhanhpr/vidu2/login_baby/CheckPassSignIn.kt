@@ -176,6 +176,12 @@ class  CheckPassSignIn:AppCompatActivity()
                 }
         }
     }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+
     //Check pass word before sent code to phone number
     fun boolPass(s:String)
     {

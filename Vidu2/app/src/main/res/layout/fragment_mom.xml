@@ -6,21 +6,17 @@
         <LinearLayout
             android:id="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/brown"
+            android:layout_height="@dimen/title_main"
+            android:background="@color/tab_fragment"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mẹ"
                 android:gravity="center_horizontal"
-                android:textSize="@dimen/tex_size_more_big"
-                android:textColor="@color/dark"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:textSize="@dimen/text_size_title"
+                android:textColor="@color/color_title"/>
         </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -48,8 +44,8 @@
                         android:orientation="vertical">
                         <Button
                             android:id="@+id/bnt_create_file"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/icon_no_data" />
                     </LinearLayout>
                 </LinearLayout>

@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.vankhanhpr.vidu2.MainActivity
@@ -42,6 +43,8 @@ class ChangePass:AppCompatActivity()
     var dialog_disconnect:Dialog?=null
     var mCountDownTimer: CountDownTimer? = null
     var f:Boolean?= true
+    var tab_return:LinearLayout?=null
+    var tab_sent_pass_again:LinearLayout?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +52,14 @@ class ChangePass:AppCompatActivity()
         EventBus.getDefault().register(this)
 
         tab_loading= findViewById(R.id.tab_loading_changepass) as ProgressBar
+        tab_return= findViewById(R.id.tab_return)as LinearLayout
+        tab_sent_pass_again= findViewById(R.id.tab_sent_pass_again) as LinearLayout
+
         var passOid:String?=null
         var pass1:String?=null
         var pass2:String?=null
         var dialog_restart_pass:Dialog?=null
+
 
 
         var inte: Intent = intent//set data
@@ -65,6 +72,23 @@ class ChangePass:AppCompatActivity()
             var sharedpreferences : SharedPreferences = getSharedPreferences(Shared_Preferences, Context.MODE_PRIVATE)
             phone = sharedpreferences.getString("id","")
         }
+
+        if(!f!!)
+        {
+            tab_return!!.visibility=View.VISIBLE
+            tab_sent_pass_again!!.visibility =View.GONE
+
+        }
+        else
+        {
+            tab_return!!.visibility=View.GONE
+            tab_sent_pass_again!!.visibility =View.VISIBLE
+        }
+        tab_return!!.setOnClickListener()
+        {
+            finish()
+        }
+
 
         tv_continue_changepass.setOnClickListener()
         {
@@ -140,7 +164,7 @@ class ChangePass:AppCompatActivity()
             mCountDownTimer!!.start()
         }
 
-        tab_sent_pass_again.setOnClickListener()
+        tab_sent_pass_again!!.setOnClickListener()
         {
 
             dialog_restart_pass= Dialog(this)
@@ -203,6 +227,10 @@ class ChangePass:AppCompatActivity()
                 }
             }
         }
+    }
+    public override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
     //goto main mom and baby
     fun sendToActivityMain(value: String,value2:String,resultcode:Int) {

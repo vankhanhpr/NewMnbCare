@@ -13,7 +13,7 @@
             android:id="@+id/choose_provine_top_bar"
             android:layout_width="fill_parent"
             android:layout_height="45.0dip"
-            android:background="@color/brown"
+            android:background="@color/tab_fragment"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -49,10 +49,10 @@
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
-            android:paddingBottom="10dip">
+            android:background="@drawable/list_selector">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,13 +60,17 @@
             <EditText
                 android:id="@+id/edt_name_customer"
                 android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dip"
+            android:layout_height="@dimen/size_create_file"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -82,15 +86,14 @@
                 android:prompt="@string/country_prompt"/>
         </LinearLayout>
 
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dip"
+            android:layout_height="@dimen/size_create_file"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -108,13 +111,13 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:weightSum="10">
             <TextView
                 android:layout_width="0dip"
@@ -136,13 +139,13 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/brown"/>
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <TextView
                 android:gravity="center"
@@ -160,16 +163,13 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
@@ -180,25 +180,19 @@
             <EditText
                 android:id="@+id/edt_phonenumber"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:inputType="number"/>
 
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/brown"/>
+            android:layout_height="@dimen/size_file"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_create_file"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/pading10dip"
+            android:background="@drawable/list_selector"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
@@ -218,12 +212,14 @@
             android:background="@color/brown"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="20dp"/>
         <Button
             android:layout_gravity="center"
             android:id="@+id/btn_create_fiel_mom"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/list_selector"
+            android:textColor="@color/button_file"
             android:text="tạo hồ sơ"/>
     </LinearLayout>
     <ProgressBar
@@ -233,4 +229,13 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
+    <TextView
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_connection"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/view_disconnect"/>
 </RelativeLayout>
